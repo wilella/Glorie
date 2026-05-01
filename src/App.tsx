@@ -183,103 +183,48 @@ const fmt = {
   date: () => new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"}),
   short: () => new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"}),
 };
-
 // ─── GLORIÉ DESIGN TOKENS ────────────────────────────────────────────────────
 const G = {
-  peach:    "#E8B89A",
-  peachLight:"#F2D0B8",
-  peachSoft: "#FBF0E8",
-  sage:     "#A8B89A",
-  sageSoft: "#C8D4BE",
-  sageLight:"#E8EFE4",
-  gold:     "#C9A96E",
-  goldLight:"#E8D4A8",
-  cream:    "#FAF6F0",
-  warmWhite:"#FDF9F4",
-  ink:      "#2C2416",
-  inkSoft:  "#4A3F30",
-  inkMid:   "#7A6B58",
-  inkLight: "#A8998A",
-  // gradients
-  bg: "linear-gradient(135deg, #F5E6D8 0%, #FAF0E8 35%, #F8F4EE 65%, #EDF2E8 100%)",
-  headerBg: "linear-gradient(180deg, rgba(245,230,216,0.98) 0%, rgba(250,246,240,0.95) 100%)",
-  cardBg: "rgba(255,252,248,0.85)",
-  cardBorder: "rgba(201,169,110,0.18)",
+  peach:"#E8B89A", peachLight:"#F2D0B8", peachSoft:"#FBF0E8",
+  sage:"#A8B89A", sageSoft:"#C8D4BE", sageLight:"#E8EFE4",
+  gold:"#C9A96E", goldLight:"#E8D4A8",
+  cream:"#FAF6F0", warmWhite:"#FDF9F4",
+  ink:"#2C2416", inkSoft:"#4A3F30", inkMid:"#7A6B58", inkLight:"#A8998A",
+  bg:"linear-gradient(135deg, #F5E6D8 0%, #FAF0E8 35%, #F8F4EE 65%, #EDF2E8 100%)",
+  headerBg:"linear-gradient(180deg, rgba(245,230,216,0.98) 0%, rgba(250,246,240,0.95) 100%)",
+  cardBg:"rgba(255,252,248,0.85)", cardBorder:"rgba(201,169,110,0.18)",
 };
 
-// ─── LEAF LOGO SVG ────────────────────────────────────────────────────────────
-function GlorieLogo({ size = 36 }) {
+// ─── LEAF LOGO ────────────────────────────────────────────────────────────────
+function GlorieLogo({size=36}) {
   return (
-    <svg width={size} height={size} viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Outer leaf */}
-      <path d="M20 4 C20 4, 32 12, 32 26 C32 36, 26 44, 20 44 C14 44, 8 36, 8 26 C8 12, 20 4, 20 4Z"
-        stroke={G.gold} strokeWidth="1.4" fill="none" strokeLinecap="round"/>
-      {/* Inner leaf / center vein */}
-      <path d="M20 44 C20 44, 20 24, 20 8"
-        stroke={G.gold} strokeWidth="1" fill="none" strokeLinecap="round"/>
-      {/* Left vein */}
-      <path d="M20 28 C20 28, 13 23, 10 18"
-        stroke={G.gold} strokeWidth="0.8" fill="none" strokeLinecap="round" opacity="0.7"/>
-      {/* Right vein */}
-      <path d="M20 28 C20 28, 27 23, 30 18"
-        stroke={G.gold} strokeWidth="0.8" fill="none" strokeLinecap="round" opacity="0.7"/>
-      {/* Gold dot accent */}
+    <svg width={size} height={size} viewBox="0 0 40 48" fill="none">
+      <path d="M20 4 C20 4, 32 12, 32 26 C32 36, 26 44, 20 44 C14 44, 8 36, 8 26 C8 12, 20 4, 20 4Z" stroke={G.gold} strokeWidth="1.4" fill="none" strokeLinecap="round"/>
+      <path d="M20 44 C20 44, 20 24, 20 8" stroke={G.gold} strokeWidth="1" fill="none" strokeLinecap="round"/>
+      <path d="M20 28 C20 28, 13 23, 10 18" stroke={G.gold} strokeWidth="0.8" fill="none" strokeLinecap="round" opacity="0.7"/>
+      <path d="M20 28 C20 28, 27 23, 30 18" stroke={G.gold} strokeWidth="0.8" fill="none" strokeLinecap="round" opacity="0.7"/>
       <circle cx="20" cy="6" r="1.5" fill={G.gold} opacity="0.6"/>
     </svg>
   );
 }
 
-// ─── GOLD SPECKLE DECORATION ──────────────────────────────────────────────────
-function GoldSpeckles({ corner = "tr" }) {
-  const dots = [
-    [88,8,1.2],[94,14,0.8],[82,16,0.6],[91,22,1],[97,10,0.5],
-    [85,4,0.7],[79,20,0.4],[96,18,0.6],[90,6,0.5],[93,26,0.8],
-  ];
-  const flip = corner === "tl" ? "scale(-1,1)" : corner === "bl" ? "scale(-1,-1)" : corner === "br" ? "scale(1,-1)" : "";
+function GoldSpeckles({corner="tr"}) {
+  const dots=[[88,8,1.2],[94,14,0.8],[82,16,0.6],[91,22,1],[97,10,0.5],[85,4,0.7],[79,20,0.4],[96,18,0.6],[90,6,0.5],[93,26,0.8]];
   return (
-    <svg width={100} height={40} style={{ position:"absolute", top: corner.includes("b") ? "auto" : 0, bottom: corner.includes("b") ? 0 : "auto", right: corner.includes("r") ? 0 : "auto", left: corner.includes("l") ? 0 : "auto", opacity:0.5, pointerEvents:"none" }} viewBox="0 0 100 40">
-      <g transform={flip} style={{transformOrigin:"50px 20px"}}>
-        {dots.map(([x,y,r],i) => <circle key={i} cx={x} cy={y} r={r} fill={G.gold} opacity={0.4+Math.random()*0.4}/>)}
-      </g>
+    <svg width={100} height={40} style={{position:"absolute",top:corner.includes("b")?"auto":0,bottom:corner.includes("b")?0:"auto",right:corner.includes("r")?0:"auto",left:corner.includes("l")?0:"auto",opacity:0.5,pointerEvents:"none"}} viewBox="0 0 100 40">
+      {dots.map(([x,y,r],i)=><circle key={i} cx={x} cy={y} r={r} fill={G.gold} opacity={0.5}/>)}
     </svg>
   );
 }
 
-// ─── SHARED STYLES ────────────────────────────────────────────────────────────
-const iS = {
-  width:"100%",
-  background:"rgba(255,252,248,0.9)",
-  border:`1px solid ${G.cardBorder}`,
-  borderRadius:14,
-  padding:"12px 16px",
-  color:G.ink,
-  fontSize:14,
-  outline:"none",
-  marginBottom:8,
-  boxSizing:"border-box",
-  fontFamily:"'Cormorant Garamond','Georgia',serif",
-  letterSpacing:"0.02em",
-};
-
-const bS = (bg, fg=G.ink) => ({
-  width:"100%",
-  background:bg,
-  border:"none",
-  borderRadius:14,
-  padding:"13px",
-  color:fg,
-  fontWeight:600,
-  fontSize:14,
-  cursor:"pointer",
-  fontFamily:"'Jost','sans-serif'",
-  letterSpacing:"0.08em",
-  textTransform:"uppercase",
-});
+// ─── SHARED UI ────────────────────────────────────────────────────────────────
+const iS={width:"100%",background:"rgba(255,252,248,0.9)",border:`1px solid ${G.cardBorder}`,borderRadius:14,padding:"12px 16px",color:G.ink,fontSize:14,outline:"none",marginBottom:8,boxSizing:"border-box",fontFamily:"'Cormorant Garamond','Georgia',serif",letterSpacing:"0.02em"};
+const bS=(bg,fg=G.ink)=>({width:"100%",background:bg,border:"none",borderRadius:14,padding:"13px",color:fg,fontWeight:600,fontSize:14,cursor:"pointer",fontFamily:"'Jost','sans-serif'",letterSpacing:"0.08em",textTransform:"uppercase"});
 
 function StatPill({label,value,unit,color}) {
   return (
-    <div style={{background:color||G.peachSoft, borderRadius:20, padding:"11px 16px", display:"flex", flexDirection:"column", alignItems:"center", minWidth:78, border:`1px solid ${G.cardBorder}`}}>
-      <span style={{fontSize:18,fontWeight:700,color:G.inkSoft,letterSpacing:"-0.5px",fontFamily:"'Cormorant Garamond',serif"}}>{value}</span>
+    <div style={{background:color||G.peachSoft,borderRadius:20,padding:"10px 14px",display:"flex",flexDirection:"column",alignItems:"center",minWidth:74,border:`1px solid ${G.cardBorder}`}}>
+      <span style={{fontSize:17,fontWeight:700,color:G.inkSoft,letterSpacing:"-0.5px",fontFamily:"'Cormorant Garamond',serif"}}>{value}</span>
       <span style={{fontSize:9,fontWeight:600,color:G.inkMid,textTransform:"uppercase",letterSpacing:1.5,marginTop:1}}>{unit}</span>
       <span style={{fontSize:9,color:G.inkLight,marginTop:1}}>{label}</span>
     </div>
@@ -287,89 +232,37 @@ function StatPill({label,value,unit,color}) {
 }
 
 function ProgressBar({value,max,color,height=5}) {
-  const pct = Math.min((value/Math.max(max,1))*100,100);
+  const pct=Math.min((value/Math.max(max,1))*100,100);
   return (
-    <div style={{background:`rgba(201,169,110,0.15)`,borderRadius:99,height,overflow:"hidden"}}>
+    <div style={{background:"rgba(201,169,110,0.15)",borderRadius:99,height,overflow:"hidden"}}>
       <div style={{width:`${pct}%`,height:"100%",background:color||`linear-gradient(90deg,${G.peach},${G.gold})`,borderRadius:99,transition:"width 0.7s cubic-bezier(0.34,1.56,0.64,1)"}}/>
     </div>
   );
 }
 
 function Card({children,style,accent}) {
-  return (
-    <div style={{
-      background:G.cardBg,
-      border:`1px solid ${accent||G.cardBorder}`,
-      borderRadius:20,
-      padding:18,
-      marginBottom:14,
-      backdropFilter:"blur(8px)",
-      boxShadow:"0 2px 20px rgba(201,169,110,0.08)",
-      ...style
-    }}>
-      {children}
-    </div>
-  );
+  return <div style={{background:G.cardBg,border:`1px solid ${accent||G.cardBorder}`,borderRadius:20,padding:18,marginBottom:14,backdropFilter:"blur(8px)",boxShadow:"0 2px 20px rgba(201,169,110,0.08)",...style}}>{children}</div>;
 }
-
 function SLabel({text}) {
-  return (
-    <div style={{fontSize:10,fontWeight:600,color:G.inkLight,textTransform:"uppercase",letterSpacing:2,marginBottom:10,fontFamily:"'Jost',sans-serif"}}>
-      {text}
-    </div>
-  );
+  return <div style={{fontSize:10,fontWeight:600,color:G.inkLight,textTransform:"uppercase",letterSpacing:2,marginBottom:10,fontFamily:"'Jost',sans-serif"}}>{text}</div>;
 }
-
 function Empty({emoji,text}) {
-  return (
-    <div style={{textAlign:"center",padding:"36px 0",color:G.inkLight}}>
-      <div style={{fontSize:32,marginBottom:8}}>{emoji}</div>
-      <div style={{fontSize:13,fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic"}}>{text}</div>
-    </div>
-  );
+  return <div style={{textAlign:"center",padding:"34px 0",color:G.inkLight}}><div style={{fontSize:32,marginBottom:8}}>{emoji}</div><div style={{fontSize:13,fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic"}}>{text}</div></div>;
 }
-
-function Chip({label,active,color,onClick,small}) {
-  return (
-    <button onClick={onClick} style={{
-      padding:small?"5px 10px":"7px 13px",
-      borderRadius:99,
-      border:`1px solid ${active?G.gold:G.cardBorder}`,
-      cursor:"pointer",
-      fontSize:small?10:11,
-      fontWeight:600,
-      background:active?`linear-gradient(135deg,${G.peach},${G.gold})`:"rgba(255,252,248,0.8)",
-      color:active?G.ink:G.inkMid,
-      transition:"all 0.2s",
-      whiteSpace:"nowrap",
-      fontFamily:"'Jost',sans-serif",
-      letterSpacing:"0.05em",
-    }}>{label}</button>
-  );
+function Chip({label,active,onClick,small,color}) {
+  return <button onClick={onClick} style={{padding:small?"5px 10px":"7px 13px",borderRadius:99,border:`1px solid ${active?G.gold:G.cardBorder}`,cursor:"pointer",fontSize:small?10:11,fontWeight:600,background:active?`linear-gradient(135deg,${G.peach},${G.gold})`:"rgba(255,252,248,0.8)",color:active?G.ink:G.inkMid,transition:"all 0.2s",whiteSpace:"nowrap",fontFamily:"'Jost',sans-serif",letterSpacing:"0.05em"}}>{label}</button>;
 }
-
 function DelBtn({onClick}) {
-  return (
-    <button onClick={onClick} style={{background:"rgba(220,100,80,0.1)",border:"1px solid rgba(220,100,80,0.2)",borderRadius:8,color:"#C05040",cursor:"pointer",padding:"4px 9px",fontSize:11,fontWeight:600,flexShrink:0}}>✕</button>
-  );
+  return <button onClick={onClick} style={{background:"rgba(220,100,80,0.1)",border:"1px solid rgba(220,100,80,0.2)",borderRadius:8,color:"#C05040",cursor:"pointer",padding:"4px 9px",fontSize:11,fontWeight:600,flexShrink:0}}>✕</button>;
 }
 
 function Toast({toasts}) {
   return (
     <div style={{position:"fixed",top:16,left:"50%",transform:"translateX(-50%)",zIndex:999,display:"flex",flexDirection:"column",gap:8,width:"92%",maxWidth:440,pointerEvents:"none"}}>
       {toasts.map(t=>(
-        <div key={t.id} style={{
-          background:t.type==="reminder"?`linear-gradient(135deg,${G.peachLight},${G.goldLight})`:t.type==="warning"?`linear-gradient(135deg,#F5D0A0,${G.goldLight})`:`linear-gradient(135deg,${G.sageLight},${G.sageSoft})`,
-          color:G.ink,borderRadius:16,padding:"13px 16px",fontWeight:600,fontSize:13,
-          boxShadow:"0 4px 24px rgba(201,169,110,0.3)",animation:"toastIn 0.35s cubic-bezier(0.34,1.56,0.64,1)",
-          display:"flex",alignItems:"center",gap:10,
-          border:`1px solid ${G.cardBorder}`,
-        }}>
+        <div key={t.id} style={{background:t.type==="reminder"?`linear-gradient(135deg,${G.peachLight},${G.goldLight})`:t.type==="warning"?`linear-gradient(135deg,#F5D0A0,${G.goldLight})`:`linear-gradient(135deg,${G.sageLight},${G.sageSoft})`,color:G.ink,borderRadius:16,padding:"13px 16px",fontWeight:600,fontSize:13,boxShadow:"0 4px 24px rgba(201,169,110,0.3)",animation:"toastIn 0.35s cubic-bezier(0.34,1.56,0.64,1)",display:"flex",alignItems:"center",gap:10,border:`1px solid ${G.cardBorder}`}}>
           <span style={{fontSize:20}}>{t.emoji||"🌿"}</span>
-          <div>
-            <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:14}}>{t.title}</div>
-            {t.body&&<div style={{fontWeight:400,fontSize:12,opacity:0.72,marginTop:2}}>{t.body}</div>}
-          </div>
+          <div><div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:14}}>{t.title}</div>{t.body&&<div style={{fontWeight:400,fontSize:12,opacity:0.72,marginTop:2}}>{t.body}</div>}</div>
         </div>
       ))}
     </div>
@@ -377,34 +270,18 @@ function Toast({toasts}) {
 }
 
 function AutocompleteInput({placeholder,value,onChange,onSelect,database,style}) {
-  const [open,setOpen] = useState(false);
-  const ref = useRef(null);
-  const filtered = useMemo(()=>{
-    if(!value||value.length<2) return [];
-    const q=value.toLowerCase();
-    return database.filter(i=>i.name.toLowerCase().includes(q)).slice(0,8);
-  },[value,database]);
-  useEffect(()=>{
-    const h=(e)=>{if(ref.current&&!ref.current.contains(e.target))setOpen(false);};
-    document.addEventListener("mousedown",h); return ()=>document.removeEventListener("mousedown",h);
-  },[]);
+  const [open,setOpen]=useState(false);
+  const ref=useRef(null);
+  const filtered=useMemo(()=>{if(!value||value.length<2)return[];const q=value.toLowerCase();return database.filter(i=>i.name.toLowerCase().includes(q)).slice(0,8);},[value,database]);
+  useEffect(()=>{const h=(e)=>{if(ref.current&&!ref.current.contains(e.target))setOpen(false);};document.addEventListener("mousedown",h);return()=>document.removeEventListener("mousedown",h);},[]);
   return (
     <div ref={ref} style={{position:"relative",marginBottom:8}}>
-      <input placeholder={placeholder} value={value}
-        onChange={e=>{onChange(e.target.value);setOpen(true);}}
-        onFocus={()=>setOpen(true)}
-        style={{...iS,marginBottom:0,...(style||{})}}/>
+      <input placeholder={placeholder} value={value} onChange={e=>{onChange(e.target.value);setOpen(true);}} onFocus={()=>setOpen(true)} style={{...iS,marginBottom:0,...(style||{})}}/>
       {open&&filtered.length>0&&(
         <div style={{position:"absolute",top:"100%",left:0,right:0,background:G.warmWhite,border:`1px solid ${G.cardBorder}`,borderRadius:14,zIndex:100,maxHeight:240,overflowY:"auto",boxShadow:"0 8px 32px rgba(201,169,110,0.2)",marginTop:4}}>
           {filtered.map((item,i)=>(
-            <div key={i} onMouseDown={()=>{onSelect(item);setOpen(false);}}
-              style={{padding:"10px 16px",cursor:"pointer",borderBottom:`1px solid rgba(201,169,110,0.1)`,display:"flex",justifyContent:"space-between",alignItems:"center",transition:"background 0.15s"}}
-              onMouseEnter={e=>e.currentTarget.style.background=G.peachSoft}
-              onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
-              <div>
-                <div style={{color:G.ink,fontSize:13,fontFamily:"'Cormorant Garamond',serif"}}>{item.name}</div>
-                {item.serving&&<div style={{color:G.inkLight,fontSize:11,marginTop:1}}>{item.serving}</div>}
-              </div>
+            <div key={i} onMouseDown={()=>{onSelect(item);setOpen(false);}} style={{padding:"10px 16px",cursor:"pointer",borderBottom:`1px solid rgba(201,169,110,0.1)`,display:"flex",justifyContent:"space-between",alignItems:"center"}} onMouseEnter={e=>e.currentTarget.style.background=G.peachSoft} onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
+              <div><div style={{color:G.ink,fontSize:13,fontFamily:"'Cormorant Garamond',serif"}}>{item.name}</div>{item.serving&&<div style={{color:G.inkLight,fontSize:11,marginTop:1}}>{item.serving}</div>}</div>
               <div style={{textAlign:"right",flexShrink:0,marginLeft:10}}>
                 {item.cal!==undefined&&<><div style={{color:G.gold,fontSize:13,fontWeight:700}}>{item.cal}</div><div style={{color:G.inkLight,fontSize:10}}>kcal</div></>}
                 {item.met!==undefined&&<span style={{fontSize:18}}>{item.emoji||"🌿"}</span>}
@@ -417,7 +294,7 @@ function AutocompleteInput({placeholder,value,onChange,onSelect,database,style})
   );
 }
 
-// ─── SMART INSIGHTS ───────────────────────────────────────────────────────────
+// ─── INSIGHT ENGINE ───────────────────────────────────────────────────────────
 function generateInsights({dayState,medList,takenLog,profile,recovery,cyclePhase}) {
   const insights=[];
   const hour=new Date().getHours();
@@ -427,52 +304,74 @@ function generateInsights({dayState,medList,takenLog,profile,recovery,cyclePhase
   const waterCups=dayState.water.reduce((s,w)=>s+Number(w.cups||0),0);
   const goalCal=profile.weight&&profile.age?calcGoalCalories(profile,cyclePhase):2000;
   const workoutCats=[...new Set(dayState.workouts.map(w=>w.category))];
-  const consecutive=profile.streak||0;
-
-  if(hour>=14&&totalCal<goalCal*0.4)
-    insights.push({type:"warning",emoji:"🌿",title:"Nourish your body",body:`Only ${totalCal} kcal logged by midday — you're ${goalCal-totalCal} kcal below your goal. A protein-rich snack would serve you well.`,priority:9});
+  if(hour>=14&&totalCal<goalCal*0.4) insights.push({type:"warning",emoji:"🌿",title:"Nourish your body",body:`Only ${totalCal} kcal logged — you're ${goalCal-totalCal} kcal below your goal. A protein-rich snack would serve you well.`,priority:9});
   const protGoal=profile.weight?(profile.weightUnit==="lbs"?Number(profile.weight)*0.7:Number(profile.weight)*1.5):120;
-  if(hour>=16&&totalProt<protGoal*0.5)
-    insights.push({type:"tip",emoji:"✨",title:"Protein is low today",body:`${totalProt}g logged so far. Try chicken, Greek yogurt, or a protein shake to reach your goal.`,priority:8});
-  if(hour>=12&&waterCups<3)
-    insights.push({type:"warning",emoji:"💧",title:"Hydration check",body:`Only ${waterCups} cups so far. Your glow starts from within — aim for 4 cups before 2pm.`,priority:7});
-  if(consecutive>=5&&recovery?.soreness>=4)
-    insights.push({type:"warning",emoji:"🛌",title:"Your body is asking for rest",body:`${consecutive} days in a row with soreness at ${recovery.soreness}/5. Rest is where growth lives.`,priority:10});
-  if(workoutCats.length>0){
-    const cat=workoutCats[0];
-    const suggested=(SUPP_PAIRINGS[cat]||[]);
-    const mySupps=medList.map(m=>m.name.toLowerCase());
-    const matches=suggested.filter(s=>mySupps.some(ms=>ms.includes(s)));
-    if(matches.length>0){
-      const suppEntry=medList.find(m=>m.name.toLowerCase().includes(matches[0]));
-      if(suppEntry&&!takenLog[`${suppEntry.id}_${TODAY}`])
-        insights.push({type:"tip",emoji:"💊",title:`Post-${cat} reminder`,body:`Now is a great time to take your ${suppEntry.name}.`,priority:8});
-    }
-  }
-  if(profile.sex==="female"&&cyclePhase){
-    const phase=CYCLE_PHASES.find(c=>c.id===cyclePhase);
-    if(phase) insights.push({type:"cycle",emoji:phase.emoji,title:`${phase.label} phase`,body:phase.notes,priority:6});
-  }
-  if(consecutive===0&&totalCal===0&&hour>=10)
-    insights.push({type:"encourage",emoji:"🌸",title:"Begin again, beautifully",body:"Every day is a fresh start. Log one meal to build your momentum.",priority:5});
-  if(totalCal>=goalCal*0.8&&totalCal<=goalCal*1.05&&hour>=18)
-    insights.push({type:"success",emoji:"🌟",title:"You showed up for yourself today",body:`${totalCal} kcal — right in your goal range. Beautiful consistency.`,priority:7});
+  if(hour>=16&&totalProt<protGoal*0.5) insights.push({type:"tip",emoji:"✨",title:"Protein is low today",body:`${totalProt}g logged. Try chicken, Greek yogurt, or a shake to hit your target.`,priority:8});
+  if(hour>=12&&waterCups<3) insights.push({type:"warning",emoji:"💧",title:"Hydration check",body:`Only ${waterCups} cups so far. Your glow starts from within.`,priority:7});
+  if(profile.sex==="female"&&cyclePhase){const phase=CYCLE_PHASES.find(c=>c.id===cyclePhase);if(phase)insights.push({type:"cycle",emoji:phase.emoji,title:`${phase.label} phase`,body:phase.notes,priority:6});}
+  if(totalCal>=goalCal*0.8&&totalCal<=goalCal*1.05&&hour>=18) insights.push({type:"success",emoji:"🌟",title:"You showed up for yourself today",body:`${totalCal} kcal — right in your goal range. Beautiful consistency.`,priority:7});
   return insights.sort((a,b)=>b.priority-a.priority).slice(0,4);
 }
 
+// ─── MACRO PIE CHART ─────────────────────────────────────────────────────────
+function MacroPie({protein,carbs,fat}) {
+  const total=(protein*4)+(carbs*4)+(fat*9);
+  if(total===0) return <div style={{textAlign:"center",fontSize:12,color:G.inkLight,fontStyle:"italic"}}>Log meals to see macros</div>;
+  const pPct=Math.round((protein*4/total)*100);
+  const cPct=Math.round((carbs*4/total)*100);
+  const fPct=100-pPct-cPct;
+  const cx=60,cy=60,r=50;
+  const slice=(start,pct,color)=>{
+    if(pct<=0)return null;
+    if(pct>=100){return <circle cx={cx} cy={cy} r={r} fill={color}/>;}
+    const s=((start/100)*2*Math.PI)-Math.PI/2;
+    const e=(((start+pct)/100)*2*Math.PI)-Math.PI/2;
+    const x1=cx+r*Math.cos(s),y1=cy+r*Math.sin(s);
+    const x2=cx+r*Math.cos(e),y2=cy+r*Math.sin(e);
+    const large=pct>50?1:0;
+    return <path d={`M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${large},1 ${x2},${y2} Z`} fill={color}/>;
+  };
+  return (
+    <div style={{display:"flex",alignItems:"center",gap:20}}>
+      <svg width={120} height={120} viewBox="0 0 120 120">
+        {slice(0,pPct,G.peach)}
+        {slice(pPct,cPct,G.sage)}
+        {slice(pPct+cPct,fPct,G.gold)}
+        <circle cx={cx} cy={cy} r={30} fill={G.warmWhite}/>
+        <text x={cx} y={cy-4} textAnchor="middle" fontSize={10} fill={G.inkSoft} fontWeight={700} fontFamily="Jost,sans-serif">{Math.round(total)}</text>
+        <text x={cx} y={cy+8} textAnchor="middle" fontSize={8} fill={G.inkLight} fontFamily="Jost,sans-serif">kcal</text>
+      </svg>
+      <div style={{flex:1}}>
+        {[{label:"Protein",val:protein,pct:pPct,cal:protein*4,color:G.peach},{label:"Carbs",val:carbs,pct:cPct,cal:carbs*4,color:G.sage},{label:"Fat",val:fat,pct:fPct,cal:fat*9,color:G.gold}].map(m=>(
+          <div key={m.label} style={{marginBottom:8}}>
+            <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}>
+              <span style={{fontSize:12,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{m.label} — {m.val}g</span>
+              <span style={{fontSize:11,color:G.inkLight}}>{m.pct}%</span>
+            </div>
+            <ProgressBar value={m.pct} max={100} color={m.color} height={5}/>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── SUMMARY TAB ─────────────────────────────────────────────────────────────
-function SummaryTab({dayState,medList,takenLog,profile,recovery,cyclePhase}) {
+function SummaryTab({dayState,medList,takenLog,profile,recovery,cyclePhase,habits,setHabits}) {
   const goalCal=profile.weight&&profile.age?calcGoalCalories(profile,cyclePhase):2000;
   const totalCals=dayState.meals.reduce((s,m)=>s+Number(m.calories||0),0);
   const totalProt=dayState.meals.reduce((s,m)=>s+Number(m.protein||0),0);
+  const totalCarbs=dayState.meals.reduce((s,m)=>s+Number(m.carbs||0),0);
+  const totalFat=dayState.meals.reduce((s,m)=>s+Number(m.fat||0),0);
   const totalMins=dayState.workouts.reduce((s,w)=>s+Number(w.duration||0),0);
   const totalBurned=dayState.workouts.reduce((s,w)=>s+Number(w.burned||0),0);
   const waterCups=dayState.water.reduce((s,w)=>s+Number(w.cups||0),0);
-  const waterOz=dayState.water.reduce((s,w)=>s+Number(w.oz||0),0);
   const medsTaken=medList.filter(m=>takenLog[`${m.id}_${TODAY}`]).length;
   const netCals=totalCals-totalBurned;
   const insights=generateInsights({dayState,medList,takenLog,profile,recovery,cyclePhase});
   const phase=CYCLE_PHASES.find(c=>c.id===cyclePhase);
+  const todayHabits=habits[TODAY]||{};
+  const habitCount=Object.values(todayHabits).filter(Boolean).length;
 
   const rings=[
     {label:"Calories",val:totalCals,max:goalCal,color:G.peach,unit:"kcal",icon:"🥗"},
@@ -483,23 +382,17 @@ function SummaryTab({dayState,medList,takenLog,profile,recovery,cyclePhase}) {
   return (
     <div>
       {profile.name&&<div style={{fontSize:14,color:G.inkMid,marginBottom:4,fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic"}}>Good day, {profile.name} ✨</div>}
-      <div style={{fontSize:11,color:G.inkLight,marginBottom:18,fontFamily:"'Jost',sans-serif",letterSpacing:"0.05em"}}>
-        {new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"})}
-      </div>
+      <div style={{fontSize:11,color:G.inkLight,marginBottom:18,letterSpacing:"0.05em"}}>{new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"})}</div>
 
-      {/* Rings */}
       <div style={{display:"flex",gap:10,marginBottom:18}}>
         {rings.map(r=>{
           const pct=Math.min(r.val/Math.max(r.max,1)*100,100);
           const R=30,cx=38,cy=38,circ=2*Math.PI*R;
           return (
-            <div key={r.label} style={{flex:1,background:G.cardBg,border:`1px solid ${G.cardBorder}`,borderRadius:20,padding:"14px 6px",textAlign:"center",boxShadow:"0 2px 12px rgba(201,169,110,0.08)"}}>
+            <div key={r.label} style={{flex:1,background:G.cardBg,border:`1px solid ${G.cardBorder}`,borderRadius:18,padding:"14px 6px",textAlign:"center",boxShadow:"0 2px 12px rgba(201,169,110,0.08)"}}>
               <svg width={76} height={76} style={{margin:"0 auto",display:"block"}}>
                 <circle cx={cx} cy={cy} r={R} fill="none" stroke="rgba(201,169,110,0.15)" strokeWidth={5}/>
-                <circle cx={cx} cy={cy} r={R} fill="none" stroke={r.color} strokeWidth={5}
-                  strokeDasharray={circ} strokeDashoffset={circ*(1-pct/100)}
-                  strokeLinecap="round" transform={`rotate(-90 ${cx} ${cy})`}
-                  style={{transition:"stroke-dashoffset 0.8s cubic-bezier(0.34,1.56,0.64,1)"}}/>
+                <circle cx={cx} cy={cy} r={R} fill="none" stroke={r.color} strokeWidth={5} strokeDasharray={circ} strokeDashoffset={circ*(1-pct/100)} strokeLinecap="round" transform={`rotate(-90 ${cx} ${cy})`} style={{transition:"stroke-dashoffset 0.8s cubic-bezier(0.34,1.56,0.64,1)"}}/>
                 <text x={cx} y={cx-2} textAnchor="middle" fill={G.inkSoft} fontSize={12} fontWeight={700} fontFamily="Cormorant Garamond,serif">{r.val}</text>
                 <text x={cx} y={cx+10} textAnchor="middle" fill={G.inkLight} fontSize={8} fontFamily="Jost,sans-serif">{r.unit}</text>
               </svg>
@@ -509,21 +402,28 @@ function SummaryTab({dayState,medList,takenLog,profile,recovery,cyclePhase}) {
         })}
       </div>
 
-      {/* Stats grid */}
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:18}}>
         {[
           {label:"Net Calories",val:netCals,sub:"consumed − burned",color:netCals<=goalCal?G.sage:G.peach},
           {label:"Daily Goal",val:goalCal,sub:profile.goal==="lose"?"fat loss":profile.goal==="gain"?"muscle gain":"maintenance",color:G.gold},
-          {label:"Protein",val:`${totalProt}g`,sub:"consumed today",color:G.peach},
+          {label:"Habits Today",val:`${habitCount}/${Object.keys(DEFAULT_HABITS).length}`,sub:"completed",color:G.peach},
           {label:"Wellness",val:`${medsTaken}/${medList.length}`,sub:"meds taken",color:G.sageSoft},
         ].map(s=>(
-          <div key={s.label} style={{background:G.cardBg,border:`1px solid ${G.cardBorder}`,borderRadius:18,padding:"14px",boxShadow:"0 2px 12px rgba(201,169,110,0.06)"}}>
+          <div key={s.label} style={{background:G.cardBg,border:`1px solid ${G.cardBorder}`,borderRadius:16,padding:"14px"}}>
             <div style={{fontSize:20,fontWeight:700,color:s.color,fontFamily:"'Cormorant Garamond',serif"}}>{s.val}</div>
             <div style={{fontSize:11,fontWeight:600,color:G.inkSoft,marginTop:2,fontFamily:"'Jost',sans-serif"}}>{s.label}</div>
             <div style={{fontSize:11,color:G.inkLight}}>{s.sub}</div>
           </div>
         ))}
       </div>
+
+      {/* Macro summary */}
+      {totalCals>0&&(
+        <Card>
+          <SLabel text="Today's Macros"/>
+          <MacroPie protein={totalProt} carbs={totalCarbs} fat={totalFat}/>
+        </Card>
+      )}
 
       {/* Cycle phase */}
       {profile.sex==="female"&&phase&&(
@@ -532,7 +432,6 @@ function SummaryTab({dayState,medList,takenLog,profile,recovery,cyclePhase}) {
           <div>
             <div style={{fontWeight:700,fontSize:14,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{phase.label} Phase · {phase.days}</div>
             <div style={{fontSize:12,color:G.inkMid,marginTop:3,fontStyle:"italic",fontFamily:"'Cormorant Garamond',serif"}}>{phase.notes}</div>
-            <div style={{fontSize:11,color:G.inkLight,marginTop:4}}>Intensity: {phase.intensity} · Cal adj: {phase.calAdj>0?"+":""}{phase.calAdj} · Carbs: {phase.carbAdj}</div>
           </div>
         </div>
       )}
@@ -542,11 +441,11 @@ function SummaryTab({dayState,medList,takenLog,profile,recovery,cyclePhase}) {
         <div style={{marginBottom:14}}>
           <SLabel text="Your Daily Glow Guide"/>
           {insights.map((ins,i)=>(
-            <div key={i} style={{background:G.cardBg,border:`1px solid ${G.cardBorder}`,borderRadius:16,padding:"13px 14px",marginBottom:8,animation:"slideIn 0.3s ease",boxShadow:"0 2px 12px rgba(201,169,110,0.06)"}}>
+            <div key={i} style={{background:G.cardBg,border:`1px solid ${G.cardBorder}`,borderRadius:16,padding:"13px 14px",marginBottom:8,animation:"slideIn 0.3s ease"}}>
               <div style={{display:"flex",gap:10,alignItems:"flex-start"}}>
                 <span style={{fontSize:18,flexShrink:0}}>{ins.emoji}</span>
                 <div>
-                  <div style={{fontWeight:600,fontSize:13,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif",fontSize:15}}>{ins.title}</div>
+                  <div style={{fontWeight:600,fontSize:15,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{ins.title}</div>
                   <div style={{fontSize:12,color:G.inkMid,marginTop:3,lineHeight:1.6}}>{ins.body}</div>
                 </div>
               </div>
@@ -565,27 +464,9 @@ function SummaryTab({dayState,medList,takenLog,profile,recovery,cyclePhase}) {
             </div>
           ))}
           <div style={{display:"flex",justifyContent:"space-between",padding:"8px 0 0",marginTop:4}}>
-            <span style={{fontSize:11,color:G.inkLight,fontFamily:"'Jost',sans-serif",letterSpacing:"0.05em",textTransform:"uppercase"}}>Total</span>
+            <span style={{fontSize:11,color:G.inkLight,fontFamily:"'Jost',sans-serif",textTransform:"uppercase",letterSpacing:"0.05em"}}>Total</span>
             <span style={{fontSize:15,fontWeight:700,color:G.gold,fontFamily:"'Cormorant Garamond',serif"}}>{totalCals} kcal</span>
           </div>
-        </Card>
-      )}
-
-      {medList.filter(m=>m.reminderTime).length>0&&(
-        <Card>
-          <SLabel text="Wellness Schedule"/>
-          {medList.filter(m=>m.reminderTime).sort((a,b)=>a.reminderTime.localeCompare(b.reminderTime)).map(m=>{
-            const taken=takenLog[`${m.id}_${TODAY}`];
-            return (
-              <div key={m.id} style={{display:"flex",alignItems:"center",gap:10,padding:"7px 0",borderBottom:`1px solid rgba(201,169,110,0.1)`}}>
-                <span>{taken?"✅":"🌿"}</span>
-                <div style={{flex:1}}>
-                  <div style={{fontSize:13,color:taken?G.inkLight:G.inkSoft,textDecoration:taken?"line-through":"none",fontFamily:"'Cormorant Garamond',serif"}}>{m.name}</div>
-                  <div style={{fontSize:11,color:G.inkLight}}>{m.dose} · {fmt.timeLabel(m.reminderTime)}</div>
-                </div>
-              </div>
-            );
-          })}
         </Card>
       )}
     </div>
@@ -597,24 +478,39 @@ function MealsTab({dayState,setDayState,profile,cyclePhase}) {
   const goalCal=profile.weight&&profile.age?calcGoalCalories(profile,cyclePhase):2000;
   const [query,setQuery]=useState("");const [selected,setSelected]=useState(null);
   const [mName,setMName]=useState("");const [mCal,setMCal]=useState("");
-  const [mProt,setMProt]=useState("");const [mType,setMType]=useState("Breakfast");
-  const [mode,setMode]=useState("search");
+  const [mProt,setMProt]=useState("");const [mCarbs,setMCarbs]=useState("");
+  const [mFat,setMFat]=useState("");const [mType,setMType]=useState("Breakfast");
+  const [mode,setMode]=useState("search");const [view,setView]=useState("log"); // log | plan
   const meals=dayState.meals;
   const totalCal=meals.reduce((s,m)=>s+Number(m.calories),0);
   const totalProt=meals.reduce((s,m)=>s+Number(m.protein||0),0);
+  const totalCarbs=meals.reduce((s,m)=>s+Number(m.carbs||0),0);
+  const totalFat=meals.reduce((s,m)=>s+Number(m.fat||0),0);
+  const [mealPlan,setMealPlan]=useState(()=>LS.get("glorie_mealplan",{}));
+  useEffect(()=>{LS.set("glorie_mealplan",mealPlan);},[mealPlan]);
   const mEmojis={Breakfast:"🍳",Lunch:"🥙",Dinner:"🍽️",Snack:"🍎"};
 
   const add=()=>{
     if(mode==="search"){
       if(!selected&&!query)return;
       const meal=selected||{name:query,cal:0,protein:0,carbs:0,fat:0};
-      setDayState(p=>({...p,meals:[...p.meals,{id:Date.now(),name:meal.name,calories:meal.cal,protein:meal.protein||0,carbs:meal.carbs||0,fat:meal.fat||0,serving:meal.serving||"",mealType:mType,time:fmt.time()}]}));
+      setDayState(p=>({...p,meals:[...p.meals,{id:Date.now(),name:meal.name,calories:meal.cal,protein:meal.protein||0,carbs:meal.carbs||0,fat:meal.fat||0,serving:meal.serving||"",mealType:mType,time:new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"})}]}));
       setQuery("");setSelected(null);
     }else{
       if(!mName||!mCal)return;
-      setDayState(p=>({...p,meals:[...p.meals,{id:Date.now(),name:mName,calories:Number(mCal),protein:Number(mProt||0),mealType:mType,time:fmt.time()}]}));
-      setMName("");setMCal("");setMProt("");
+      setDayState(p=>({...p,meals:[...p.meals,{id:Date.now(),name:mName,calories:Number(mCal),protein:Number(mProt||0),carbs:Number(mCarbs||0),fat:Number(mFat||0),mealType:mType,time:new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"})}]}));
+      setMName("");setMCal("");setMProt("");setMCarbs("");setMFat("");
     }
+  };
+
+  const DAYS=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  const [planDay,setPlanDay]=useState(DAYS[new Date().getDay()-1]||"Mon");
+  const [planMeal,setPlanMeal]=useState("");const [planType,setPlanType]=useState("Breakfast");
+  const addToPlan=()=>{
+    if(!planMeal)return;
+    const key=`${planDay}_${planType}`;
+    setMealPlan(p=>({...p,[key]:[...(p[key]||[]),planMeal]}));
+    setPlanMeal("");
   };
 
   return (
@@ -625,54 +521,115 @@ function MealsTab({dayState,setDayState,profile,cyclePhase}) {
         <StatPill label="Protein" value={totalProt} unit="grams" color={G.goldLight}/>
       </div>
       <div style={{marginBottom:14}}>
-        <div style={{fontSize:10,color:G.inkLight,marginBottom:5,textTransform:"uppercase",letterSpacing:1.5,fontFamily:"'Jost',sans-serif"}}>Daily Goal: {goalCal} kcal</div>
+        <div style={{fontSize:10,color:G.inkLight,marginBottom:5,textTransform:"uppercase",letterSpacing:1.5,fontFamily:"'Jost',sans-serif"}}>Goal: {goalCal} kcal</div>
         <ProgressBar value={totalCal} max={goalCal}/>
       </div>
-      <Card>
-        <div style={{display:"flex",gap:6,marginBottom:12,flexWrap:"wrap"}}>
-          <Chip label="🔍 Search" active={mode==="search"} onClick={()=>setMode("search")}/>
-          <Chip label="✏️ Manual" active={mode==="manual"} onClick={()=>setMode("manual")}/>
-        </div>
-        <div style={{display:"flex",gap:6,marginBottom:12,flexWrap:"wrap"}}>
-          {["Breakfast","Lunch","Dinner","Snack"].map(t=><Chip key={t} label={t} active={mType===t} onClick={()=>setMType(t)}/>)}
-        </div>
-        {mode==="search"?(
-          <>
-            <AutocompleteInput placeholder="Search foods — chicken rice, Healthy Choice, protein bar…" value={query} onChange={v=>{setQuery(v);setSelected(null);}} onSelect={item=>{setSelected(item);setQuery(item.name);}} database={MEAL_DB}/>
-            {selected&&(
-              <div style={{background:`linear-gradient(135deg,${G.peachSoft},${G.sageLight})`,border:`1px solid ${G.cardBorder}`,borderRadius:14,padding:"10px 14px",marginBottom:8}}>
-                <div style={{fontWeight:600,fontSize:14,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{selected.name}</div>
-                <div style={{fontSize:11,color:G.inkMid,marginTop:3,display:"flex",gap:12,flexWrap:"wrap"}}>
-                  <span>🔥 {selected.cal} kcal</span><span>🥩 {selected.protein}g</span><span>🌾 {selected.carbs}g</span><span>🫙 {selected.fat}g fat</span>
+
+      {/* Macro breakdown */}
+      {totalCal>0&&(
+        <Card>
+          <SLabel text="Macro Breakdown"/>
+          <MacroPie protein={totalProt} carbs={totalCarbs} fat={totalFat}/>
+        </Card>
+      )}
+
+      {/* View toggle */}
+      <div style={{display:"flex",gap:8,marginBottom:14}}>
+        <Chip label="📋 Log Meals" active={view==="log"} onClick={()=>setView("log")}/>
+        <Chip label="📅 Meal Plan" active={view==="plan"} onClick={()=>setView("plan")}/>
+      </div>
+
+      {view==="log"&&(
+        <>
+          <Card>
+            <div style={{display:"flex",gap:6,marginBottom:10}}>
+              <Chip label="🔍 Search" active={mode==="search"} onClick={()=>setMode("search")}/>
+              <Chip label="✏️ Manual" active={mode==="manual"} onClick={()=>setMode("manual")}/>
+            </div>
+            <div style={{display:"flex",gap:6,marginBottom:10,flexWrap:"wrap"}}>
+              {["Breakfast","Lunch","Dinner","Snack"].map(t=><Chip key={t} label={t} active={mType===t} onClick={()=>setMType(t)}/>)}
+            </div>
+            {mode==="search"?(
+              <>
+                <AutocompleteInput placeholder="Search foods — chicken rice, Healthy Choice…" value={query} onChange={v=>{setQuery(v);setSelected(null);}} onSelect={item=>{setSelected(item);setQuery(item.name);}} database={MEAL_DB}/>
+                {selected&&(
+                  <div style={{background:`linear-gradient(135deg,${G.peachSoft},${G.sageLight})`,border:`1px solid ${G.cardBorder}`,borderRadius:14,padding:"10px 14px",marginBottom:8}}>
+                    <div style={{fontWeight:600,fontSize:14,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{selected.name}</div>
+                    <div style={{fontSize:11,color:G.inkMid,marginTop:3,display:"flex",gap:12,flexWrap:"wrap"}}>
+                      <span>🔥 {selected.cal} kcal</span><span>🥩 {selected.protein}g</span><span>🌾 {selected.carbs}g</span><span>🫙 {selected.fat}g fat</span>
+                    </div>
+                  </div>
+                )}
+              </>
+            ):(
+              <>
+                <input placeholder="Food name" value={mName} onChange={e=>setMName(e.target.value)} style={iS}/>
+                <div style={{display:"flex",gap:8,marginBottom:8}}>
+                  <input placeholder="Calories" type="number" value={mCal} onChange={e=>setMCal(e.target.value)} style={{...iS,flex:1,marginBottom:0}}/>
+                  <input placeholder="Protein (g)" type="number" value={mProt} onChange={e=>setMProt(e.target.value)} style={{...iS,flex:1,marginBottom:0}}/>
                 </div>
-              </div>
+                <div style={{display:"flex",gap:8,marginBottom:8}}>
+                  <input placeholder="Carbs (g)" type="number" value={mCarbs} onChange={e=>setMCarbs(e.target.value)} style={{...iS,flex:1,marginBottom:0}}/>
+                  <input placeholder="Fat (g)" type="number" value={mFat} onChange={e=>setMFat(e.target.value)} style={{...iS,flex:1,marginBottom:0}}/>
+                </div>
+              </>
             )}
-          </>
-        ):(
-          <>
-            <input placeholder="Food name" value={mName} onChange={e=>setMName(e.target.value)} style={iS}/>
-            <div style={{display:"flex",gap:8,marginBottom:8}}>
-              <input placeholder="Calories" type="number" value={mCal} onChange={e=>setMCal(e.target.value)} style={{...iS,flex:1,marginBottom:0}}/>
-              <input placeholder="Protein (g)" type="number" value={mProt} onChange={e=>setMProt(e.target.value)} style={{...iS,flex:1,marginBottom:0}}/>
+            <button onClick={add} style={bS(`linear-gradient(135deg,${G.peach},${G.gold})`)}>+ Add {mType}</button>
+          </Card>
+          {meals.length===0?<Empty emoji="🌿" text="No meals logged yet"/>:
+            meals.map(m=>(
+              <div key={m.id} style={{background:G.cardBg,border:`1px solid ${G.cardBorder}`,borderRadius:16,padding:"12px 14px",display:"flex",alignItems:"center",gap:10,marginBottom:8,animation:"slideIn 0.3s ease"}}>
+                <span style={{fontSize:20}}>{mEmojis[m.mealType]||"🍽️"}</span>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontWeight:600,fontSize:14,color:G.inkSoft,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",fontFamily:"'Cormorant Garamond',serif"}}>{m.name}</div>
+                  <div style={{fontSize:11,color:G.inkLight,marginTop:2}}>{m.mealType} · P:{m.protein}g C:{m.carbs||0}g F:{m.fat||0}g</div>
+                </div>
+                <div style={{fontSize:14,fontWeight:700,color:G.gold,flexShrink:0,fontFamily:"'Cormorant Garamond',serif"}}>{m.calories}</div>
+                <DelBtn onClick={()=>setDayState(p=>({...p,meals:p.meals.filter(x=>x.id!==m.id)}))}/>
+              </div>
+            ))
+          }
+        </>
+      )}
+
+      {view==="plan"&&(
+        <div>
+          <Card>
+            <SLabel text="Weekly Meal Planner"/>
+            <div style={{display:"flex",gap:6,marginBottom:12,flexWrap:"wrap"}}>
+              {DAYS.map(d=><Chip key={d} label={d} active={planDay===d} onClick={()=>setPlanDay(d)} small/>)}
             </div>
-          </>
-        )}
-        <button onClick={add} style={bS(`linear-gradient(135deg,${G.peach},${G.gold})`)}>+ Add {mType}</button>
-      </Card>
-      {meals.length===0?<Empty emoji="🌿" text="No meals logged yet"/>:
-        meals.map(m=>(
-          <div key={m.id} style={{background:G.cardBg,border:`1px solid ${G.cardBorder}`,borderRadius:16,padding:"12px 14px",display:"flex",alignItems:"center",gap:10,marginBottom:8,animation:"slideIn 0.3s ease",boxShadow:"0 2px 8px rgba(201,169,110,0.06)"}}>
-            <span style={{fontSize:20}}>{mEmojis[m.mealType]||"🍽️"}</span>
-            <div style={{flex:1,minWidth:0}}>
-              <div style={{fontWeight:600,fontSize:14,color:G.inkSoft,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",fontFamily:"'Cormorant Garamond',serif"}}>{m.name}</div>
-              <div style={{fontSize:11,color:G.inkLight,marginTop:2}}>{m.mealType} · {m.protein}g protein</div>
+            <div style={{display:"flex",gap:6,marginBottom:10,flexWrap:"wrap"}}>
+              {["Breakfast","Lunch","Dinner","Snack"].map(t=><Chip key={t} label={t} active={planType===t} onClick={()=>setPlanType(t)} small/>)}
             </div>
-            <div style={{fontSize:15,fontWeight:700,color:G.gold,flexShrink:0,fontFamily:"'Cormorant Garamond',serif"}}>{m.calories}</div>
-            <div style={{fontSize:10,color:G.inkLight,flexShrink:0}}>kcal</div>
-            <DelBtn onClick={()=>setDayState(p=>({...p,meals:p.meals.filter(x=>x.id!==m.id)}))}/>
-          </div>
-        ))
-      }
+            <div style={{display:"flex",gap:8}}>
+              <input placeholder={`Add ${planType} for ${planDay}…`} value={planMeal} onChange={e=>setPlanMeal(e.target.value)} style={{...iS,flex:1,marginBottom:0}}/>
+              <button onClick={addToPlan} style={{...bS(`linear-gradient(135deg,${G.peach},${G.gold})`),flex:"none",padding:"0 18px",marginBottom:0}}>+</button>
+            </div>
+          </Card>
+          {DAYS.map(day=>{
+            const dayMeals=["Breakfast","Lunch","Dinner","Snack"].map(t=>({type:t,items:mealPlan[`${day}_${t}`]||[]})).filter(x=>x.items.length>0);
+            if(!dayMeals.length)return null;
+            return (
+              <Card key={day}>
+                <SLabel text={day}/>
+                {dayMeals.map(({type,items})=>(
+                  <div key={type} style={{marginBottom:8}}>
+                    <div style={{fontSize:11,color:G.inkMid,fontWeight:600,fontFamily:"'Jost',sans-serif",marginBottom:4}}>{type}</div>
+                    {items.map((item,i)=>(
+                      <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"4px 0"}}>
+                        <span style={{fontSize:13,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{item}</span>
+                        <button onClick={()=>setMealPlan(p=>{const k=`${day}_${type}`;return{...p,[k]:p[k].filter((_,j)=>j!==i)};})} style={{background:"none",border:"none",cursor:"pointer",color:G.inkLight,fontSize:12}}>✕</button>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </Card>
+            );
+          })}
+          {DAYS.every(d=>["Breakfast","Lunch","Dinner","Snack"].every(t=>!(mealPlan[`${d}_${t}`]||[]).length))&&<Empty emoji="📅" text="Your meal plan is empty — start adding meals above"/>}
+        </div>
+      )}
     </div>
   );
 }
@@ -687,20 +644,10 @@ function WorkoutsTab({dayState,setDayState,profile}) {
   const totalMins=workouts.reduce((s,w)=>s+Number(w.duration||0),0);
   const preview=useMemo(()=>{if(!selected||!dur||!profile.weight)return null;return calcWorkoutCal(selected.met,profile,Number(dur));},[selected,dur,profile]);
   const catColors={Cardio:G.peach,Strength:G.gold,HIIT:"#C08080",Yoga:G.sage,Sports:G.sageSoft,Custom:G.peachLight};
-
   const add=()=>{
-    if(mode==="search"){
-      if(!selected||!dur)return;
-      const burned=calcWorkoutCal(selected.met,profile,Number(dur));
-      setDayState(p=>({...p,workouts:[...p.workouts,{id:Date.now(),name:selected.name,category:selected.category,duration:Number(dur),burned,time:fmt.time()}]}));
-      setQuery("");setSelected(null);setDur("");
-    }else{
-      if(!mName||!dur)return;
-      setDayState(p=>({...p,workouts:[...p.workouts,{id:Date.now(),name:mName,category:"Custom",duration:Number(dur),burned:Number(mBurned||0),time:fmt.time()}]}));
-      setMName("");setDur("");setMBurned("");
-    }
+    if(mode==="search"){if(!selected||!dur)return;const burned=calcWorkoutCal(selected.met,profile,Number(dur));setDayState(p=>({...p,workouts:[...p.workouts,{id:Date.now(),name:selected.name,category:selected.category,duration:Number(dur),burned,time:new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"})}]}));setQuery("");setSelected(null);setDur("");}
+    else{if(!mName||!dur)return;setDayState(p=>({...p,workouts:[...p.workouts,{id:Date.now(),name:mName,category:"Custom",duration:Number(dur),burned:Number(mBurned||0),time:new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"})}]}));setMName("");setDur("");setMBurned("");}
   };
-
   return (
     <div>
       <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:14}}>
@@ -709,27 +656,17 @@ function WorkoutsTab({dayState,setDayState,profile}) {
         <StatPill label="Burned" value={totalBurned} unit="kcal" color={G.goldLight}/>
       </div>
       <Card>
-        <div style={{display:"flex",gap:6,marginBottom:12}}>
+        <div style={{display:"flex",gap:6,marginBottom:10}}>
           <Chip label="🔍 Library" active={mode==="search"} onClick={()=>setMode("search")}/>
           <Chip label="✏️ Manual" active={mode==="manual"} onClick={()=>setMode("manual")}/>
         </div>
         {mode==="search"?(
           <>
             <AutocompleteInput placeholder="Search — running, yoga, deadlifts, HIIT…" value={query} onChange={v=>{setQuery(v);setSelected(null);}} onSelect={item=>{setSelected(item);setQuery(item.name);}} database={WORKOUT_DB}/>
-            {selected&&(
-              <div style={{background:`linear-gradient(135deg,${G.sageLight},${G.peachSoft})`,border:`1px solid ${G.cardBorder}`,borderRadius:14,padding:"10px 14px",marginBottom:8}}>
-                <div style={{fontWeight:600,fontSize:14,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{selected.emoji} {selected.name}</div>
-                <div style={{fontSize:11,color:G.inkMid,marginTop:3}}>{selected.category} · MET: {selected.met}</div>
-              </div>
-            )}
+            {selected&&(<div style={{background:`linear-gradient(135deg,${G.sageLight},${G.peachSoft})`,border:`1px solid ${G.cardBorder}`,borderRadius:14,padding:"10px 14px",marginBottom:8}}><div style={{fontWeight:600,fontSize:14,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{selected.emoji} {selected.name}</div><div style={{fontSize:11,color:G.inkMid,marginTop:3}}>{selected.category} · MET: {selected.met}</div></div>)}
             <div style={{display:"flex",gap:8,marginBottom:8}}>
               <input placeholder="Duration (minutes)" type="number" value={dur} onChange={e=>setDur(e.target.value)} style={{...iS,flex:1,marginBottom:0}}/>
-              {preview!==null&&(
-                <div style={{background:`linear-gradient(135deg,${G.peachSoft},${G.goldLight})`,borderRadius:14,padding:"0 16px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",flexShrink:0,border:`1px solid ${G.cardBorder}`}}>
-                  <span style={{fontSize:16,fontWeight:700,color:G.gold,fontFamily:"'Cormorant Garamond',serif"}}>{preview}</span>
-                  <span style={{fontSize:9,color:G.inkLight}}>kcal est.</span>
-                </div>
-              )}
+              {preview!==null&&(<div style={{background:`linear-gradient(135deg,${G.peachSoft},${G.goldLight})`,borderRadius:14,padding:"0 16px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",flexShrink:0,border:`1px solid ${G.cardBorder}`}}><span style={{fontSize:16,fontWeight:700,color:G.gold,fontFamily:"'Cormorant Garamond',serif"}}>{preview}</span><span style={{fontSize:9,color:G.inkLight}}>kcal est.</span></div>)}
             </div>
           </>
         ):(
@@ -743,22 +680,14 @@ function WorkoutsTab({dayState,setDayState,profile}) {
         )}
         <button onClick={add} style={bS(`linear-gradient(135deg,${G.sage},${G.gold})`)}>+ Log Movement</button>
       </Card>
-      {workouts.length===0?<Empty emoji="🌿" text="No movement logged yet"/>:
-        workouts.map(w=>(
-          <div key={w.id} style={{background:G.cardBg,border:`1px solid ${G.cardBorder}`,borderRadius:16,padding:"12px 14px",display:"flex",alignItems:"center",gap:10,marginBottom:8,animation:"slideIn 0.3s ease"}}>
-            <div style={{width:6,height:40,background:catColors[w.category]||G.gold,borderRadius:4,flexShrink:0}}/>
-            <div style={{flex:1,minWidth:0}}>
-              <div style={{fontWeight:600,fontSize:14,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{w.name}</div>
-              <div style={{fontSize:11,color:G.inkLight,marginTop:2}}>{w.category||"Custom"} · {w.duration} min</div>
-            </div>
-            <div style={{textAlign:"right",flexShrink:0}}>
-              <div style={{fontSize:15,fontWeight:700,color:G.gold,fontFamily:"'Cormorant Garamond',serif"}}>{w.burned}</div>
-              <div style={{fontSize:9,color:G.inkLight}}>kcal</div>
-            </div>
-            <DelBtn onClick={()=>setDayState(p=>({...p,workouts:p.workouts.filter(x=>x.id!==w.id)}))}/>
-          </div>
-        ))
-      }
+      {workouts.length===0?<Empty emoji="🌿" text="No movement logged yet"/>:workouts.map(w=>(
+        <div key={w.id} style={{background:G.cardBg,border:`1px solid ${G.cardBorder}`,borderRadius:16,padding:"12px 14px",display:"flex",alignItems:"center",gap:10,marginBottom:8,animation:"slideIn 0.3s ease"}}>
+          <div style={{width:6,height:40,background:catColors[w.category]||G.gold,borderRadius:4,flexShrink:0}}/>
+          <div style={{flex:1,minWidth:0}}><div style={{fontWeight:600,fontSize:14,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{w.name}</div><div style={{fontSize:11,color:G.inkLight,marginTop:2}}>{w.category||"Custom"} · {w.duration} min</div></div>
+          <div style={{textAlign:"right",flexShrink:0}}><div style={{fontSize:15,fontWeight:700,color:G.gold,fontFamily:"'Cormorant Garamond',serif"}}>{w.burned}</div><div style={{fontSize:9,color:G.inkLight}}>kcal</div></div>
+          <DelBtn onClick={()=>setDayState(p=>({...p,workouts:p.workouts.filter(x=>x.id!==w.id)}))}/>
+        </div>
+      ))}
     </div>
   );
 }
@@ -770,17 +699,13 @@ function WaterTab({dayState,setDayState}) {
   const totalOz=water.reduce((s,w)=>s+Number(w.oz),0);
   const totalCups=water.reduce((s,w)=>s+Number(w.cups),0);
   const circ=2*Math.PI*56,pct=Math.min((totalCups/8)*100,100);
-  const addWater=oz=>setDayState(p=>({...p,water:[...p.water,{id:Date.now(),oz,cups:oz/8,time:fmt.time()}]}));
-
+  const addWater=oz=>setDayState(p=>({...p,water:[...p.water,{id:Date.now(),oz,cups:oz/8,time:new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"})}]}));
   return (
     <div>
       <div style={{textAlign:"center",marginBottom:22}}>
         <svg width={148} height={148}>
           <circle cx={74} cy={74} r={56} fill="none" stroke="rgba(201,169,110,0.15)" strokeWidth={8}/>
-          <circle cx={74} cy={74} r={56} fill="none" stroke={G.sage} strokeWidth={8}
-            strokeDasharray={circ} strokeDashoffset={circ*(1-pct/100)}
-            strokeLinecap="round" transform="rotate(-90 74 74)"
-            style={{transition:"stroke-dashoffset 0.8s cubic-bezier(0.34,1.56,0.64,1)"}}/>
+          <circle cx={74} cy={74} r={56} fill="none" stroke={G.sage} strokeWidth={8} strokeDasharray={circ} strokeDashoffset={circ*(1-pct/100)} strokeLinecap="round" transform="rotate(-90 74 74)" style={{transition:"stroke-dashoffset 0.8s cubic-bezier(0.34,1.56,0.64,1)"}}/>
           <text x={74} y={67} textAnchor="middle" fill={G.inkSoft} fontSize={28} fontWeight={700} fontFamily="Cormorant Garamond,serif">{Math.round(totalCups*10)/10}</text>
           <text x={74} y={84} textAnchor="middle" fill={G.inkLight} fontSize={11} fontFamily="Jost,sans-serif">of 8 cups</text>
           <text x={74} y={100} textAnchor="middle" fill={G.sage} fontSize={10} fontFamily="Jost,sans-serif">{totalOz} oz total</text>
@@ -797,22 +722,610 @@ function WaterTab({dayState,setDayState}) {
         <input placeholder="Custom oz" type="number" value={custom} onChange={e=>setCustom(e.target.value)} style={{...iS,flex:1,marginBottom:0}}/>
         <button onClick={()=>{if(custom){addWater(Number(custom));setCustom("");}}} style={{...bS(`linear-gradient(135deg,${G.sage},${G.gold})`),flex:"none",padding:"0 22px"}}>Add</button>
       </div>
-      {water.length===0?<Empty emoji="💧" text="No water logged yet"/>:
-        water.map(w=>(
-          <div key={w.id} style={{background:`linear-gradient(135deg,${G.sageLight},rgba(255,252,248,0.9))`,border:`1px solid ${G.cardBorder}`,borderRadius:14,padding:"11px 14px",display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
-            <span style={{fontSize:18}}>💧</span>
-            <div style={{flex:1,fontSize:14,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{w.oz} oz</div>
-            <span style={{fontSize:11,color:G.inkLight}}>{w.time}</span>
-            <DelBtn onClick={()=>setDayState(p=>({...p,water:p.water.filter(x=>x.id!==w.id)}))}/>
-          </div>
-        ))
-      }
+      {water.length===0?<Empty emoji="💧" text="No water logged yet"/>:water.map(w=>(
+        <div key={w.id} style={{background:`linear-gradient(135deg,${G.sageLight},rgba(255,252,248,0.9))`,border:`1px solid ${G.cardBorder}`,borderRadius:14,padding:"11px 14px",display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
+          <span style={{fontSize:18}}>💧</span>
+          <div style={{flex:1,fontSize:14,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{w.oz} oz</div>
+          <span style={{fontSize:11,color:G.inkLight}}>{w.time}</span>
+          <DelBtn onClick={()=>setDayState(p=>({...p,water:p.water.filter(x=>x.id!==w.id)}))}/>
+        </div>
+      ))}
     </div>
   );
 }
 
-// ─── RECOVERY TAB ─────────────────────────────────────────────────────────────
-function RecoveryTab({recovery,setRecovery,dayState,profile,cyclePhase,addToast}) {
+// ─── WEIGHT TAB (weekly) ─────────────────────────────────────────────────────
+function WeightTab({profile,setProfile,addToast}) {
+  const [weightLog,setWeightLog]=useState(()=>LS.get("glorie_weightlog",[]));
+  const [newWeight,setNewWeight]=useState("");const [newNote,setNewNote]=useState("");
+  const [goalWeight,setGoalWeight]=useState(profile.goalWeight||"");
+  const [editGoal,setEditGoal]=useState(false);
+  const unit=profile.weightUnit||"lbs";
+  useEffect(()=>{LS.set("glorie_weightlog",weightLog);},[weightLog]);
+
+  // Check if already logged this week
+  const getWeekKey=()=>{const d=new Date();const day=d.getDay();const diff=d.getDate()-day+(day===0?-6:1);const mon=new Date(d.setDate(diff));return mon.toISOString().slice(0,10);};
+  const thisWeek=getWeekKey();
+  const loggedThisWeek=weightLog.find(e=>e.weekKey===thisWeek);
+
+  const logWeight=()=>{
+    if(!newWeight)return;
+    if(loggedThisWeek){addToast({emoji:"⚖️",title:"Already logged this week",body:"You can update your entry below.",type:"warning"});return;}
+    const entry={id:Date.now(),weight:Number(newWeight),date:TODAY,weekKey:thisWeek,note:newNote};
+    const updated=[...weightLog,entry].sort((a,b)=>a.date.localeCompare(b.date));
+    setWeightLog(updated);
+    setProfile(p=>({...p,weight:newWeight,startWeight:p.startWeight||newWeight}));
+    addToast({emoji:"⚖️",title:`${newWeight} ${unit} logged`,body:"Consistency is the key — see you next week.",type:"success"});
+    setNewWeight("");setNewNote("");
+  };
+
+  const saveGoal=()=>{setProfile(p=>({...p,goalWeight}));setEditGoal(false);addToast({emoji:"🎯",title:`Goal set: ${goalWeight} ${unit}`,type:"success"});};
+  const deleteEntry=(id)=>setWeightLog(p=>p.filter(x=>x.id!==id));
+  const updateEntry=(id,w)=>setWeightLog(p=>p.map(x=>x.id===id?{...x,weight:Number(w)}:x));
+
+  const startW=Number(profile.startWeight||weightLog[0]?.weight||profile.weight||0);
+  const currentW=Number(weightLog.length>0?weightLog[weightLog.length-1].weight:profile.weight||0);
+  const goalW=Number(goalWeight||profile.goalWeight||0);
+  const totalLoss=startW&&currentW?startW-currentW:0;
+  const toGo=goalW&&currentW?currentW-goalW:0;
+  const pctDone=startW&&goalW&&startW!==goalW?Math.min(Math.max(((startW-currentW)/(startW-goalW))*100,0),100):0;
+  const weeks=goalW&&currentW&&currentW!==goalW?Math.ceil(Math.abs(currentW-goalW)/1):null;
+
+  // BMI
+  const calcBMI=()=>{if(!currentW)return null;const w=unit==="lbs"?currentW*0.453592:currentW;const h=profile.heightUnit==="imperial"?(parseInt(profile.heightFt)||0)*0.3048+(parseInt(profile.heightIn)||0)*0.0254:Number(profile.height)/100;if(!h)return null;return(w/(h*h)).toFixed(1);};
+  const bmi=calcBMI();
+  const bmiInfo=(b)=>{if(!b)return null;if(b<18.5)return{label:"Underweight",color:"#78d4ff"};if(b<25)return{label:"Healthy",color:G.sage};if(b<30)return{label:"Overweight",color:G.peach};return{label:"Obese",color:"#C06050"};};
+  const bmiData=bmiInfo(Number(bmi));
+
+  // Chart
+  const chartData=weightLog.slice(-12);
+  const chartMin=chartData.length?Math.min(...chartData.map(d=>d.weight))-2:0;
+  const chartMax=chartData.length?Math.max(...chartData.map(d=>d.weight))+2:1;
+  const chartW=300,chartH=80;
+  const px=(i)=>chartData.length<2?chartW/2:i*(chartW/(chartData.length-1));
+  const py=(w)=>chartH-((w-chartMin)/(chartMax-chartMin))*chartH;
+
+  return (
+    <div>
+      <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,color:G.inkSoft,marginBottom:4}}>Weight Journey</div>
+      <div style={{fontSize:12,color:G.inkLight,marginBottom:4,fontStyle:"italic"}}>Log once a week for the most accurate trends.</div>
+      {loggedThisWeek&&<div style={{background:`linear-gradient(135deg,${G.sageLight},${G.peachSoft})`,border:`1px solid ${G.cardBorder}`,borderRadius:12,padding:"10px 14px",marginBottom:14,fontSize:12,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>✅ This week logged: <strong>{loggedThisWeek.weight} {unit}</strong> on {loggedThisWeek.date}</div>}
+
+      <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:16}}>
+        <StatPill label="Current" value={currentW||"—"} unit={unit} color={G.peachSoft}/>
+        <StatPill label="Goal" value={goalW||"—"} unit={unit} color={G.sageLight}/>
+        <StatPill label={totalLoss>=0?"Lost":"Gained"} value={totalLoss?Math.abs(totalLoss).toFixed(1):"—"} unit={unit} color={G.goldLight}/>
+      </div>
+
+      {goalW>0&&currentW>0&&(
+        <Card accent={`${G.gold}30`}>
+          <SLabel text="Progress to Goal"/>
+          <div style={{display:"flex",justifyContent:"space-between",marginBottom:8}}>
+            <span style={{fontSize:12,color:G.inkMid}}>{startW} {unit}</span>
+            <span style={{fontSize:13,color:G.gold,fontWeight:600}}>{pctDone.toFixed(0)}% there ✨</span>
+            <span style={{fontSize:12,color:G.inkMid}}>{goalW} {unit}</span>
+          </div>
+          <ProgressBar value={pctDone} max={100} height={10}/>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginTop:12}}>
+            <div style={{background:G.peachSoft,borderRadius:12,padding:"10px",textAlign:"center"}}><div style={{fontSize:18,fontWeight:700,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{toGo>0?toGo.toFixed(1):0}</div><div style={{fontSize:10,color:G.inkLight}}>{unit} to go</div></div>
+            {weeks&&<div style={{background:G.sageLight,borderRadius:12,padding:"10px",textAlign:"center"}}><div style={{fontSize:18,fontWeight:700,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{weeks}</div><div style={{fontSize:10,color:G.inkLight}}>est. weeks</div></div>}
+          </div>
+        </Card>
+      )}
+
+      {bmi&&(<Card>
+        <SLabel text="BMI"/>
+        <div style={{display:"flex",alignItems:"center",gap:16,marginBottom:12}}>
+          <div style={{fontSize:36,fontWeight:700,color:bmiData?.color||G.gold,fontFamily:"'Cormorant Garamond',serif"}}>{bmi}</div>
+          <div><div style={{fontSize:14,fontWeight:600,color:bmiData?.color||G.gold,fontFamily:"'Cormorant Garamond',serif"}}>{bmiData?.label}</div><div style={{fontSize:11,color:G.inkLight}}>Body Mass Index</div></div>
+        </div>
+        <div style={{position:"relative"}}>
+          <div style={{display:"flex",height:8,borderRadius:99,overflow:"hidden"}}>
+            {[{w:"25%",c:"#78d4ff"},{w:"25%",c:G.sage},{w:"25%",c:G.peach},{w:"25%",c:"#C06050"}].map((s,i)=><div key={i} style={{width:s.w,background:s.c,opacity:0.6}}/>)}
+          </div>
+          <div style={{position:"absolute",top:-4,left:`${Math.min(Math.max((Number(bmi)-15)/(40-15)*100,0),96)}%`,width:16,height:16,borderRadius:99,background:bmiData?.color||G.gold,border:"2px solid white",transform:"translateX(-50%)",boxShadow:"0 2px 6px rgba(0,0,0,0.2)"}}/>
+          <div style={{display:"flex",justifyContent:"space-between",marginTop:8}}>
+            {["Under","Healthy","Over","Obese"].map(l=><span key={l} style={{fontSize:9,color:G.inkLight}}>{l}</span>)}
+          </div>
+        </div>
+      </Card>)}
+
+      {chartData.length>=2&&(
+        <Card>
+          <SLabel text="Weight Trend"/>
+          <svg width="100%" viewBox={`0 0 ${chartW} ${chartH+20}`} style={{overflow:"visible"}}>
+            <defs><linearGradient id="wGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor={G.peach} stopOpacity={0.3}/><stop offset="100%" stopColor={G.peach} stopOpacity={0}/></linearGradient></defs>
+            {goalW>0&&goalW>=chartMin&&goalW<=chartMax&&<line x1={0} y1={py(goalW)} x2={chartW} y2={py(goalW)} stroke={G.sage} strokeWidth={1.5} strokeDasharray="6,4" opacity={0.6}/>}
+            <path d={`M ${px(0)} ${py(chartData[0].weight)} ${chartData.slice(1).map((d,i)=>`L ${px(i+1)} ${py(d.weight)}`).join(" ")} L ${px(chartData.length-1)} ${chartH} L 0 ${chartH} Z`} fill="url(#wGrad)"/>
+            <polyline points={chartData.map((d,i)=>`${px(i)},${py(d.weight)}`).join(" ")} fill="none" stroke={G.peach} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"/>
+            {chartData.map((d,i)=><circle key={i} cx={px(i)} cy={py(d.weight)} r={4} fill={G.peach} stroke="white" strokeWidth={2}/>)}
+            <text x={px(0)} y={chartH+16} textAnchor="middle" fontSize={9} fill={G.inkLight} fontFamily="Jost,sans-serif">{chartData[0].date.slice(5)}</text>
+            <text x={px(chartData.length-1)} y={chartH+16} textAnchor="middle" fontSize={9} fill={G.inkLight} fontFamily="Jost,sans-serif">{chartData[chartData.length-1].date.slice(5)}</text>
+          </svg>
+          {goalW>0&&<div style={{fontSize:11,color:G.sage,marginTop:4,fontStyle:"italic"}}>── Goal: {goalW} {unit}</div>}
+        </Card>
+      )}
+
+      <Card>
+        <SLabel text="🎯 Goal Weight"/>
+        {editGoal||!goalW?(<><input placeholder={`Goal weight (${unit})`} type="number" value={goalWeight} onChange={e=>setGoalWeight(e.target.value)} style={iS}/><button onClick={saveGoal} style={bS(`linear-gradient(135deg,${G.sage},${G.gold})`)}>Set My Goal</button></>):
+        (<div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}><div><div style={{fontSize:22,fontWeight:700,color:G.sage,fontFamily:"'Cormorant Garamond',serif"}}>{goalW} {unit}</div><div style={{fontSize:11,color:G.inkLight,marginTop:2}}>{toGo>0?`${toGo.toFixed(1)} ${unit} to go`:"🎉 Goal reached!"}</div></div><button onClick={()=>setEditGoal(true)} style={{background:"none",border:`1px solid ${G.cardBorder}`,borderRadius:10,padding:"6px 12px",cursor:"pointer",fontSize:11,color:G.inkMid,fontFamily:"'Jost',sans-serif"}}>Edit</button></div>)}
+      </Card>
+
+      <Card>
+        <SLabel text="⚖️ Log This Week's Weight"/>
+        {loggedThisWeek?<div style={{fontSize:13,color:G.inkMid,fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",marginBottom:8}}>Already logged this week. Next log available Monday.</div>:null}
+        <div style={{display:"flex",gap:8,marginBottom:8}}>
+          <input placeholder={`Weight (${unit})`} type="number" value={newWeight} onChange={e=>setNewWeight(e.target.value)} style={{...iS,flex:1,marginBottom:0}}/>
+          <div style={{display:"flex",alignItems:"center",padding:"0 10px",background:G.peachSoft,borderRadius:12,fontSize:12,color:G.inkMid,fontWeight:600,border:`1px solid ${G.cardBorder}`}}>{unit}</div>
+        </div>
+        <input placeholder="Note (optional — morning, post-workout…)" value={newNote} onChange={e=>setNewNote(e.target.value)} style={iS}/>
+        <button onClick={logWeight} style={bS(`linear-gradient(135deg,${G.peach},${G.gold})`)}>+ Log Weight</button>
+      </Card>
+
+      {weightLog.length>0&&(
+        <div>
+          <SLabel text="Weekly History"/>
+          {[...weightLog].reverse().map((entry,idx)=>{
+            const prev=[...weightLog].reverse()[idx+1];
+            const diff=prev?entry.weight-prev.weight:0;
+            return (
+              <div key={entry.id} style={{background:G.cardBg,border:`1px solid ${G.cardBorder}`,borderRadius:14,padding:"12px 14px",display:"flex",alignItems:"center",gap:12,marginBottom:8}}>
+                <div style={{flex:1}}>
+                  <div style={{display:"flex",alignItems:"baseline",gap:8}}>
+                    <span style={{fontSize:20,fontWeight:700,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{entry.weight}</span>
+                    <span style={{fontSize:12,color:G.inkLight}}>{unit}</span>
+                    {diff!==0&&<span style={{fontSize:11,color:diff<0?G.sage:G.peach,fontWeight:600}}>{diff<0?"▼":"▲"} {Math.abs(diff).toFixed(1)}</span>}
+                  </div>
+                  <div style={{fontSize:11,color:G.inkLight,marginTop:2}}>Week of {entry.weekKey||entry.date}{entry.note&&` · ${entry.note}`}</div>
+                </div>
+                <DelBtn onClick={()=>deleteEntry(entry.id)}/>
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {weightLog.length===0&&<Empty emoji="⚖️" text="No entries yet — log your first weekly weight above"/>}
+    </div>
+  );
+}
+
+// ─── MEASUREMENTS TAB ─────────────────────────────────────────────────────────
+const MEASUREMENT_FIELDS=[
+  {key:"waist",label:"Waist",icon:"📏"},
+  {key:"hips",label:"Hips",icon:"📐"},
+  {key:"chest",label:"Chest",icon:"💪"},
+  {key:"thighs",label:"Thighs",icon:"🦵"},
+  {key:"arms",label:"Upper Arms",icon:"💪"},
+  {key:"neck",label:"Neck",icon:"📏"},
+  {key:"calves",label:"Calves",icon:"🦵"},
+];
+
+function MeasurementsTab({addToast}) {
+  const [log,setLog]=useState(()=>LS.get("glorie_measurements",[]));
+  const [form,setForm]=useState({});
+  const [unit,setUnit]=useState("in");
+  const [showForm,setShowForm]=useState(false);
+  useEffect(()=>{LS.set("glorie_measurements",log);},[log]);
+
+  const save=()=>{
+    if(!Object.values(form).some(v=>v)){addToast({emoji:"📏",title:"Enter at least one measurement",type:"warning"});return;}
+    const entry={id:Date.now(),date:TODAY,unit,...form};
+    setLog(p=>[...p,entry].sort((a,b)=>a.date.localeCompare(b.date)));
+    setForm({});setShowForm(false);
+    addToast({emoji:"📏",title:"Measurements saved!",body:"Progress beyond the scale.",type:"success"});
+  };
+
+  const latest=log.length>0?log[log.length-1]:null;
+  const prev=log.length>1?log[log.length-2]:null;
+
+  return (
+    <div>
+      <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,color:G.inkSoft,marginBottom:4}}>Body Measurements</div>
+      <div style={{fontSize:12,color:G.inkLight,marginBottom:18,fontStyle:"italic"}}>The scale doesn't tell the full story. Your body does.</div>
+
+      {latest&&(
+        <Card>
+          <SLabel text="Latest Measurements"/>
+          <div style={{fontSize:11,color:G.inkLight,marginBottom:12,fontFamily:"'Jost',sans-serif"}}>{latest.date} · in {latest.unit}</div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+            {MEASUREMENT_FIELDS.filter(f=>latest[f.key]).map(f=>{
+              const diff=prev&&prev[f.key]?Number(latest[f.key])-Number(prev[f.key]):null;
+              return (
+                <div key={f.key} style={{background:G.peachSoft,borderRadius:14,padding:"12px"}}>
+                  <div style={{fontSize:10,color:G.inkLight,textTransform:"uppercase",letterSpacing:1,fontFamily:"'Jost',sans-serif"}}>{f.icon} {f.label}</div>
+                  <div style={{display:"flex",alignItems:"baseline",gap:6,marginTop:4}}>
+                    <span style={{fontSize:20,fontWeight:700,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{latest[f.key]}</span>
+                    <span style={{fontSize:11,color:G.inkLight}}>{latest.unit}</span>
+                    {diff!==null&&diff!==0&&<span style={{fontSize:10,color:diff<0?G.sage:G.peach,fontWeight:600}}>{diff<0?"▼":"▲"}{Math.abs(diff).toFixed(1)}</span>}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </Card>
+      )}
+
+      <button onClick={()=>setShowForm(p=>!p)} style={{...bS(showForm?`rgba(201,169,110,0.1)`:`linear-gradient(135deg,${G.peach},${G.gold})`),marginBottom:14,border:`1px solid ${G.cardBorder}`}}>
+        {showForm?"✕ Cancel":"+ Log Measurements"}
+      </button>
+
+      {showForm&&(
+        <Card>
+          <SLabel text="New Entry"/>
+          <div style={{display:"flex",gap:8,marginBottom:12}}>
+            <Chip label="inches" active={unit==="in"} onClick={()=>setUnit("in")}/>
+            <Chip label="cm" active={unit==="cm"} onClick={()=>setUnit("cm")}/>
+          </div>
+          {MEASUREMENT_FIELDS.map(f=>(
+            <div key={f.key} style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
+              <span style={{fontSize:16,width:24}}>{f.icon}</span>
+              <span style={{fontSize:13,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif",width:80}}>{f.label}</span>
+              <input placeholder={`0.0 ${unit}`} type="number" value={form[f.key]||""} onChange={e=>setForm(p=>({...p,[f.key]:e.target.value}))} style={{...iS,flex:1,marginBottom:0,padding:"9px 12px"}}/>
+            </div>
+          ))}
+          <button onClick={save} style={bS(`linear-gradient(135deg,${G.peach},${G.gold})`)}>💾 Save Measurements</button>
+        </Card>
+      )}
+
+      {log.length>1&&(
+        <Card>
+          <SLabel text="Progress Over Time"/>
+          {MEASUREMENT_FIELDS.filter(f=>log.some(e=>e[f.key])).map(f=>{
+            const entries=log.filter(e=>e[f.key]);
+            if(entries.length<2)return null;
+            const first=Number(entries[0][f.key]);
+            const last=Number(entries[entries.length-1][f.key]);
+            const diff=last-first;
+            return (
+              <div key={f.key} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 0",borderBottom:`1px solid rgba(201,169,110,0.1)`}}>
+                <span style={{fontSize:13,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{f.icon} {f.label}</span>
+                <div style={{textAlign:"right"}}>
+                  <span style={{fontSize:13,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{last} {entries[entries.length-1].unit}</span>
+                  {diff!==0&&<span style={{fontSize:11,color:diff<0?G.sage:G.peach,fontWeight:600,marginLeft:8}}>{diff<0?"▼":"▲"}{Math.abs(diff).toFixed(1)}</span>}
+                </div>
+              </div>
+            );
+          })}
+        </Card>
+      )}
+
+      {log.length===0&&<Empty emoji="📏" text="No measurements yet — log your first entry above"/>}
+    </div>
+  );
+}
+
+// ─── HABITS TAB ───────────────────────────────────────────────────────────────
+const DEFAULT_HABITS={
+  "💧 Drank water before coffee":"water",
+  "💊 Took vitamins/supplements":"vitamins",
+  "🥗 Ate a vegetable":"veggies",
+  "🏃 Moved my body":"movement",
+  "😴 Got 7+ hours sleep":"sleep",
+  "🚫 No late night eating":"latenight",
+  "📱 Logged my meals":"logging",
+  "🙏 Morning intention":"intention",
+};
+
+function HabitsTab({habits,setHabits,addToast}) {
+  const todayHabits=habits[TODAY]||{};
+  const [customHabit,setCustomHabit]=useState("");
+  const [customHabits,setCustomHabits]=useState(()=>LS.get("glorie_custom_habits",[]));
+  useEffect(()=>{LS.set("glorie_custom_habits",customHabits);},[customHabits]);
+
+  const allHabits={...DEFAULT_HABITS,...Object.fromEntries(customHabits.map(h=>[h,h]))};
+  const total=Object.keys(allHabits).length;
+  const done=Object.values(todayHabits).filter(Boolean).length;
+
+  const toggle=(key)=>{
+    const updated={...todayHabits,[key]:!todayHabits[key]};
+    setHabits(p=>({...p,[TODAY]:updated}));
+    if(!todayHabits[key]) addToast({emoji:"✅",title:key.split(" ").slice(1).join(" "),body:"Another habit checked off!",type:"success"});
+  };
+
+  const addCustom=()=>{
+    if(!customHabit.trim())return;
+    setCustomHabits(p=>[...p,customHabit.trim()]);
+    setCustomHabit("");
+    addToast({emoji:"✨",title:"Habit added",body:"Building your routine one day at a time.",type:"success"});
+  };
+
+  // Streak calculation
+  const getStreak=()=>{
+    let streak=0;
+    let d=new Date();
+    while(true){
+      const key=d.toISOString().slice(0,10);
+      const dayHabits=habits[key]||{};
+      const dayDone=Object.values(dayHabits).filter(Boolean).length;
+      if(dayDone===0&&key!==TODAY)break;
+      if(dayDone>0)streak++;
+      d.setDate(d.getDate()-1);
+      if(streak>365)break;
+    }
+    return streak;
+  };
+  const streak=getStreak();
+
+  // Calendar (last 4 weeks)
+  const calDays=[];
+  for(let i=27;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const key=d.toISOString().slice(0,10);const dayDone=Object.values(habits[key]||{}).filter(Boolean).length;calDays.push({key,day:d.getDate(),done:dayDone,total});}
+
+  return (
+    <div>
+      <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,color:G.inkSoft,marginBottom:4}}>Daily Habits</div>
+      <div style={{fontSize:12,color:G.inkLight,marginBottom:18,fontStyle:"italic"}}>Small consistent actions create lasting change.</div>
+
+      {/* Streak & progress */}
+      <div style={{display:"flex",gap:10,marginBottom:16}}>
+        <StatPill label="Streak" value={streak} unit="days" color={G.peachSoft}/>
+        <StatPill label="Today" value={`${done}/${total}`} unit="done" color={G.sageLight}/>
+        <StatPill label="Best" value={`${Math.round((done/total)*100)||0}%`} unit="today" color={G.goldLight}/>
+      </div>
+
+      {/* 4-week calendar */}
+      <Card>
+        <SLabel text="Last 4 Weeks"/>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:4}}>
+          {["M","T","W","T","F","S","S"].map((d,i)=><div key={i} style={{textAlign:"center",fontSize:9,color:G.inkLight,fontFamily:"'Jost',sans-serif",marginBottom:4}}>{d}</div>)}
+          {calDays.map(d=>{
+            const pct=d.total>0?(d.done/d.total):0;
+            const bg=pct===0?"rgba(201,169,110,0.1)":pct<0.5?G.peachSoft:pct<1?G.peachLight:G.sage;
+            return <div key={d.key} style={{aspectRatio:"1",borderRadius:6,background:bg,display:"flex",alignItems:"center",justifyContent:"center",fontSize:8,color:G.inkSoft,fontFamily:"'Jost',sans-serif",cursor:"default"}}>{d.done>0?d.day:""}</div>;
+          })}
+        </div>
+        <div style={{display:"flex",gap:12,marginTop:10,fontSize:10,color:G.inkLight}}>
+          <span>◻️ None</span><span style={{color:G.peachLight}}>▪️ Some</span><span style={{color:G.sage}}>▪️ All done</span>
+        </div>
+      </Card>
+
+      {/* Today's habits */}
+      <Card>
+        <SLabel text="Today's Checklist"/>
+        {Object.keys(allHabits).map(habit=>(
+          <button key={habit} onClick={()=>toggle(habit)} style={{width:"100%",display:"flex",alignItems:"center",gap:12,padding:"12px 0",background:"none",border:"none",cursor:"pointer",borderBottom:`1px solid rgba(201,169,110,0.1)`,textAlign:"left",fontFamily:"inherit"}}>
+            <div style={{width:24,height:24,borderRadius:8,border:`1.5px solid ${todayHabits[habit]?G.sage:G.cardBorder}`,background:todayHabits[habit]?G.sage:"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all 0.2s"}}>
+              {todayHabits[habit]&&<span style={{color:G.ink,fontSize:14,fontWeight:700}}>✓</span>}
+            </div>
+            <span style={{fontSize:14,color:todayHabits[habit]?G.inkLight:G.inkSoft,textDecoration:todayHabits[habit]?"line-through":"none",fontFamily:"'Cormorant Garamond',serif",transition:"all 0.2s"}}>{habit}</span>
+          </button>
+        ))}
+      </Card>
+
+      {/* Add custom habit */}
+      <Card>
+        <SLabel text="Add Custom Habit"/>
+        <div style={{display:"flex",gap:8}}>
+          <input placeholder="e.g. 🧘 Meditated for 5 min" value={customHabit} onChange={e=>setCustomHabit(e.target.value)} style={{...iS,flex:1,marginBottom:0}}/>
+          <button onClick={addCustom} style={{...bS(`linear-gradient(135deg,${G.peach},${G.gold})`),flex:"none",padding:"0 18px"}}>+</button>
+        </div>
+        {customHabits.length>0&&(
+          <div style={{marginTop:10}}>
+            {customHabits.map((h,i)=>(
+              <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"5px 0"}}>
+                <span style={{fontSize:13,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{h}</span>
+                <button onClick={()=>setCustomHabits(p=>p.filter((_,j)=>j!==i))} style={{background:"none",border:"none",cursor:"pointer",color:G.inkLight,fontSize:12}}>✕</button>
+              </div>
+            ))}
+          </div>
+        )}
+      </Card>
+    </div>
+  );
+}
+
+// ─── MILESTONES TAB ───────────────────────────────────────────────────────────
+const MILESTONE_DEFS=[
+  {id:"first_meal",icon:"🥗",title:"First Nourishment",desc:"Logged your first meal",check:({meals})=>meals.length>=1},
+  {id:"first_workout",icon:"🌸",title:"First Movement",desc:"Logged your first workout",check:({workouts})=>workouts.length>=1},
+  {id:"first_water",icon:"💧",title:"First Sip",desc:"Logged your first water",check:({water})=>water.length>=1},
+  {id:"calorie_goal",icon:"🎯",title:"On Target",desc:"Hit your calorie goal for the day",check:({meals,profile,cyclePhase})=>{const goal=profile.weight&&profile.age?calcGoalCalories(profile,cyclePhase):2000;const cal=meals.reduce((s,m)=>s+Number(m.calories||0),0);return cal>=goal*0.9&&cal<=goal*1.1;}},
+  {id:"protein_50",icon:"🥩",title:"Protein Power",desc:"Logged 50g+ protein in a day",check:({meals})=>meals.reduce((s,m)=>s+Number(m.protein||0),0)>=50},
+  {id:"water_goal",icon:"🌊",title:"Fully Hydrated",desc:"Hit 8 cups of water in a day",check:({water})=>water.reduce((s,w)=>s+Number(w.cups||0),0)>=8},
+  {id:"weight_5",icon:"⚖️",title:"First 5 Lost",desc:"Lost your first 5 lbs",check:({weightLog,profile})=>{if(!weightLog||weightLog.length<2)return false;const start=Number(weightLog[0].weight);const last=Number(weightLog[weightLog.length-1].weight);return start-last>=5;}},
+  {id:"weight_10",icon:"🏆",title:"10 Lbs Down",desc:"Lost 10 lbs total",check:({weightLog})=>{if(!weightLog||weightLog.length<2)return false;const start=Number(weightLog[0].weight);const last=Number(weightLog[weightLog.length-1].weight);return start-last>=10;}},
+  {id:"workout_5",icon:"💪",title:"5 Workouts",desc:"Completed 5 total workouts",check:({allWorkouts})=>(allWorkouts||[]).length>=5},
+  {id:"workout_10",icon:"🔥",title:"10 Workouts",desc:"Completed 10 total workouts",check:({allWorkouts})=>(allWorkouts||[]).length>=10},
+  {id:"habit_streak_3",icon:"🌿",title:"3-Day Habit Streak",desc:"Completed habits 3 days in a row",check:({habitStreak})=>(habitStreak||0)>=3},
+  {id:"habit_streak_7",icon:"✨",title:"7-Day Habit Streak",desc:"One full week of habits",check:({habitStreak})=>(habitStreak||0)>=7},
+  {id:"logged_weight",icon:"📊",title:"On the Scale",desc:"Logged your first weekly weight",check:({weightLog})=>(weightLog||[]).length>=1},
+  {id:"measurements",icon:"📏",title:"Beyond the Scale",desc:"Logged body measurements",check:({measurements})=>(measurements||[]).length>=1},
+  {id:"full_day",icon:"🌟",title:"Perfect Day",desc:"Logged meals, workout, and water in one day",check:({meals,workouts,water})=>meals.length>=1&&workouts.length>=1&&water.length>=1},
+];
+
+function MilestonesTab({dayState,profile,cyclePhase,habits,weightLog,measurements}) {
+  const [earned,setEarned]=useState(()=>LS.get("glorie_milestones",{}));
+  const [newlyUnlocked,setNewlyUnlocked]=useState([]);
+
+  const habitStreak=useMemo(()=>{
+    let streak=0;let d=new Date();
+    while(true){const key=d.toISOString().slice(0,10);const done=Object.values(habits[key]||{}).filter(Boolean).length;if(done===0&&key!==TODAY)break;if(done>0)streak++;d.setDate(d.getDate()-1);if(streak>365)break;}
+    return streak;
+  },[habits]);
+
+  const allWorkouts=useMemo(()=>{
+    const all=[];
+    Object.keys(localStorage).filter(k=>k.startsWith("wellness_day_")).forEach(k=>{try{const d=JSON.parse(localStorage.getItem(k));if(d?.workouts)all.push(...d.workouts);}catch{}});
+    return all;
+  },[]);
+
+  useEffect(()=>{
+    const ctx={...dayState,profile,cyclePhase,weightLog,measurements,habitStreak,allWorkouts};
+    const newEarned={...earned};let changed=false;const unlocked=[];
+    MILESTONE_DEFS.forEach(m=>{
+      if(!newEarned[m.id]&&m.check(ctx)){newEarned[m.id]=TODAY;changed=true;unlocked.push(m);}
+    });
+    if(changed){setEarned(newEarned);LS.set("glorie_milestones",newEarned);setNewlyUnlocked(unlocked);}
+  },[dayState,weightLog,measurements,habitStreak]);
+
+  const earnedCount=Object.keys(earned).length;
+
+  return (
+    <div>
+      <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,color:G.inkSoft,marginBottom:4}}>Milestones</div>
+      <div style={{fontSize:12,color:G.inkLight,marginBottom:18,fontStyle:"italic"}}>Every win deserves to be celebrated.</div>
+
+      {newlyUnlocked.length>0&&(
+        <div style={{background:`linear-gradient(135deg,${G.goldLight},${G.peachSoft})`,border:`1px solid ${G.gold}`,borderRadius:18,padding:"16px",marginBottom:16,textAlign:"center",animation:"slideIn 0.5s ease"}}>
+          <div style={{fontSize:32,marginBottom:8}}>🎉</div>
+          <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:18,color:G.inkSoft,fontWeight:600}}>New Achievement{newlyUnlocked.length>1?"s":""} Unlocked!</div>
+          {newlyUnlocked.map(m=><div key={m.id} style={{fontSize:14,color:G.inkMid,marginTop:4}}>{m.icon} {m.title}</div>)}
+        </div>
+      )}
+
+      <div style={{display:"flex",gap:10,marginBottom:18}}>
+        <StatPill label="Earned" value={earnedCount} unit="badges" color={G.goldLight}/>
+        <StatPill label="Total" value={MILESTONE_DEFS.length} unit="available" color={G.peachSoft}/>
+        <StatPill label="Progress" value={`${Math.round((earnedCount/MILESTONE_DEFS.length)*100)}%`} unit="complete" color={G.sageLight}/>
+      </div>
+
+      <ProgressBar value={earnedCount} max={MILESTONE_DEFS.length} height={8}/>
+      <div style={{fontSize:11,color:G.inkLight,marginBottom:18,marginTop:6,fontFamily:"'Jost',sans-serif"}}>{earnedCount} of {MILESTONE_DEFS.length} milestones unlocked</div>
+
+      {/* Earned */}
+      {earnedCount>0&&(
+        <>
+          <SLabel text="✨ Earned"/>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:18}}>
+            {MILESTONE_DEFS.filter(m=>earned[m.id]).map(m=>(
+              <div key={m.id} style={{background:`linear-gradient(135deg,${G.goldLight},${G.peachSoft})`,border:`1px solid ${G.gold}`,borderRadius:16,padding:"14px",textAlign:"center",animation:"slideIn 0.3s ease"}}>
+                <div style={{fontSize:28,marginBottom:6}}>{m.icon}</div>
+                <div style={{fontSize:13,fontWeight:600,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{m.title}</div>
+                <div style={{fontSize:10,color:G.inkMid,marginTop:3,lineHeight:1.4}}>{m.desc}</div>
+                <div style={{fontSize:9,color:G.inkLight,marginTop:4}}>{earned[m.id]}</div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* Locked */}
+      <SLabel text="🔒 Locked"/>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+        {MILESTONE_DEFS.filter(m=>!earned[m.id]).map(m=>(
+          <div key={m.id} style={{background:"rgba(255,252,248,0.5)",border:`1px solid ${G.cardBorder}`,borderRadius:16,padding:"14px",textAlign:"center",opacity:0.6}}>
+            <div style={{fontSize:28,marginBottom:6,filter:"grayscale(1)"}}>{m.icon}</div>
+            <div style={{fontSize:13,fontWeight:600,color:G.inkLight,fontFamily:"'Cormorant Garamond',serif"}}>{m.title}</div>
+            <div style={{fontSize:10,color:G.inkLight,marginTop:3,lineHeight:1.4}}>{m.desc}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── ANALYTICS TAB ────────────────────────────────────────────────────────────
+function AnalyticsTab({profile,cyclePhase}) {
+  const [range,setRange]=useState(7);
+  const goalCal=profile.weight&&profile.age?calcGoalCalories(profile,cyclePhase):2000;
+
+  const getDayData=(daysAgo)=>{
+    const d=new Date();d.setDate(d.getDate()-daysAgo);
+    const key=d.toISOString().slice(0,10);
+    try{const data=JSON.parse(localStorage.getItem(`wellness_day_${key}`)||"{}");return{key,date:d,meals:data.meals||[],workouts:data.workouts||[],water:data.water||[]};}
+    catch{return{key,date:d,meals:[],workouts:[],water:[]};}
+  };
+
+  const days=useMemo(()=>Array.from({length:range},(_,i)=>getDayData(range-1-i)),[range]);
+  const avgCal=Math.round(days.reduce((s,d)=>s+d.meals.reduce((a,m)=>a+Number(m.calories||0),0),0)/days.filter(d=>d.meals.length>0).length)||0;
+  const avgProt=Math.round(days.reduce((s,d)=>s+d.meals.reduce((a,m)=>a+Number(m.protein||0),0),0)/days.filter(d=>d.meals.length>0).length)||0;
+  const totalWorkouts=days.reduce((s,d)=>s+d.workouts.length,0);
+  const avgWater=Math.round(days.reduce((s,d)=>s+d.water.reduce((a,w)=>a+Number(w.cups||0),0),0)/days.filter(d=>d.water.length>0).length*10)/10||0;
+  const loggedDays=days.filter(d=>d.meals.length>0).length;
+  const onTargetDays=days.filter(d=>{const cal=d.meals.reduce((s,m)=>s+Number(m.calories||0),0);return cal>=goalCal*0.85&&cal<=goalCal*1.15;}).length;
+
+  // Best/worst day for calories
+  const calsByDay=days.map(d=>({label:d.date.toLocaleDateString("en-US",{weekday:"short"}),cal:d.meals.reduce((s,m)=>s+Number(m.calories||0),0),workouts:d.workouts.length,water:d.water.reduce((s,w)=>s+Number(w.cups||0),0)}));
+  const maxCal=Math.max(...calsByDay.map(d=>d.cal),goalCal);
+
+  // Pattern insight
+  const getInsight=()=>{
+    const overDays=calsByDay.filter(d=>d.cal>goalCal*1.1&&d.cal>0);
+    const noLogDays=calsByDay.filter(d=>d.cal===0);
+    if(noLogDays.length>range*0.4)return{emoji:"📝",text:`You didn't log ${noLogDays.length} of ${range} days. Consistent logging is the #1 predictor of success.`};
+    if(overDays.length>0)return{emoji:"💡",text:`You went over your goal on ${overDays.length} day${overDays.length>1?"s":""} — often ${overDays[0]?.label}s. Try prepping meals on those days.`};
+    if(onTargetDays>=range*0.7)return{emoji:"🌟",text:`You hit your calorie goal ${onTargetDays} out of ${range} days. That's exceptional consistency.`};
+    return{emoji:"🌿",text:`You averaged ${avgCal} kcal/day vs your ${goalCal} kcal goal. ${avgCal<goalCal?"Try not to go too far under — under-eating slows metabolism.":"Keep it up!"}`};
+  };
+  const insight=getInsight();
+
+  return (
+    <div>
+      <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,color:G.inkSoft,marginBottom:4}}>Weekly Analytics</div>
+      <div style={{fontSize:12,color:G.inkLight,marginBottom:18,fontStyle:"italic"}}>Patterns you can't see day-to-day.</div>
+
+      <div style={{display:"flex",gap:8,marginBottom:16}}>
+        {[7,14,30].map(r=><Chip key={r} label={`${r} days`} active={range===r} onClick={()=>setRange(r)}/>)}
+      </div>
+
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:16}}>
+        {[
+          {label:"Avg Calories",val:avgCal,unit:"kcal/day",color:G.peach},
+          {label:"Avg Protein",val:avgProt,unit:"g/day",color:G.gold},
+          {label:"Workouts",val:totalWorkouts,unit:`in ${range} days`,color:G.sage},
+          {label:"Avg Water",val:avgWater,unit:"cups/day",color:G.sageSoft},
+          {label:"Days Logged",val:loggedDays,unit:`of ${range}`,color:G.peachLight},
+          {label:"On Target",val:onTargetDays,unit:"days",color:G.goldLight},
+        ].map(s=>(
+          <div key={s.label} style={{background:G.cardBg,border:`1px solid ${G.cardBorder}`,borderRadius:16,padding:"12px"}}>
+            <div style={{fontSize:20,fontWeight:700,color:s.color,fontFamily:"'Cormorant Garamond',serif"}}>{s.val}</div>
+            <div style={{fontSize:11,fontWeight:600,color:G.inkSoft,fontFamily:"'Jost',sans-serif"}}>{s.label}</div>
+            <div style={{fontSize:10,color:G.inkLight}}>{s.unit}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Pattern insight */}
+      <Card accent={`${G.gold}30`}>
+        <SLabel text="Pattern Insight"/>
+        <div style={{display:"flex",gap:10,alignItems:"flex-start"}}>
+          <span style={{fontSize:20}}>{insight.emoji}</span>
+          <div style={{fontSize:13,color:G.inkMid,lineHeight:1.6,fontFamily:"'Cormorant Garamond',serif"}}>{insight.text}</div>
+        </div>
+      </Card>
+
+      {/* Calorie bar chart */}
+      <Card>
+        <SLabel text={`Calories — Last ${range} Days`}/>
+        <div style={{display:"flex",alignItems:"flex-end",gap:4,height:80}}>
+          {calsByDay.map((d,i)=>{
+            const h=maxCal>0?Math.max((d.cal/maxCal)*70,d.cal>0?4:0):0;
+            const onTarget=d.cal>=goalCal*0.85&&d.cal<=goalCal*1.15;
+            const over=d.cal>goalCal*1.15;
+            return (
+              <div key={i} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:3}}>
+                <div style={{width:"100%",height:h,background:d.cal===0?"rgba(201,169,110,0.1)":onTarget?G.sage:over?G.peach:G.goldLight,borderRadius:"4px 4px 0 0",transition:"height 0.5s ease",minHeight:d.cal>0?4:0}}/>
+                <span style={{fontSize:8,color:G.inkLight,fontFamily:"'Jost',sans-serif"}}>{d.label}</span>
+              </div>
+            );
+          })}
+        </div>
+        {/* Goal line label */}
+        <div style={{display:"flex",gap:12,marginTop:10,fontSize:10,color:G.inkLight}}>
+          <span style={{color:G.sage}}>■ On target</span>
+          <span style={{color:G.peach}}>■ Over</span>
+          <span style={{color:G.goldLight}}>■ Under</span>
+        </div>
+      </Card>
+
+      {/* Workout frequency */}
+      <Card>
+        <SLabel text="Movement Frequency"/>
+        <div style={{display:"flex",alignItems:"flex-end",gap:4,height:40}}>
+          {calsByDay.map((d,i)=>(
+            <div key={i} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:3}}>
+              <div style={{width:"100%",height:d.workouts>0?30:4,background:d.workouts>0?G.sage:"rgba(201,169,110,0.1)",borderRadius:"4px 4px 0 0"}}/>
+              <span style={{fontSize:8,color:G.inkLight,fontFamily:"'Jost',sans-serif"}}>{d.label}</span>
+            </div>
+          ))}
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+// ─── CHECK-IN TAB ─────────────────────────────────────────────────────────────
+function CheckInTab({recovery,setRecovery,dayState,profile,cyclePhase,addToast}) {
   const [sleep,setSleep]=useState(recovery.sleep||"");
   const [soreness,setSoreness]=useState(recovery.soreness||3);
   const [stress,setStress]=useState(recovery.stress||3);
@@ -826,19 +1339,16 @@ function RecoveryTab({recovery,setRecovery,dayState,profile,cyclePhase,addToast}
   const save=()=>{
     const rec={sleep:Number(sleep),soreness,stress,energy,mood,restDay,notes,date:TODAY};
     setRecovery(rec);LS.set("wellness_recovery_"+TODAY,rec);
-    addToast({emoji:"🌸",title:"Recovery logged",body:restDay?"Rest day marked — you deserve it.":"Hydrate and rest well tonight.",type:"success"});
+    addToast({emoji:"🌸",title:"Check-in saved",body:restDay?"Rest day marked — you deserve it.":"Keep listening to your body.",type:"success"});
   };
 
   const suppSugg=[];
   if(soreness>=4)suppSugg.push({name:"Magnesium",why:"Soothes muscles and improves sleep"});
   if(stress>=4)suppSugg.push({name:"Ashwagandha",why:"Calms cortisol and stress response"});
-  if(energy<=2)suppSugg.push({name:"Vitamin B12",why:"Supports natural energy metabolism"});
+  if(energy<=2)suppSugg.push({name:"Vitamin B12",why:"Supports natural energy"});
   if(sleep<6)suppSugg.push({name:"Melatonin",why:"Gently regulates sleep cycles"});
 
-  const workoutRecs=[];
-  if(soreness>=4||restDay){workoutRecs.push("Yoga (Hatha / gentle)","Stretching / Flexibility","Walking (2 mph, slow)");}
-  else if(energy>=4&&soreness<=2){if(phase)workoutRecs.push(...phase.workouts);else workoutRecs.push("HIIT (general)","Running (6 mph / 10 min mile)","Weight Training (vigorous)");}
-  else{workoutRecs.push("Walking (3.5 mph, brisk)","Yoga (Vinyasa / flow)","Stationary Bike (moderate)");}
+  const workoutRecs=soreness>=4||restDay?["Yoga (Hatha / gentle)","Stretching / Flexibility","Walking (2 mph, slow)"]:energy>=4&&soreness<=2?phase?phase.workouts:["HIIT (general)","Weight Training (vigorous)"]:["Walking (3.5 mph, brisk)","Yoga (Vinyasa / flow)"];
 
   const ScaleBtn=({val,current,setter,color})=>(
     <button onClick={()=>setter(val)} style={{width:36,height:36,borderRadius:10,border:`1.5px solid ${current===val?color:G.cardBorder}`,background:current===val?`${color}30`:"rgba(255,252,248,0.8)",cursor:"pointer",color:current===val?G.inkSoft:G.inkLight,fontWeight:700,fontSize:14,fontFamily:"'Cormorant Garamond',serif"}}>{val}</button>
@@ -846,10 +1356,26 @@ function RecoveryTab({recovery,setRecovery,dayState,profile,cyclePhase,addToast}
 
   return (
     <div>
-      <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,color:G.inkSoft,marginBottom:4}}>Recovery & Rest</div>
-      <div style={{fontSize:12,color:G.inkLight,marginBottom:18,fontStyle:"italic"}}>Track how you feel — your body speaks, listen.</div>
+      <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,color:G.inkSoft,marginBottom:4}}>Morning Check-In</div>
+      <div style={{fontSize:12,color:G.inkLight,marginBottom:18,fontStyle:"italic"}}>10 seconds of honesty sets your whole day up right.</div>
+
+      {recovery.date===TODAY&&(
+        <Card accent={`${G.sage}40`}>
+          <SLabel text="Today's Check-In Saved"/>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>
+            {[{label:"Sleep",val:`${recovery.sleep||"—"}h`,color:G.peach},{label:"Energy",val:`${recovery.energy||"—"}/5`,color:G.sage},{label:"Soreness",val:`${recovery.soreness||"—"}/5`,color:G.gold}].map(s=>(
+              <div key={s.label} style={{background:G.peachSoft,borderRadius:12,padding:"10px 8px",textAlign:"center"}}>
+                <div style={{fontSize:16,fontWeight:700,color:s.color,fontFamily:"'Cormorant Garamond',serif"}}>{s.val}</div>
+                <div style={{fontSize:10,color:G.inkLight}}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+          {recovery.mood&&<div style={{fontSize:13,color:G.inkMid,marginTop:10,fontFamily:"'Cormorant Garamond',serif"}}>Mood: {recovery.mood}</div>}
+        </Card>
+      )}
+
       <Card>
-        <SLabel text="Today's Check-In"/>
+        <SLabel text="How are you today?"/>
         <div style={{marginBottom:14}}>
           <div style={{fontSize:13,color:G.inkSoft,marginBottom:8,fontFamily:"'Cormorant Garamond',serif"}}>😴 Hours of sleep last night</div>
           <input type="number" placeholder="e.g. 7.5" value={sleep} onChange={e=>setSleep(e.target.value)} style={{...iS,marginBottom:0}}/>
@@ -878,38 +1404,31 @@ function RecoveryTab({recovery,setRecovery,dayState,profile,cyclePhase,addToast}
         </div>
         <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:12}}>
           <button onClick={()=>setRestDay(!restDay)} style={{width:28,height:28,borderRadius:8,border:`1.5px solid ${restDay?G.sage:G.cardBorder}`,background:restDay?G.sage:"transparent",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,color:G.ink,fontWeight:700}}>{restDay?"✓":""}</button>
-          <span style={{fontSize:13,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>🛌 Mark as rest day</span>
+          <span style={{fontSize:13,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>🛌 Rest day</span>
         </div>
         <input placeholder="Notes (optional)" value={notes} onChange={e=>setNotes(e.target.value)} style={iS}/>
-        <button onClick={save} style={bS(`linear-gradient(135deg,${G.peach},${G.gold})`)}>Save Recovery</button>
+        <button onClick={save} style={bS(`linear-gradient(135deg,${G.peach},${G.gold})`)}>Save Check-In</button>
       </Card>
+
       {workoutRecs.length>0&&(
         <Card accent={`${G.sage}40`}>
-          <SLabel text="Recommended for today"/>
-          {workoutRecs.slice(0,3).map((w,i)=>{
-            const entry=WORKOUT_DB.find(x=>x.name===w);
-            return (
-              <div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 0",borderBottom:`1px solid rgba(201,169,110,0.1)`}}>
-                <span style={{fontSize:18}}>{entry?.emoji||"🌿"}</span>
-                <div style={{flex:1}}>
-                  <div style={{fontSize:14,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{w}</div>
-                  <div style={{fontSize:11,color:G.inkLight}}>{entry?.category} · MET {entry?.met}</div>
-                </div>
-              </div>
-            );
-          })}
+          <SLabel text="Recommended movement today"/>
+          {workoutRecs.slice(0,3).map((w,i)=>{const entry=WORKOUT_DB.find(x=>x.name===w);return(
+            <div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 0",borderBottom:`1px solid rgba(201,169,110,0.1)`}}>
+              <span style={{fontSize:18}}>{entry?.emoji||"🌿"}</span>
+              <div style={{flex:1}}><div style={{fontSize:14,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{w}</div><div style={{fontSize:11,color:G.inkLight}}>{entry?.category} · MET {entry?.met}</div></div>
+            </div>
+          );})}
         </Card>
       )}
+
       {suppSugg.length>0&&(
-        <Card accent={`${G.gold}40`}>
-          <SLabel text="Recovery supplement suggestions"/>
+        <Card accent={`${G.gold}30`}>
+          <SLabel text="Recovery suggestions"/>
           {suppSugg.map((s,i)=>(
             <div key={i} style={{display:"flex",gap:10,padding:"8px 0",borderBottom:`1px solid rgba(201,169,110,0.1)`}}>
               <span style={{fontSize:16}}>🌿</span>
-              <div>
-                <div style={{fontSize:14,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{s.name}</div>
-                <div style={{fontSize:12,color:G.inkMid,fontStyle:"italic",marginTop:2}}>{s.why}</div>
-              </div>
+              <div><div style={{fontSize:14,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{s.name}</div><div style={{fontSize:12,color:G.inkMid,fontStyle:"italic",marginTop:2}}>{s.why}</div></div>
             </div>
           ))}
         </Card>
@@ -920,7 +1439,7 @@ function RecoveryTab({recovery,setRecovery,dayState,profile,cyclePhase,addToast}
 
 // ─── CYCLE TAB ────────────────────────────────────────────────────────────────
 function CycleTab({cyclePhase,setCyclePhase,profile,addToast}) {
-  if(profile.sex!=="female") return (
+  if(profile.sex!=="female") return(
     <div style={{textAlign:"center",padding:"40px 20px"}}>
       <div style={{fontSize:40,marginBottom:12}}>🌙</div>
       <div style={{fontSize:18,color:G.inkMid,fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic"}}>Cycle Sync is for female profiles</div>
@@ -931,7 +1450,7 @@ function CycleTab({cyclePhase,setCyclePhase,profile,addToast}) {
   return (
     <div>
       <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,color:G.inkSoft,marginBottom:4}}>Cycle Sync</div>
-      <div style={{fontSize:12,color:G.inkLight,marginBottom:18,fontStyle:"italic"}}>Your body changes each phase — so should your goals.</div>
+      <div style={{fontSize:12,color:G.inkLight,marginBottom:18,fontStyle:"italic"}}>Your body changes each phase — so should your approach.</div>
       <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:20}}>
         {CYCLE_PHASES.map(p=>(
           <button key={p.id} onClick={()=>{setCyclePhase(p.id);addToast({emoji:p.emoji,title:`${p.label} phase set`,body:p.notes,type:"success"});}} style={{background:cyclePhase===p.id?`linear-gradient(135deg,${G.peachSoft},${G.sageLight})`:"rgba(255,252,248,0.7)",border:`1.5px solid ${cyclePhase===p.id?G.gold:G.cardBorder}`,borderRadius:18,padding:"14px 16px",cursor:"pointer",textAlign:"left",fontFamily:"inherit",transition:"all 0.2s"}}>
@@ -953,25 +1472,25 @@ function CycleTab({cyclePhase,setCyclePhase,profile,addToast}) {
           </button>
         ))}
       </div>
+      {phase&&(<Card accent={`${G.gold}30`}><SLabel text="Suggested workouts this phase"/>{phase.workouts.map((w,i)=>{const entry=WORKOUT_DB.find(x=>x.name===w);return(<div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 0",borderBottom:`1px solid rgba(201,169,110,0.1)`}}><span style={{fontSize:20}}>{entry?.emoji||"🏋️"}</span><div style={{flex:1}}><div style={{fontSize:14,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{w}</div><div style={{fontSize:11,color:G.inkLight}}>{entry?.category} · MET {entry?.met}</div></div></div>);})}</Card>)}
     </div>
   );
 }
 
-// ─── MEDS & SUPPS ─────────────────────────────────────────────────────────────
+// ─── MEDS TAB ─────────────────────────────────────────────────────────────────
 const CAT_EMOJIS={Supplement:"💊",Prescription:"💉",Vitamin:"🌟",Protein:"🥤",Herb:"🌿",OTC:"🧴"};
 
+
 function MedCard({med,takenLog,onToggle,onDelete}) {
-  const taken=!!takenLog[`${med.id}_${TODAY}`];
-  const takenAt=takenLog[`${med.id}_${TODAY}`];
-  return (
+  const taken=!!takenLog[`${med.id}_${TODAY}`];const takenAt=takenLog[`${med.id}_${TODAY}`];
+  return(
     <div style={{background:taken?`linear-gradient(135deg,${G.sageLight},rgba(255,252,248,0.9))`:G.cardBg,border:`1px solid ${taken?G.sage:G.cardBorder}`,borderRadius:16,padding:"14px 12px",display:"flex",alignItems:"flex-start",gap:10,marginBottom:10,transition:"all 0.25s"}}>
-      <button onClick={onToggle} style={{width:30,height:30,borderRadius:9,border:`1.5px solid ${taken?G.sage:G.cardBorder}`,background:taken?G.sage:"transparent",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,fontSize:14,color:G.ink,fontWeight:700,transition:"all 0.2s",marginTop:2}}>{taken?"✓":""}</button>
+      <button onClick={onToggle} style={{width:30,height:30,borderRadius:9,border:`1.5px solid ${taken?G.sage:G.cardBorder}`,background:taken?G.sage:"transparent",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,fontSize:14,color:G.ink,fontWeight:800,transition:"all 0.2s",marginTop:2}}>{taken?"✓":""}</button>
       <span style={{fontSize:22,flexShrink:0}}>{CAT_EMOJIS[med.category]||"🌿"}</span>
       <div style={{flex:1,minWidth:0}}>
         <div style={{fontWeight:600,fontSize:15,color:taken?G.inkLight:G.inkSoft,textDecoration:taken?"line-through":"none",fontFamily:"'Cormorant Garamond',serif"}}>{med.name}</div>
         <div style={{fontSize:11,color:G.inkLight,marginTop:3,display:"flex",gap:8,flexWrap:"wrap"}}>
-          {med.dose&&<span>💊 {med.dose}</span>}
-          {med.frequency&&<span>🔁 {med.frequency}</span>}
+          {med.dose&&<span>💊 {med.dose}</span>}{med.frequency&&<span>🔁 {med.frequency}</span>}
           {med.reminderTime&&<span style={{color:G.gold}}>⏰ {fmt.timeLabel(med.reminderTime)}</span>}
         </div>
         {med.notes&&<div style={{fontSize:11,color:G.inkLight,marginTop:3,fontStyle:"italic"}}>{med.notes}</div>}
@@ -989,78 +1508,41 @@ function MedsTab({medList,setMedList,takenLog,setTakenLog,addToast,dayState}) {
   const [remTime,setRemTime]=useState("");const [notes,setNotes]=useState("");
   const takenToday=medList.filter(m=>takenLog[`${m.id}_${TODAY}`]).length;
   const workoutCats=[...new Set(dayState.workouts.map(w=>w.category))];
-  const pairingSuggestions=workoutCats.flatMap(cat=>{
-    const suggested=SUPP_PAIRINGS[cat]||[];
-    return suggested.filter(s=>!medList.some(m=>m.name.toLowerCase().includes(s))).slice(0,1).map(s=>({workout:cat,supp:s}));
-  }).slice(0,2);
+  const pairingSuggestions=workoutCats.flatMap(cat=>{const suggested=SUPP_PAIRINGS[cat]||[];return suggested.filter(s=>!medList.some(m=>m.name.toLowerCase().includes(s))).slice(0,1).map(s=>({workout:cat,supp:s}));}).slice(0,2);
 
-  const add=()=>{
-    if(!name)return;
-    const med={id:Date.now(),name,dose,category:cat,frequency:freq,reminderTime:remTime,notes};
-    setMedList(p=>[...p,med]);
-    addToast({emoji:CAT_EMOJIS[cat]||"🌿",title:`${name} added`,body:remTime?`Reminder set for ${fmt.timeLabel(remTime)}`:"No reminder set",type:"success"});
-    setName("");setDose("");setNotes("");setRemTime("");setShowForm(false);
-  };
-  const toggleTaken=(med)=>{
-    const key=`${med.id}_${TODAY}`;const already=takenLog[key];
-    setTakenLog(p=>{const n={...p};if(already)delete n[key];else n[key]=fmt.time();return n;});
-    if(!already)addToast({emoji:"✅",title:`${med.name} marked taken`,body:med.dose||"",type:"success"});
-  };
-
+  const add=()=>{if(!name)return;const med={id:Date.now(),name,dose,category:cat,frequency:freq,reminderTime:remTime,notes};setMedList(p=>[...p,med]);addToast({emoji:CAT_EMOJIS[cat]||"🌿",title:`${name} added`,body:remTime?`Reminder set for ${fmt.timeLabel(remTime)}`:"No reminder set",type:"success"});setName("");setDose("");setNotes("");setRemTime("");setShowForm(false);};
+  const toggleTaken=(med)=>{const key=`${med.id}_${TODAY}`;const already=takenLog[key];setTakenLog(p=>{const n={...p};if(already)delete n[key];else n[key]=fmt.time();return n;});if(!already)addToast({emoji:"✅",title:`${med.name} marked taken`,body:med.dose||"",type:"success"});};
   const scheduled=medList.filter(m=>m.reminderTime).sort((a,b)=>a.reminderTime.localeCompare(b.reminderTime));
   const unscheduled=medList.filter(m=>!m.reminderTime);
 
-  return (
+  return(
     <div>
       <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:14}}>
         <StatPill label="Total" value={medList.length} unit="in list" color={G.peachSoft}/>
         <StatPill label="Taken" value={takenToday} unit="today" color={G.sageLight}/>
         <StatPill label="Pending" value={medList.length-takenToday} unit="left" color={G.goldLight}/>
       </div>
-      {pairingSuggestions.length>0&&(
-        <Card accent={`${G.gold}40`}>
-          <SLabel text="Suggested for your workout"/>
-          {pairingSuggestions.map((p,i)=>(
-            <div key={i} style={{fontSize:13,color:G.inkSoft,padding:"5px 0",fontFamily:"'Cormorant Garamond',serif"}}>
-              You logged <span style={{color:G.peach,fontWeight:600}}>{p.workout}</span> — consider adding <span style={{color:G.gold,fontWeight:600}}>{p.supp}</span> to your routine.
-            </div>
-          ))}
-        </Card>
-      )}
-      <button onClick={()=>setShowForm(p=>!p)} style={{...bS(showForm?`rgba(201,169,110,0.1)`:`linear-gradient(135deg,${G.peach},${G.gold})`),marginBottom:14,border:`1px solid ${G.cardBorder}`}}>
-        {showForm?"✕ Cancel":"+ Add Supplement or Medication"}
-      </button>
-      {showForm&&(
-        <Card>
-          <SLabel text="New Entry"/>
-          <div style={{display:"flex",gap:6,marginBottom:10,flexWrap:"wrap"}}>
-            {Object.keys(CAT_EMOJIS).map(t=><Chip key={t} label={`${CAT_EMOJIS[t]} ${t}`} active={cat===t} onClick={()=>setCat(t)}/>)}
-          </div>
-          <input placeholder="Name (e.g. Vitamin D3, Metformin, Magnesium)" value={name} onChange={e=>setName(e.target.value)} style={iS}/>
-          <input placeholder="Dosage (e.g. 1000mg, 2 capsules)" value={dose} onChange={e=>setDose(e.target.value)} style={iS}/>
-          <div style={{display:"flex",gap:6,marginBottom:10,flexWrap:"wrap"}}>
-            {["Daily","Twice Daily","With Meals","Weekly","As Needed"].map(f=><Chip key={f} label={f} active={freq===f} onClick={()=>setFreq(f)}/>)}
-          </div>
-          <div style={{marginBottom:10}}>
-            <div style={{fontSize:10,color:G.inkLight,marginBottom:5,textTransform:"uppercase",letterSpacing:1.5,fontFamily:"'Jost',sans-serif"}}>⏰ Reminder Time</div>
-            <input type="time" value={remTime} onChange={e=>setRemTime(e.target.value)} style={{...iS,marginBottom:4,colorScheme:"light"}}/>
-          </div>
-          <input placeholder="Notes (e.g. take with food, before bed)" value={notes} onChange={e=>setNotes(e.target.value)} style={iS}/>
-          <button onClick={add} style={bS(`linear-gradient(135deg,${G.peach},${G.gold})`)}>💾 Save to My List</button>
-        </Card>
-      )}
+      {pairingSuggestions.length>0&&(<Card accent={`${G.gold}40`}><SLabel text="Suggested for your workout"/>{pairingSuggestions.map((p,i)=>(<div key={i} style={{fontSize:13,color:G.inkSoft,padding:"5px 0",fontFamily:"'Cormorant Garamond',serif"}}>You logged <span style={{color:G.peach,fontWeight:600}}>{p.workout}</span> — consider adding <span style={{color:G.gold,fontWeight:600}}>{p.supp}</span>.</div>))}</Card>)}
+      <button onClick={()=>setShowForm(p=>!p)} style={{...bS(showForm?`rgba(201,169,110,0.1)`:`linear-gradient(135deg,${G.peach},${G.gold})`),marginBottom:14,border:`1px solid ${G.cardBorder}`}}>{showForm?"✕ Cancel":"+ Add Supplement or Medication"}</button>
+      {showForm&&(<Card><SLabel text="New Entry"/>
+        <div style={{display:"flex",gap:6,marginBottom:10,flexWrap:"wrap"}}>{Object.keys(CAT_EMOJIS).map(t=><Chip key={t} label={`${CAT_EMOJIS[t]} ${t}`} active={cat===t} onClick={()=>setCat(t)}/>)}</div>
+        <input placeholder="Name (e.g. Vitamin D3, Metformin)" value={name} onChange={e=>setName(e.target.value)} style={iS}/>
+        <input placeholder="Dosage (e.g. 1000mg, 2 capsules)" value={dose} onChange={e=>setDose(e.target.value)} style={iS}/>
+        <div style={{display:"flex",gap:6,marginBottom:10,flexWrap:"wrap"}}>{["Daily","Twice Daily","With Meals","Weekly","As Needed"].map(f=><Chip key={f} label={f} active={freq===f} onClick={()=>setFreq(f)}/>)}</div>
+        <div style={{marginBottom:10}}><div style={{fontSize:10,color:G.inkLight,marginBottom:5,textTransform:"uppercase",letterSpacing:1.5,fontFamily:"'Jost',sans-serif"}}>⏰ Reminder Time</div><input type="time" value={remTime} onChange={e=>setRemTime(e.target.value)} style={{...iS,marginBottom:4,colorScheme:"light"}}/></div>
+        <input placeholder="Notes (e.g. take with food)" value={notes} onChange={e=>setNotes(e.target.value)} style={iS}/>
+        <button onClick={add} style={bS(`linear-gradient(135deg,${G.peach},${G.gold})`)}>💾 Save to My List</button>
+      </Card>)}
       {medList.length===0?<Empty emoji="🌿" text="No supplements or meds added yet"/>:(
-        <>
-          {scheduled.length>0&&<><SLabel text="⏰ Scheduled Reminders"/>{scheduled.map(m=><MedCard key={m.id} med={m} takenLog={takenLog} onToggle={()=>toggleTaken(m)} onDelete={()=>setMedList(p=>p.filter(x=>x.id!==m.id))}/>)}</>}
-          {unscheduled.length>0&&<><SLabel text={scheduled.length>0?"📋 No Reminder Set":"📋 My List"}/>{unscheduled.map(m=><MedCard key={m.id} med={m} takenLog={takenLog} onToggle={()=>toggleTaken(m)} onDelete={()=>setMedList(p=>p.filter(x=>x.id!==m.id))}/>)}</>}
-        </>
+        <>{scheduled.length>0&&<><SLabel text="⏰ Scheduled"/>{scheduled.map(m=><MedCard key={m.id} med={m} takenLog={takenLog} onToggle={()=>toggleTaken(m)} onDelete={()=>setMedList(p=>p.filter(x=>x.id!==m.id))}/>)}</>}
+        {unscheduled.length>0&&<><SLabel text={scheduled.length>0?"📋 No Reminder":"📋 My List"}/>{unscheduled.map(m=><MedCard key={m.id} med={m} takenLog={takenLog} onToggle={()=>toggleTaken(m)} onDelete={()=>setMedList(p=>p.filter(x=>x.id!==m.id))}/>)}</>}</>
       )}
     </div>
   );
 }
 
 // ─── PROFILE TAB ─────────────────────────────────────────────────────────────
-const DEF_PROFILE={name:"",age:"",sex:"female",weight:"",weightUnit:"lbs",heightFt:"",heightIn:"",heightUnit:"imperial",height:"",activity:"moderate",goal:"maintain",streak:0};
+const DEF_PROFILE={name:"",age:"",sex:"female",weight:"",weightUnit:"lbs",heightFt:"",heightIn:"",heightUnit:"imperial",height:"",activity:"moderate",goal:"maintain",streak:0,goalWeight:"",startWeight:""};
 
 function ProfileTab({profile,setProfile,addToast}) {
   const [local,setLocal]=useState({...profile});
@@ -1069,132 +1551,335 @@ function ProfileTab({profile,setProfile,addToast}) {
   const goalCal=tdee?calcGoalCalories(local,null):null;
   const bmr=local.weight&&local.age?Math.round(calcBMR(local)):null;
   const save=()=>{setProfile(local);addToast({emoji:"✨",title:"Profile saved!",body:goalCal?`Daily target: ${goalCal} kcal`:"",type:"success"});};
-
-  return (
+  return(
     <div>
       <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,color:G.inkSoft,marginBottom:4}}>Your Profile</div>
       <div style={{fontSize:12,color:G.inkLight,marginBottom:18,fontStyle:"italic"}}>Personalizes your goals, calorie targets & insights</div>
-
-      {tdee&&(
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8,marginBottom:18}}>
-          {[
-            {label:"BMR",val:bmr,sub:"base rate",color:G.peach},
-            {label:"TDEE",val:tdee,sub:"daily burn",color:G.gold},
-            {label:"Goal",val:goalCal,sub:local.goal==="lose"?"fat loss":local.goal==="gain"?"muscle gain":"maintenance",color:G.sage},
-          ].map(s=>(
-            <div key={s.label} style={{background:G.cardBg,border:`1px solid ${G.cardBorder}`,borderRadius:16,padding:"12px 10px",textAlign:"center"}}>
-              <div style={{fontSize:18,fontWeight:700,color:s.color,fontFamily:"'Cormorant Garamond',serif"}}>{s.val}</div>
-              <div style={{fontSize:10,fontWeight:600,color:G.inkSoft,marginTop:2,fontFamily:"'Jost',sans-serif"}}>{s.label}</div>
-              <div style={{fontSize:9,color:G.inkLight}}>{s.sub}</div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {tdee&&(
-        <Card accent={`${G.gold}30`}>
-          <SLabel text="Why your goal is what it is"/>
-          <div style={{fontSize:13,color:G.inkMid,lineHeight:1.7,fontFamily:"'Cormorant Garamond',serif",fontSize:14}}>
-            Your body burns <span style={{color:G.gold,fontWeight:600}}>{tdee} kcal/day</span> at your activity level.
-            {local.goal==="lose"&&<> A <span style={{color:G.sage,fontWeight:600}}>500 kcal daily deficit</span> creates a ~1 lb/week fat loss rate safely.</>}
-            {local.goal==="gain"&&<> A <span style={{color:G.sage,fontWeight:600}}>300 kcal daily surplus</span> supports lean muscle growth with minimal fat gain.</>}
-            {local.goal==="maintain"&&<> Eating at <span style={{color:G.sage,fontWeight:600}}>{tdee} kcal</span> maintains your current weight and composition.</>}
-          </div>
-        </Card>
-      )}
-
-      <Card>
-        <SLabel text="Basic Info"/>
-        <input placeholder="Your name" value={local.name} onChange={e=>set("name",e.target.value)} style={iS}/>
-        <div style={{display:"flex",gap:8,marginBottom:8}}>
-          <input placeholder="Age" type="number" value={local.age} onChange={e=>set("age",e.target.value)} style={{...iS,flex:1,marginBottom:0}}/>
-          <div style={{flex:1,display:"flex",gap:6,alignItems:"center"}}>
-            <Chip label="Female" active={local.sex==="female"} onClick={()=>set("sex","female")}/>
-            <Chip label="Male" active={local.sex==="male"} onClick={()=>set("sex","male")}/>
-          </div>
-        </div>
-      </Card>
-
-      <Card>
-        <SLabel text="Weight"/>
-        <div style={{display:"flex",gap:8,marginBottom:8}}>
-          <input placeholder={local.weightUnit==="lbs"?"Weight (lbs)":"Weight (kg)"} type="number" value={local.weight} onChange={e=>set("weight",e.target.value)} style={{...iS,flex:1,marginBottom:0}}/>
-          <div style={{display:"flex",gap:6,alignItems:"center"}}>
-            <Chip label="lbs" active={local.weightUnit==="lbs"} onClick={()=>set("weightUnit","lbs")}/>
-            <Chip label="kg" active={local.weightUnit==="kg"} onClick={()=>set("weightUnit","kg")}/>
-          </div>
-        </div>
-      </Card>
-
-      <Card>
-        <SLabel text="Height"/>
-        <div style={{display:"flex",gap:6,marginBottom:8}}>
-          <Chip label="ft / in" active={local.heightUnit==="imperial"} onClick={()=>set("heightUnit","imperial")}/>
-          <Chip label="cm" active={local.heightUnit==="metric"} onClick={()=>set("heightUnit","metric")}/>
-        </div>
-        {local.heightUnit==="imperial"?(
-          <div style={{display:"flex",gap:8}}>
-            <input placeholder="Feet" type="number" value={local.heightFt} onChange={e=>set("heightFt",e.target.value)} style={{...iS,flex:1,marginBottom:0}}/>
-            <input placeholder="Inches" type="number" value={local.heightIn} onChange={e=>set("heightIn",e.target.value)} style={{...iS,flex:1,marginBottom:0}}/>
-          </div>
-        ):(
-          <input placeholder="Height (cm)" type="number" value={local.height} onChange={e=>set("height",e.target.value)} style={{...iS,marginBottom:0}}/>
-        )}
-      </Card>
-
-      <Card>
-        <SLabel text="Activity Level"/>
-        <div style={{display:"flex",flexDirection:"column",gap:6}}>
-          {[
-            {val:"sedentary",label:"Sedentary",sub:"Desk job, little exercise"},
-            {val:"light",label:"Lightly Active",sub:"Exercise 1–3 days/week"},
-            {val:"moderate",label:"Moderately Active",sub:"Exercise 3–5 days/week"},
-            {val:"active",label:"Very Active",sub:"Hard training 6–7 days/week"},
-            {val:"veryActive",label:"Extra Active",sub:"Physical job + daily training"},
-          ].map(a=>(
-            <button key={a.val} onClick={()=>set("activity",a.val)} style={{background:local.activity===a.val?`linear-gradient(135deg,${G.peachSoft},${G.sageLight})`:"rgba(255,252,248,0.7)",border:`1.5px solid ${local.activity===a.val?G.gold:G.cardBorder}`,borderRadius:14,padding:"11px 14px",cursor:"pointer",textAlign:"left",fontFamily:"inherit",transition:"all 0.2s"}}>
-              <div style={{fontWeight:600,fontSize:14,color:local.activity===a.val?G.inkSoft:G.inkMid,fontFamily:"'Cormorant Garamond',serif"}}>{a.label}</div>
-              <div style={{fontSize:11,color:G.inkLight,marginTop:2,fontStyle:"italic"}}>{a.sub}</div>
-            </button>
-          ))}
-        </div>
-      </Card>
-
-      <Card>
-        <SLabel text="Your Goal"/>
-        <div style={{display:"flex",gap:8}}>
-          {[{val:"lose",label:"🔥 Lose Fat"},{val:"maintain",label:"⚖️ Maintain"},{val:"gain",label:"💪 Build"}].map(g=>(
-            <button key={g.val} onClick={()=>set("goal",g.val)} style={{flex:1,padding:"13px 4px",borderRadius:14,border:`1.5px solid ${local.goal===g.val?G.gold:G.cardBorder}`,background:local.goal===g.val?`linear-gradient(135deg,${G.peachSoft},${G.goldLight})`:"rgba(255,252,248,0.7)",cursor:"pointer",fontWeight:600,fontSize:12,color:local.goal===g.val?G.inkSoft:G.inkLight,fontFamily:"'Jost',sans-serif",letterSpacing:"0.05em"}}>{g.label}</button>
-          ))}
-        </div>
-      </Card>
-
+      {tdee&&(<div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8,marginBottom:18}}>{[{label:"BMR",val:bmr,sub:"base rate",color:G.peach},{label:"TDEE",val:tdee,sub:"daily burn",color:G.gold},{label:"Goal",val:goalCal,sub:local.goal==="lose"?"fat loss":local.goal==="gain"?"muscle gain":"maintenance",color:G.sage}].map(s=>(<div key={s.label} style={{background:G.cardBg,border:`1px solid ${G.cardBorder}`,borderRadius:16,padding:"12px 10px",textAlign:"center"}}><div style={{fontSize:18,fontWeight:700,color:s.color,fontFamily:"'Cormorant Garamond',serif"}}>{s.val}</div><div style={{fontSize:10,fontWeight:600,color:G.inkSoft,marginTop:2,fontFamily:"'Jost',sans-serif"}}>{s.label}</div><div style={{fontSize:9,color:G.inkLight}}>{s.sub}</div></div>))}</div>)}
+      {tdee&&(<Card accent={`${G.gold}30`}><SLabel text="Why your goal is what it is"/><div style={{fontSize:14,color:G.inkMid,lineHeight:1.7,fontFamily:"'Cormorant Garamond',serif"}}>Your body burns <span style={{color:G.gold,fontWeight:600}}>{tdee} kcal/day</span> at your activity level.{local.goal==="lose"&&<> A <span style={{color:G.sage,fontWeight:600}}>500 kcal daily deficit</span> creates ~1 lb/week fat loss safely.</>}{local.goal==="gain"&&<> A <span style={{color:G.sage,fontWeight:600}}>300 kcal surplus</span> supports lean muscle growth.</>}{local.goal==="maintain"&&<> Eating at <span style={{color:G.sage,fontWeight:600}}>{tdee} kcal</span> maintains your weight.</>}</div></Card>)}
+      <Card><SLabel text="Basic Info"/><input placeholder="Your name" value={local.name} onChange={e=>set("name",e.target.value)} style={iS}/><div style={{display:"flex",gap:8,marginBottom:8}}><input placeholder="Age" type="number" value={local.age} onChange={e=>set("age",e.target.value)} style={{...iS,flex:1,marginBottom:0}}/><div style={{flex:1,display:"flex",gap:6,alignItems:"center"}}><Chip label="Female" active={local.sex==="female"} onClick={()=>set("sex","female")}/><Chip label="Male" active={local.sex==="male"} onClick={()=>set("sex","male")}/></div></div></Card>
+      <Card><SLabel text="Weight"/><div style={{display:"flex",gap:8,marginBottom:8}}><input placeholder={local.weightUnit==="lbs"?"Weight (lbs)":"Weight (kg)"} type="number" value={local.weight} onChange={e=>set("weight",e.target.value)} style={{...iS,flex:1,marginBottom:0}}/><div style={{display:"flex",gap:6,alignItems:"center"}}><Chip label="lbs" active={local.weightUnit==="lbs"} onClick={()=>set("weightUnit","lbs")}/><Chip label="kg" active={local.weightUnit==="kg"} onClick={()=>set("weightUnit","kg")}/></div></div></Card>
+      <Card><SLabel text="Height"/><div style={{display:"flex",gap:6,marginBottom:8}}><Chip label="ft/in" active={local.heightUnit==="imperial"} onClick={()=>set("heightUnit","imperial")}/><Chip label="cm" active={local.heightUnit==="metric"} onClick={()=>set("heightUnit","metric")}/></div>{local.heightUnit==="imperial"?(<div style={{display:"flex",gap:8}}><input placeholder="Feet" type="number" value={local.heightFt} onChange={e=>set("heightFt",e.target.value)} style={{...iS,flex:1,marginBottom:0}}/><input placeholder="Inches" type="number" value={local.heightIn} onChange={e=>set("heightIn",e.target.value)} style={{...iS,flex:1,marginBottom:0}}/></div>):(<input placeholder="Height (cm)" type="number" value={local.height} onChange={e=>set("height",e.target.value)} style={{...iS,marginBottom:0}}/>)}</Card>
+      <Card><SLabel text="Activity Level"/><div style={{display:"flex",flexDirection:"column",gap:6}}>{[{val:"sedentary",label:"Sedentary",sub:"Desk job, little exercise"},{val:"light",label:"Lightly Active",sub:"1–3 days/week"},{val:"moderate",label:"Moderately Active",sub:"3–5 days/week"},{val:"active",label:"Very Active",sub:"6–7 days/week"},{val:"veryActive",label:"Extra Active",sub:"Physical job + training"}].map(a=>(<button key={a.val} onClick={()=>set("activity",a.val)} style={{background:local.activity===a.val?`linear-gradient(135deg,${G.peachSoft},${G.sageLight})`:"rgba(255,252,248,0.7)",border:`1.5px solid ${local.activity===a.val?G.gold:G.cardBorder}`,borderRadius:14,padding:"11px 14px",cursor:"pointer",textAlign:"left",fontFamily:"inherit"}}><div style={{fontWeight:600,fontSize:14,color:local.activity===a.val?G.inkSoft:G.inkMid,fontFamily:"'Cormorant Garamond',serif"}}>{a.label}</div><div style={{fontSize:11,color:G.inkLight,fontStyle:"italic"}}>{a.sub}</div></button>))}</div></Card>
+      <Card><SLabel text="Your Goal"/><div style={{display:"flex",gap:8}}>{[{val:"lose",label:"🔥 Lose Fat"},{val:"maintain",label:"⚖️ Maintain"},{val:"gain",label:"💪 Build"}].map(g=>(<button key={g.val} onClick={()=>set("goal",g.val)} style={{flex:1,padding:"13px 4px",borderRadius:14,border:`1.5px solid ${local.goal===g.val?G.gold:G.cardBorder}`,background:local.goal===g.val?`linear-gradient(135deg,${G.peachSoft},${G.goldLight})`:"rgba(255,252,248,0.7)",cursor:"pointer",fontWeight:600,fontSize:11,color:local.goal===g.val?G.inkSoft:G.inkLight,fontFamily:"'Jost',sans-serif",letterSpacing:"0.05em"}}>{g.label}</button>))}</div></Card>
       <button onClick={save} style={bS(`linear-gradient(135deg,${G.peach},${G.gold})`)}>✨ Save Profile</button>
     </div>
   );
 }
+// ─── SPLASH SCREEN ────────────────────────────────────────────────────────────
+function SplashScreen({onDone}) {
+  const [fade,setFade]=useState(false);
+  useEffect(()=>{
+    const t1=setTimeout(()=>setFade(true),1800);
+    const t2=setTimeout(()=>onDone(),2400);
+    return()=>{clearTimeout(t1);clearTimeout(t2);};
+  },[]);
+  return (
+    <div style={{
+      position:"fixed",inset:0,zIndex:9999,
+      background:G.bg,
+      display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
+      opacity:fade?0:1,transition:"opacity 0.6s ease",
+      fontFamily:"'Cormorant Garamond',serif",
+    }}>
+      <GoldSpeckles corner="tr"/>
+      <GoldSpeckles corner="bl"/>
+      <div style={{textAlign:"center",animation:"splashIn 0.9s cubic-bezier(0.34,1.56,0.64,1)"}}>
+        <GlorieLogo size={72}/>
+        <div style={{fontSize:52,fontWeight:600,color:G.inkSoft,letterSpacing:"-1px",marginTop:16,lineHeight:1}}>Glorié</div>
+        <div style={{fontSize:15,color:G.inkLight,fontStyle:"italic",marginTop:8,letterSpacing:"0.05em"}}>your daily glow, inside and out.</div>
+      </div>
+      <div style={{position:"absolute",bottom:48,fontSize:11,color:G.inkLight,fontFamily:"'Jost',sans-serif",letterSpacing:"0.15em",textTransform:"uppercase"}}>Wellness by design</div>
+    </div>
+  );
+}
 
-// ─── ROOT APP ─────────────────────────────────────────────────────────────────
-const TABS=[
+// ─── ONBOARDING SCREENS ───────────────────────────────────────────────────────
+const ONBOARDING_SLIDES=[
+  {
+    emoji:"🥗",
+    title:"Nourish your body",
+    body:"Log meals from our food database with calories that fill in automatically. Your daily goal adjusts to your body and goals.",
+    bg:`linear-gradient(135deg,${G.peachSoft},${G.cream})`,
+    accent:G.peach,
+  },
+  {
+    emoji:"🌸",
+    title:"Move with intention",
+    body:"Track workouts from our exercise library. Calories burned calculate based on your weight and duration — automatically.",
+    bg:`linear-gradient(135deg,${G.sageLight},${G.cream})`,
+    accent:G.sage,
+  },
+  {
+    emoji:"💊",
+    title:"Your wellness routine",
+    body:"Track supplements and medications with smart reminders. Your app connects your workout to the right supplements to take after.",
+    bg:`linear-gradient(135deg,${G.goldLight},${G.cream})`,
+    accent:G.gold,
+  },
+  {
+    emoji:"🌙",
+    title:"Built around your body",
+    body:"Cycle sync adjusts your calories, carbs, and workout intensity based on your phase. Recovery tracking keeps you from overdoing it.",
+    bg:`linear-gradient(135deg,${G.peachSoft},${G.sageLight})`,
+    accent:G.inkMid,
+  },
+];
+
+function OnboardingScreen({onDone}) {
+  const [slide,setSlide]=useState(0);
+  const [animating,setAnimating]=useState(false);
+  const current=ONBOARDING_SLIDES[slide];
+  const isLast=slide===ONBOARDING_SLIDES.length-1;
+
+  const next=()=>{
+    if(animating)return;
+    setAnimating(true);
+    setTimeout(()=>{
+      if(isLast){onDone();}
+      else{setSlide(s=>s+1);}
+      setAnimating(false);
+    },200);
+  };
+
+  const skip=()=>onDone();
+
+  return (
+    <div style={{
+      minHeight:"100vh",background:current.bg,
+      display:"flex",flexDirection:"column",
+      fontFamily:"'Cormorant Garamond',serif",
+      maxWidth:480,margin:"0 auto",
+      transition:"background 0.5s ease",
+    }}>
+      {/* Skip */}
+      <div style={{padding:"52px 24px 0",display:"flex",justifyContent:"flex-end"}}>
+        <button onClick={skip} style={{background:"none",border:"none",cursor:"pointer",fontSize:12,color:G.inkLight,fontFamily:"'Jost',sans-serif",letterSpacing:"0.1em",textTransform:"uppercase"}}>Skip</button>
+      </div>
+
+      {/* Content */}
+      <div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"40px 32px",textAlign:"center",opacity:animating?0:1,transition:"opacity 0.2s"}}>
+        <div style={{fontSize:72,marginBottom:28}}>{current.emoji}</div>
+        <div style={{fontSize:34,fontWeight:600,color:G.inkSoft,lineHeight:1.2,marginBottom:16}}>{current.title}</div>
+        <div style={{fontSize:16,color:G.inkMid,lineHeight:1.7,fontStyle:"italic",maxWidth:320}}>{current.body}</div>
+      </div>
+
+      {/* Dots + button */}
+      <div style={{padding:"0 32px 60px",display:"flex",flexDirection:"column",alignItems:"center",gap:28}}>
+        <div style={{display:"flex",gap:8}}>
+          {ONBOARDING_SLIDES.map((_,i)=>(
+            <div key={i} onClick={()=>setSlide(i)} style={{width:i===slide?24:8,height:8,borderRadius:99,background:i===slide?current.accent:"rgba(44,36,22,0.15)",transition:"all 0.3s",cursor:"pointer"}}/>
+          ))}
+        </div>
+        <button onClick={next} style={{
+          width:"100%",padding:"16px",borderRadius:16,border:"none",cursor:"pointer",
+          background:`linear-gradient(135deg,${G.peach},${G.gold})`,
+          color:G.ink,fontWeight:700,fontSize:15,
+          fontFamily:"'Jost',sans-serif",letterSpacing:"0.08em",textTransform:"uppercase",
+          boxShadow:"0 4px 20px rgba(201,169,110,0.3)",
+        }}>
+          {isLast?"Get Started →":"Continue →"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ─── LOGIN / SIGNUP SCREEN ────────────────────────────────────────────────────
+function AuthScreen({onAuth}) {
+  const [mode,setMode]=useState("welcome"); // "welcome" | "login" | "signup"
+  const [name,setName]=useState("");
+  const [email,setEmail]=useState("");
+  const [password,setPassword]=useState("");
+  const [showPass,setShowPass]=useState(false);
+  const [error,setError]=useState("");
+  const [loading,setLoading]=useState(false);
+
+  // For now: local auth stored in localStorage (replace with real backend for App Store)
+  const handleSignup=()=>{
+    setError("");
+    if(!name.trim()){setError("Please enter your name.");return;}
+    if(!email.includes("@")){setError("Please enter a valid email.");return;}
+    if(password.length<6){setError("Password must be at least 6 characters.");return;}
+    setLoading(true);
+    setTimeout(()=>{
+      const users=LS.get("glorie_users",{});
+      if(users[email.toLowerCase()]){setError("An account with this email already exists.");setLoading(false);return;}
+      users[email.toLowerCase()]={name,email,password,createdAt:TODAY};
+      LS.set("glorie_users",users);
+      LS.set("glorie_session",{email:email.toLowerCase(),name,loggedIn:true});
+      setLoading(false);
+      onAuth({name,email:email.toLowerCase()});
+    },800);
+  };
+
+  const handleLogin=()=>{
+    setError("");
+    if(!email.includes("@")){setError("Please enter a valid email.");return;}
+    if(!password){setError("Please enter your password.");return;}
+    setLoading(true);
+    setTimeout(()=>{
+      const users=LS.get("glorie_users",{});
+      const user=users[email.toLowerCase()];
+      if(!user){setError("No account found with this email.");setLoading(false);return;}
+      if(user.password!==password){setError("Incorrect password.");setLoading(false);return;}
+      LS.set("glorie_session",{email:email.toLowerCase(),name:user.name,loggedIn:true});
+      setLoading(false);
+      onAuth({name:user.name,email:email.toLowerCase()});
+    },800);
+  };
+
+  const inputStyle={
+    ...iS,
+    marginBottom:12,
+    fontSize:15,
+    padding:"14px 16px",
+    borderRadius:14,
+    background:"rgba(255,252,248,0.9)",
+  };
+
+  if(mode==="welcome") return (
+    <div style={{minHeight:"100vh",background:G.bg,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-between",fontFamily:"'Cormorant Garamond',serif",maxWidth:480,margin:"0 auto",padding:"0 28px"}}>
+      <GoldSpeckles corner="tr"/>
+      <GoldSpeckles corner="bl"/>
+
+      {/* Logo area */}
+      <div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",textAlign:"center"}}>
+        <GlorieLogo size={80}/>
+        <div style={{fontSize:54,fontWeight:600,color:G.inkSoft,letterSpacing:"-1px",marginTop:20,lineHeight:1}}>Glorié</div>
+        <div style={{fontSize:16,color:G.inkLight,fontStyle:"italic",marginTop:10,letterSpacing:"0.03em"}}>your daily glow, inside and out.</div>
+
+        <div style={{display:"flex",gap:12,marginTop:48,width:"100%",flexDirection:"column"}}>
+          <button onClick={()=>setMode("signup")} style={{
+            padding:"16px",borderRadius:16,border:"none",cursor:"pointer",
+            background:`linear-gradient(135deg,${G.peach},${G.gold})`,
+            color:G.ink,fontWeight:700,fontSize:15,
+            fontFamily:"'Jost',sans-serif",letterSpacing:"0.08em",textTransform:"uppercase",
+            boxShadow:"0 4px 20px rgba(201,169,110,0.3)",
+          }}>Create Account</button>
+          <button onClick={()=>setMode("login")} style={{
+            padding:"16px",borderRadius:16,border:`1.5px solid ${G.cardBorder}`,cursor:"pointer",
+            background:"rgba(255,252,248,0.8)",
+            color:G.inkSoft,fontWeight:600,fontSize:15,
+            fontFamily:"'Jost',sans-serif",letterSpacing:"0.08em",textTransform:"uppercase",
+          }}>Sign In</button>
+        </div>
+      </div>
+
+      <div style={{paddingBottom:40,fontSize:11,color:G.inkLight,fontFamily:"'Jost',sans-serif",letterSpacing:"0.1em",textAlign:"center",lineHeight:1.8}}>
+        Your personal wellness companion.<br/>Private. Judgment-free. Yours.
+      </div>
+    </div>
+  );
+
+  return (
+    <div style={{minHeight:"100vh",background:G.bg,fontFamily:"'Cormorant Garamond',serif",maxWidth:480,margin:"0 auto",padding:"0 24px"}}>
+      <GoldSpeckles corner="tr"/>
+
+      {/* Back button */}
+      <div style={{paddingTop:52,marginBottom:8}}>
+        <button onClick={()=>{setMode("welcome");setError("");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:13,color:G.inkLight,fontFamily:"'Jost',sans-serif",letterSpacing:"0.05em",display:"flex",alignItems:"center",gap:6}}>← Back</button>
+      </div>
+
+      {/* Header */}
+      <div style={{marginBottom:32,marginTop:24}}>
+        <GlorieLogo size={40}/>
+        <div style={{fontSize:36,fontWeight:600,color:G.inkSoft,marginTop:12,lineHeight:1}}>
+          {mode==="signup"?"Welcome.":"Welcome back."}
+        </div>
+        <div style={{fontSize:15,color:G.inkLight,fontStyle:"italic",marginTop:6}}>
+          {mode==="signup"?"Let's create your account.":"Sign in to your account."}
+        </div>
+      </div>
+
+      {/* Form */}
+      <div>
+        {mode==="signup"&&(
+          <input placeholder="Your name" value={name} onChange={e=>setName(e.target.value)} style={inputStyle}/>
+        )}
+        <input placeholder="Email address" type="email" value={email} onChange={e=>setEmail(e.target.value)} style={inputStyle}/>
+        <div style={{position:"relative",marginBottom:12}}>
+          <input
+            placeholder="Password"
+            type={showPass?"text":"password"}
+            value={password}
+            onChange={e=>setPassword(e.target.value)}
+            style={{...inputStyle,marginBottom:0,paddingRight:48}}
+          />
+          <button onClick={()=>setShowPass(p=>!p)} style={{position:"absolute",right:14,top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:16,color:G.inkLight}}>{showPass?"🙈":"👁️"}</button>
+        </div>
+
+        {error&&(
+          <div style={{background:"rgba(200,80,60,0.08)",border:"1px solid rgba(200,80,60,0.2)",borderRadius:12,padding:"10px 14px",marginBottom:12,fontSize:13,color:"#A04030",fontFamily:"'Jost',sans-serif"}}>
+            {error}
+          </div>
+        )}
+
+        <button
+          onClick={mode==="signup"?handleSignup:handleLogin}
+          disabled={loading}
+          style={{
+            width:"100%",padding:"16px",borderRadius:16,border:"none",cursor:"pointer",
+            background:loading?`rgba(201,169,110,0.4)`:`linear-gradient(135deg,${G.peach},${G.gold})`,
+            color:G.ink,fontWeight:700,fontSize:15,
+            fontFamily:"'Jost',sans-serif",letterSpacing:"0.08em",textTransform:"uppercase",
+            boxShadow:"0 4px 20px rgba(201,169,110,0.3)",marginBottom:16,
+            transition:"all 0.2s",
+          }}>
+          {loading?"Please wait…":mode==="signup"?"Create My Account":"Sign In"}
+        </button>
+
+        <div style={{textAlign:"center",fontSize:13,color:G.inkLight,fontFamily:"'Jost',sans-serif"}}>
+          {mode==="signup"?"Already have an account? ":"Don't have an account? "}
+          <span onClick={()=>{setMode(mode==="signup"?"login":"signup");setError("");}} style={{color:G.gold,cursor:"pointer",fontWeight:600}}>
+            {mode==="signup"?"Sign in":"Create one"}
+          </span>
+        </div>
+
+        {mode==="login"&&(
+          <div style={{textAlign:"center",marginTop:12,fontSize:12,color:G.inkLight,fontFamily:"'Jost',sans-serif"}}>
+            <span style={{cursor:"pointer",textDecoration:"underline"}} onClick={()=>setError("Password reset coming soon — for now, create a new account.")}>Forgot password?</span>
+          </div>
+        )}
+      </div>
+
+      <div style={{marginTop:40,fontSize:11,color:G.inkLight,fontFamily:"'Jost',sans-serif",letterSpacing:"0.05em",textAlign:"center",lineHeight:1.8,paddingBottom:40}}>
+        Your data stays on your device.<br/>Private. Secure. Always yours.
+      </div>
+    </div>
+  );
+}
+
+// ─── MAIN APP SHELL ───────────────────────────────────────────────────────────
+const ALL_TABS=[
   {id:"Summary",icon:"🌿",label:"Home"},
+  {id:"CheckIn",icon:"☀️",label:"Check-In"},
   {id:"Meals",icon:"🥗",label:"Meals"},
   {id:"Workouts",icon:"🌸",label:"Move"},
   {id:"Water",icon:"💧",label:"Water"},
-  {id:"Meds",icon:"🌿",label:"Wellness"},
-  {id:"Recovery",icon:"🛌",label:"Rest"},
-  {id:"Cycle",icon:"🌙",label:"Cycle"},
+  {id:"Weight",icon:"⚖️",label:"Weight"},
+  {id:"Measurements",icon:"📏",label:"Measure"},
+  {id:"Habits",icon:"✅",label:"Habits"},
+  {id:"Analytics",icon:"📊",label:"Insights"},
+  {id:"Milestones",icon:"🏆",label:"Wins"},
+  {id:"Meds",icon:"💊",label:"Wellness"},
+  {id:"Cycle",icon:"🌙",label:"Cycle",femaleOnly:true},
   {id:"Profile",icon:"✨",label:"Profile"},
 ];
 
-export default function App() {
+function MainApp({user,onLogout}) {
   const [activeTab,setActiveTab]=useState("Summary");
   const [dayState,setDayState]=useState(()=>LS.get(`wellness_day_${TODAY}`,{meals:[],workouts:[],water:[]}));
   const [medList,setMedList]=useState(()=>LS.get("wellness_medlist",[]));
   const [takenLog,setTakenLog]=useState(()=>LS.get("wellness_takenlog",{}));
-  const [profile,setProfile]=useState(()=>LS.get("wellness_profile",DEF_PROFILE));
+  const [profile,setProfile]=useState(()=>LS.get("wellness_profile",{...DEF_PROFILE,name:user?.name||""}));
   const [recovery,setRecovery]=useState(()=>LS.get("wellness_recovery_"+TODAY,{}));
   const [cyclePhase,setCyclePhase]=useState(()=>LS.get("wellness_cycle",""));
+  const [habits,setHabits]=useState(()=>LS.get("glorie_habits",{}));
+  const [weightLog]=useState(()=>LS.get("glorie_weightlog",[]));
+  const [measurements]=useState(()=>LS.get("glorie_measurements",[]));
   const [toasts,setToasts]=useState([]);
+  const [showUserMenu,setShowUserMenu]=useState(false);
   const firedRef=useRef(new Set(LS.get("wellness_fired",[])));
 
   useEffect(()=>{LS.set(`wellness_day_${TODAY}`,dayState);},[dayState]);
@@ -1202,6 +1887,9 @@ export default function App() {
   useEffect(()=>{LS.set("wellness_takenlog",takenLog);},[takenLog]);
   useEffect(()=>{LS.set("wellness_profile",profile);},[profile]);
   useEffect(()=>{LS.set("wellness_cycle",cyclePhase);},[cyclePhase]);
+  useEffect(()=>{LS.set("glorie_habits",habits);},[habits]);
+  // Redirect away from Cycle tab if profile changes to male
+  useEffect(()=>{if(profile.sex!=="female"&&activeTab==="Cycle")setActiveTab("Summary");},[profile.sex]);
 
   const addToast=useCallback((t)=>{
     const id=Date.now()+Math.random();
@@ -1227,6 +1915,7 @@ export default function App() {
 
   const pendingMeds=medList.filter(m=>m.reminderTime&&!takenLog[`${m.id}_${TODAY}`]).length;
   const profileMissing=!profile.weight||!profile.age;
+  const displayName=profile.name||user?.name||"";
 
   return (
     <div style={{minHeight:"100vh",background:G.bg,fontFamily:"'Jost','sans-serif'",color:G.ink,maxWidth:480,margin:"0 auto",paddingBottom:110}}>
@@ -1235,8 +1924,10 @@ export default function App() {
         *{box-sizing:border-box;}
         input::placeholder{color:${G.inkLight};}
         input:focus{border-color:${G.gold}!important;box-shadow:0 0 0 3px rgba(201,169,110,0.1);}
+        @keyframes splashIn{from{opacity:0;transform:translateY(20px) scale(0.96);}to{opacity:1;transform:translateY(0) scale(1);}}
         @keyframes slideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
         @keyframes toastIn{from{opacity:0;transform:translateY(-14px) scale(0.96);}to{opacity:1;transform:translateY(0) scale(1);}}
+        @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
         ::-webkit-scrollbar{width:0;}
         button{transition:all 0.15s;}
         button:active{opacity:0.8!important;}
@@ -1244,38 +1935,53 @@ export default function App() {
 
       <Toast toasts={toasts}/>
 
+      {/* User menu overlay */}
+      {showUserMenu&&(
+        <div style={{position:"fixed",inset:0,zIndex:200,background:"rgba(44,36,22,0.3)",backdropFilter:"blur(4px)",animation:"fadeIn 0.2s ease"}} onClick={()=>setShowUserMenu(false)}>
+          <div style={{position:"absolute",top:80,right:16,background:G.warmWhite,border:`1px solid ${G.cardBorder}`,borderRadius:18,padding:"8px",minWidth:200,boxShadow:"0 8px 32px rgba(44,36,22,0.15)"}} onClick={e=>e.stopPropagation()}>
+            <div style={{padding:"12px 16px 8px",borderBottom:`1px solid rgba(201,169,110,0.1)`}}>
+              <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:18,color:G.inkSoft,fontWeight:600}}>{displayName}</div>
+              <div style={{fontSize:11,color:G.inkLight,marginTop:2}}>{user?.email}</div>
+            </div>
+            {[
+              {label:"My Profile",icon:"✨",action:()=>{setActiveTab("Profile");setShowUserMenu(false);}},
+              {label:"Cycle Settings",icon:"🌙",action:()=>{setActiveTab("Cycle");setShowUserMenu(false);}},
+            ].map(item=>(
+              <button key={item.label} onClick={item.action} style={{width:"100%",padding:"12px 16px",background:"none",border:"none",cursor:"pointer",textAlign:"left",fontFamily:"'Jost',sans-serif",fontSize:13,color:G.inkSoft,display:"flex",gap:10,alignItems:"center",borderRadius:10}}>
+                <span>{item.icon}</span>{item.label}
+              </button>
+            ))}
+            <div style={{borderTop:`1px solid rgba(201,169,110,0.1)`,marginTop:4,paddingTop:4}}>
+              <button onClick={()=>{onLogout();setShowUserMenu(false);}} style={{width:"100%",padding:"12px 16px",background:"none",border:"none",cursor:"pointer",textAlign:"left",fontFamily:"'Jost',sans-serif",fontSize:13,color:"#A04030",display:"flex",gap:10,alignItems:"center",borderRadius:10}}>
+                <span>👋</span>Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
-      <div style={{
-        padding:"28px 20px 14px",
-        background:G.headerBg,
-        position:"sticky",top:0,zIndex:10,
-        borderBottom:`1px solid rgba(201,169,110,0.15)`,
-        backdropFilter:"blur(12px)",
-        position:"relative",overflow:"hidden",
-      }}>
+      <div style={{padding:"28px 20px 14px",background:G.headerBg,position:"sticky",top:0,zIndex:10,borderBottom:`1px solid rgba(201,169,110,0.15)`,backdropFilter:"blur(12px)",overflow:"hidden"}}>
         <GoldSpeckles corner="tr"/>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",position:"relative"}}>
           <div>
-            {profile.name&&<div style={{fontSize:11,color:G.inkLight,fontFamily:"'Jost',sans-serif",letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:2}}>{profile.name}</div>}
+            {displayName&&<div style={{fontSize:11,color:G.inkLight,fontFamily:"'Jost',sans-serif",letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:2}}>{displayName}</div>}
             <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:32,fontWeight:600,letterSpacing:"-0.5px",lineHeight:1,color:G.inkSoft}}>Glorié</div>
             <div style={{fontSize:10,color:G.inkLight,fontStyle:"italic",fontFamily:"'Cormorant Garamond',serif",marginTop:2}}>your daily glow, inside and out.</div>
           </div>
-          <GlorieLogo size={44}/>
+          {/* Avatar / user button */}
+          <button onClick={()=>setShowUserMenu(p=>!p)} style={{background:"none",border:"none",cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:4}}>
+            <div style={{width:44,height:44,borderRadius:99,background:`linear-gradient(135deg,${G.peach},${G.gold})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,fontWeight:700,color:G.ink,fontFamily:"'Cormorant Garamond',serif",boxShadow:`0 2px 12px rgba(201,169,110,0.3)`}}>
+              {displayName?displayName[0].toUpperCase():"✨"}
+            </div>
+          </button>
         </div>
       </div>
 
       {/* Tabs */}
       <div style={{display:"flex",borderBottom:`1px solid rgba(201,169,110,0.15)`,background:"rgba(250,246,240,0.95)",position:"sticky",top:88,zIndex:9,overflowX:"auto",scrollbarWidth:"none",backdropFilter:"blur(8px)"}}>
-        {TABS.map(tab=>(
-          <button key={tab.id} onClick={()=>setActiveTab(tab.id)} style={{
-            flex:"0 0 auto",padding:"11px 12px",background:"none",border:"none",cursor:"pointer",
-            fontSize:10,fontWeight:600,letterSpacing:0.8,whiteSpace:"nowrap",fontFamily:"'Jost',sans-serif",
-            textTransform:"uppercase",
-            color:activeTab===tab.id?G.inkSoft:G.inkLight,
-            borderBottom:activeTab===tab.id?`2px solid ${G.gold}`:"2px solid transparent",
-            position:"relative",
-            transition:"all 0.2s",
-          }}>
+        {ALL_TABS.filter(tab=>!tab.femaleOnly||profile.sex==="female").map(tab=>(
+          <button key={tab.id} onClick={()=>setActiveTab(tab.id)} style={{flex:"0 0 auto",padding:"11px 12px",background:"none",border:"none",cursor:"pointer",fontSize:10,fontWeight:600,letterSpacing:0.8,whiteSpace:"nowrap",fontFamily:"'Jost',sans-serif",textTransform:"uppercase",color:activeTab===tab.id?G.inkSoft:G.inkLight,borderBottom:activeTab===tab.id?`2px solid ${G.gold}`:"2px solid transparent",position:"relative",transition:"all 0.2s"}}>
             {tab.icon} {tab.label}
             {tab.id==="Meds"&&pendingMeds>0&&<span style={{position:"absolute",top:6,right:3,background:`linear-gradient(135deg,${G.peach},${G.gold})`,borderRadius:99,minWidth:14,height:14,fontSize:8,fontWeight:700,color:G.ink,display:"inline-flex",alignItems:"center",justifyContent:"center",padding:"0 3px"}}>{pendingMeds}</span>}
             {tab.id==="Profile"&&profileMissing&&<span style={{position:"absolute",top:6,right:3,background:G.peach,borderRadius:99,width:6,height:6}}/>}
@@ -1285,15 +1991,74 @@ export default function App() {
 
       {/* Content */}
       <div style={{padding:"20px 16px"}}>
-        {activeTab==="Summary"  &&<SummaryTab  dayState={dayState} medList={medList} takenLog={takenLog} profile={profile} recovery={recovery} cyclePhase={cyclePhase}/>}
-        {activeTab==="Meals"    &&<MealsTab    dayState={dayState} setDayState={setDayState} profile={profile} cyclePhase={cyclePhase}/>}
-        {activeTab==="Workouts" &&<WorkoutsTab dayState={dayState} setDayState={setDayState} profile={profile}/>}
-        {activeTab==="Water"    &&<WaterTab    dayState={dayState} setDayState={setDayState}/>}
-        {activeTab==="Meds"     &&<MedsTab     medList={medList} setMedList={setMedList} takenLog={takenLog} setTakenLog={setTakenLog} addToast={addToast} dayState={dayState}/>}
-        {activeTab==="Recovery" &&<RecoveryTab recovery={recovery} setRecovery={setRecovery} dayState={dayState} profile={profile} cyclePhase={cyclePhase} addToast={addToast}/>}
-        {activeTab==="Cycle"    &&<CycleTab    cyclePhase={cyclePhase} setCyclePhase={setCyclePhase} profile={profile} addToast={addToast}/>}
+        {activeTab==="Summary"      &&<SummaryTab      dayState={dayState} medList={medList} takenLog={takenLog} profile={profile} recovery={recovery} cyclePhase={cyclePhase} habits={habits} setHabits={setHabits}/>}
+        {activeTab==="CheckIn"      &&<CheckInTab      recovery={recovery} setRecovery={setRecovery} dayState={dayState} profile={profile} cyclePhase={cyclePhase} addToast={addToast}/>}
+        {activeTab==="Meals"        &&<MealsTab        dayState={dayState} setDayState={setDayState} profile={profile} cyclePhase={cyclePhase}/>}
+        {activeTab==="Workouts"     &&<WorkoutsTab     dayState={dayState} setDayState={setDayState} profile={profile}/>}
+        {activeTab==="Water"        &&<WaterTab        dayState={dayState} setDayState={setDayState}/>}
+        {activeTab==="Weight"       &&<WeightTab       profile={profile} setProfile={setProfile} addToast={addToast}/>}
+        {activeTab==="Measurements" &&<MeasurementsTab addToast={addToast}/>}
+        {activeTab==="Habits"       &&<HabitsTab       habits={habits} setHabits={setHabits} addToast={addToast}/>}
+        {activeTab==="Analytics"    &&<AnalyticsTab    profile={profile} cyclePhase={cyclePhase}/>}
+        {activeTab==="Milestones"   &&<MilestonesTab   dayState={dayState} profile={profile} cyclePhase={cyclePhase} habits={habits} weightLog={weightLog} measurements={measurements}/>}
+        {activeTab==="Meds"         &&<MedsTab         medList={medList} setMedList={setMedList} takenLog={takenLog} setTakenLog={setTakenLog} addToast={addToast} dayState={dayState}/>}
+        {activeTab==="Cycle"        &&<CycleTab        cyclePhase={cyclePhase} setCyclePhase={setCyclePhase} profile={profile} addToast={addToast}/>}
+        {activeTab==="Profile"      &&<ProfileTab      profile={profile} setProfile={setProfile} addToast={addToast}/>}
         {activeTab==="Profile"  &&<ProfileTab  profile={profile} setProfile={setProfile} addToast={addToast}/>}
       </div>
     </div>
+  );
+}
+
+// ─── ROOT APP CONTROLLER ──────────────────────────────────────────────────────
+export default function App() {
+  // "splash" | "onboarding" | "auth" | "app"
+  const [screen,setScreen]=useState(()=>{
+    const session=LS.get("glorie_session",null);
+    const seenOnboarding=LS.get("glorie_onboarded",false);
+    if(session?.loggedIn) return "splash_to_app";
+    if(seenOnboarding) return "splash_to_auth";
+    return "splash_to_onboarding";
+  });
+  const [user,setUser]=useState(()=>LS.get("glorie_session",null));
+  const [showSplash,setShowSplash]=useState(true);
+
+  const afterSplash=()=>{
+    setShowSplash(false);
+    if(screen==="splash_to_app") setScreen("app");
+    else if(screen==="splash_to_auth") setScreen("auth");
+    else setScreen("onboarding");
+  };
+
+  const handleOnboardingDone=()=>{
+    LS.set("glorie_onboarded",true);
+    setScreen("auth");
+  };
+
+  const handleAuth=(userData)=>{
+    setUser(userData);
+    setScreen("app");
+  };
+
+  const handleLogout=()=>{
+    LS.set("glorie_session",null);
+    setUser(null);
+    setScreen("auth");
+  };
+
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600;700&display=swap');
+        *{box-sizing:border-box;margin:0;padding:0;}
+        body{background:${G.peachSoft};}
+        @keyframes splashIn{from{opacity:0;transform:translateY(20px) scale(0.95);}to{opacity:1;transform:translateY(0) scale(1);}}
+        @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+      `}</style>
+      {showSplash&&<SplashScreen onDone={afterSplash}/>}
+      {!showSplash&&screen==="onboarding"&&<OnboardingScreen onDone={handleOnboardingDone}/>}
+      {!showSplash&&screen==="auth"&&<AuthScreen onAuth={handleAuth}/>}
+      {!showSplash&&screen==="app"&&<MainApp user={user} onLogout={handleLogout}/>}
+    </>
   );
 }
