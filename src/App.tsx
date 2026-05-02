@@ -1717,42 +1717,243 @@ function CheckInTab({recovery,setRecovery,dayState,profile,cyclePhase,addToast})
   );
 }
 
-// ─── CYCLE TAB ────────────────────────────────────────────────────────────────
-function CycleTab({cyclePhase,setCyclePhase,profile,addToast}) {
-  if(profile.sex!=="female") return(
-    <div style={{textAlign:"center",padding:"40px 20px"}}>
-      <div style={{fontSize:40,marginBottom:12}}>🌙</div>
-      <div style={{fontSize:18,color:G.inkMid,fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic"}}>Cycle Sync is for female profiles</div>
-      <div style={{fontSize:13,color:G.inkLight,marginTop:8}}>Update your sex in Profile to enable this feature.</div>
-    </div>
-  );
-  const phase=CYCLE_PHASES.find(c=>c.id===cyclePhase);
+// ─── PERIOD TRACKER TAB ──────────────────────────────────────────────────────
+function CycleTab({profile,addToast}) {
+  const [periods,setPeriods]=useState(()=>LS.get("glorie_periods",[]));
+  const [symptoms,setSymptoms]=useState(()=>LS.get("glorie_symptoms",{}));
+  const [cycleLen,setCycleLen]=useState(()=>LS.get("glorie_cycle_len",28));
+  const [periodLen,setPeriodLen]=useState(()=>LS.get("glorie_period_len",5));
+  const [view,setView]=useState("calendar"); // calendar | log | history
+  const [selectedDay,setSelectedDay]=useState(null);
+  const [showSettings,setShowSettings]=useState(false);
+
+  useEffect(()=>{LS.set("glorie_periods",periods);},[periods]);
+  useEffect(()=>{LS.set("glorie_symptoms",symptoms);},[symptoms]);
+  useEffect(()=>{LS.set("glorie_cycle_len",cycleLen);},[cycleLen]);
+  useEffect(()=>{LS.set("glorie_period_len",periodLen);},[periodLen]);
+
+  const today=new Date();
+  const todayStr=TODAY;
+
+  // Get last period start
+  const sortedPeriods=[...periods].sort((a,b)=>b.start.localeCompare(a.start));
+  const lastPeriod=sortedPeriods[0];
+  const lastStart=lastPeriod?new Date(lastPeriod.start):null;
+
+  // Predict next period
+  const nextPeriod=lastStart?new Date(lastStart.getTime()+cycleLen*86400000):null;
+  const daysUntilNext=nextPeriod?Math.round((nextPeriod-today)/86400000):null;
+
+  // Check if today is in a period
+  const isInPeriod=(dateStr)=>{
+    return periods.some(p=>{
+      const s=new Date(p.start);
+      const e=new Date(s.getTime()+(p.length||periodLen)*86400000);
+      const d=new Date(dateStr);
+      return d>=s&&d<e;
+    });
+  };
+
+  // Is predicted period day
+  const isPredicted=(dateStr)=>{
+    if(!nextPeriod)return false;
+    const d=new Date(dateStr);
+    const e=new Date(nextPeriod.getTime()+periodLen*86400000);
+    return d>=nextPeriod&&d<e;
+  };
+
+  // Is fertile window (ovulation ~14 days before next period)
+  const isFertile=(dateStr)=>{
+    if(!nextPeriod)return false;
+    const ovulation=new Date(nextPeriod.getTime()-14*86400000);
+    const fertileStart=new Date(ovulation.getTime()-2*86400000);
+    const fertileEnd=new Date(ovulation.getTime()+3*86400000);
+    const d=new Date(dateStr);
+    return d>=fertileStart&&d<fertileEnd;
+  };
+
+  // Log period start
+  const logPeriod=(dateStr)=>{
+    if(periods.some(p=>p.start===dateStr)){
+      setPeriods(p=>p.filter(x=>x.start!==dateStr));
+      addToast({emoji:"🌸",title:"Period entry removed",type:"success"});
+    } else {
+      setPeriods(p=>[...p,{id:Date.now(),start:dateStr,length:periodLen}]);
+      addToast({emoji:"🌸",title:"Period day logged",body:"Tracking your cycle.",type:"success"});
+    }
+  };
+
+  // Toggle symptom for today
+  const SYMPTOM_LIST=["Cramps","Bloating","Headache","Fatigue","Mood swings","Back pain","Breast tenderness","Nausea","Spotting","Heavy flow","Light flow","Acne","Insomnia","Cravings"];
+  const todaySymptoms=symptoms[todayStr]||[];
+  const toggleSymptom=(s)=>{
+    const updated=todaySymptoms.includes(s)?todaySymptoms.filter(x=>x!==s):[...todaySymptoms,s];
+    setSymptoms(p=>({...p,[todayStr]:updated}));
+  };
+
+  // Build calendar — current month
+  const [calMonth,setCalMonth]=useState(()=>new Date(today.getFullYear(),today.getMonth(),1));
+  const daysInMonth=new Date(calMonth.getFullYear(),calMonth.getMonth()+1,0).getDate();
+  const firstDay=(new Date(calMonth.getFullYear(),calMonth.getMonth(),1).getDay()+6)%7; // Mon=0
+  const monthLabel=calMonth.toLocaleDateString("en-US",{month:"long",year:"numeric"});
+
+  const dayStr=(d)=>{
+    const dt=new Date(calMonth.getFullYear(),calMonth.getMonth(),d);
+    return dt.toISOString().slice(0,10);
+  };
+
+  // Average cycle length from history
+  const avgCycle=periods.length>=2?Math.round(sortedPeriods.slice(0,-1).reduce((s,p,i)=>{
+    const diff=(new Date(sortedPeriods[i].start)-new Date(sortedPeriods[i+1].start))/86400000;
+    return s+Math.abs(diff);
+  },0)/(sortedPeriods.length-1)):null;
+
   return (
     <div>
-      <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,color:G.inkSoft,marginBottom:4}}>Cycle Sync</div>
-      <div style={{fontSize:12,color:G.inkLight,marginBottom:18,fontStyle:"italic"}}>Your body changes each phase — so should your approach.</div>
-      <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:20}}>
-        {CYCLE_PHASES.map(p=>(
-          <button key={p.id} onClick={()=>{setCyclePhase(p.id);addToast({emoji:p.emoji,title:`${p.label} phase set`,body:p.notes,type:"success"});}} style={{background:cyclePhase===p.id?`linear-gradient(135deg,${G.peachSoft},${G.sageLight})`:"rgba(255,252,248,0.7)",border:`1.5px solid ${cyclePhase===p.id?G.gold:G.cardBorder}`,borderRadius:18,padding:"14px 16px",cursor:"pointer",textAlign:"left",fontFamily:"inherit",transition:"all 0.2s"}}>
-            <div style={{display:"flex",alignItems:"center",gap:12}}>
-              <span style={{fontSize:28}}>{p.emoji}</span>
-              <div style={{flex:1}}>
-                <div style={{fontWeight:600,fontSize:15,color:cyclePhase===p.id?G.inkSoft:G.inkMid,fontFamily:"'Cormorant Garamond',serif"}}>{p.label}<span style={{fontSize:11,fontWeight:400,color:G.inkLight,marginLeft:8}}>{p.days}</span></div>
-                <div style={{fontSize:12,color:G.inkMid,marginTop:3,fontStyle:"italic"}}>{p.notes}</div>
-              </div>
-              {cyclePhase===p.id&&<span style={{color:G.gold,fontSize:18}}>✓</span>}
+      <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,color:G.inkSoft,marginBottom:4}}>Menstrual Tracker</div>
+      <div style={{fontSize:12,color:G.inkLight,marginBottom:16,fontStyle:"italic"}}>Private. Discreet. Just for you.</div>
+
+      {/* Status card */}
+      <Card accent={`${G.peach}40`}>
+        <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+          {lastStart&&(
+            <div style={{flex:1,minWidth:80}}>
+              <div style={{fontSize:11,color:G.inkLight,textTransform:"uppercase",letterSpacing:1,fontFamily:"'Jost',sans-serif"}}>Last Period</div>
+              <div style={{fontSize:18,fontWeight:700,color:G.peach,fontFamily:"'Cormorant Garamond',serif",marginTop:2}}>{lastStart.toLocaleDateString("en-US",{month:"short",day:"numeric"})}</div>
             </div>
-            {cyclePhase===p.id&&(
-              <div style={{marginTop:10,paddingTop:10,borderTop:`1px solid rgba(201,169,110,0.15)`,display:"flex",gap:16}}>
-                <div><div style={{fontSize:10,color:G.inkLight}}>Cal adj</div><div style={{fontSize:13,fontWeight:600,color:G.gold}}>{p.calAdj>0?"+":""}{p.calAdj} kcal</div></div>
-                <div><div style={{fontSize:10,color:G.inkLight}}>Carbs</div><div style={{fontSize:13,fontWeight:600,color:G.gold}}>{p.carbAdj}</div></div>
-                <div><div style={{fontSize:10,color:G.inkLight}}>Intensity</div><div style={{fontSize:13,fontWeight:600,color:G.gold}}>{p.intensity}</div></div>
-              </div>
-            )}
-          </button>
-        ))}
+          )}
+          {daysUntilNext!==null&&(
+            <div style={{flex:1,minWidth:80}}>
+              <div style={{fontSize:11,color:G.inkLight,textTransform:"uppercase",letterSpacing:1,fontFamily:"'Jost',sans-serif"}}>{daysUntilNext<0?"Overdue by":"Next Period"}</div>
+              <div style={{fontSize:18,fontWeight:700,color:daysUntilNext<0?"#C06050":daysUntilNext<=3?G.peach:G.gold,fontFamily:"'Cormorant Garamond',serif",marginTop:2}}>{Math.abs(daysUntilNext)} days</div>
+            </div>
+          )}
+          <div style={{flex:1,minWidth:80}}>
+            <div style={{fontSize:11,color:G.inkLight,textTransform:"uppercase",letterSpacing:1,fontFamily:"'Jost',sans-serif"}}>Cycle Length</div>
+            <div style={{fontSize:18,fontWeight:700,color:G.sage,fontFamily:"'Cormorant Garamond',serif",marginTop:2}}>{avgCycle||cycleLen} days</div>
+          </div>
+        </div>
+        {isInPeriod(todayStr)&&(
+          <div style={{marginTop:10,padding:"8px 12px",background:`${G.peach}20`,borderRadius:10,fontSize:13,color:G.peach,fontFamily:"'Cormorant Garamond',serif",fontWeight:600}}>🌸 Period day today</div>
+        )}
+        {!isInPeriod(todayStr)&&isFertile(todayStr)&&(
+          <div style={{marginTop:10,padding:"8px 12px",background:`${G.sage}20`,borderRadius:10,fontSize:13,color:G.sage,fontFamily:"'Cormorant Garamond',serif",fontWeight:600}}>🌿 Fertile window</div>
+        )}
+      </Card>
+
+      {/* View toggle */}
+      <div style={{display:"flex",gap:8,marginBottom:14}}>
+        <Chip label="📅 Calendar" active={view==="calendar"} onClick={()=>setView("calendar")}/>
+        <Chip label="📝 Log Symptoms" active={view==="log"} onClick={()=>setView("log")}/>
+        <Chip label="📊 History" active={view==="history"} onClick={()=>setView("history")}/>
       </div>
-      {phase&&(<Card accent={`${G.gold}30`}><SLabel text="Suggested workouts this phase"/>{phase.workouts.map((w,i)=>{const entry=WORKOUT_DB.find(x=>x.name===w);return(<div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 0",borderBottom:`1px solid rgba(201,169,110,0.1)`}}><span style={{fontSize:20}}>{entry?.emoji||"🏋️"}</span><div style={{flex:1}}><div style={{fontSize:14,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{w}</div><div style={{fontSize:11,color:G.inkLight}}>{entry?.category} · MET {entry?.met}</div></div></div>);})}</Card>)}
+
+      {view==="calendar"&&(
+        <Card>
+          {/* Month nav */}
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
+            <button onClick={()=>setCalMonth(m=>new Date(m.getFullYear(),m.getMonth()-1,1))} style={{background:"none",border:`1px solid ${G.cardBorder}`,borderRadius:8,padding:"4px 10px",cursor:"pointer",color:G.inkMid,fontFamily:"'Jost',sans-serif",fontSize:13}}>‹</button>
+            <span style={{fontFamily:"'Cormorant Garamond',serif",fontSize:16,fontWeight:600,color:G.inkSoft}}>{monthLabel}</span>
+            <button onClick={()=>setCalMonth(m=>new Date(m.getFullYear(),m.getMonth()+1,1))} style={{background:"none",border:`1px solid ${G.cardBorder}`,borderRadius:8,padding:"4px 10px",cursor:"pointer",color:G.inkMid,fontFamily:"'Jost',sans-serif",fontSize:13}}>›</button>
+          </div>
+          {/* Day headers */}
+          <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:2,marginBottom:4}}>
+            {["M","T","W","T","F","S","S"].map((d,i)=><div key={i} style={{textAlign:"center",fontSize:10,color:G.inkLight,fontFamily:"'Jost',sans-serif",padding:"2px 0"}}>{d}</div>)}
+          </div>
+          {/* Calendar grid */}
+          <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:2}}>
+            {Array.from({length:firstDay},(_,i)=><div key={`e${i}`}/>)}
+            {Array.from({length:daysInMonth},(_,i)=>{
+              const d=i+1;
+              const ds=dayStr(d);
+              const isToday=ds===todayStr;
+              const inPeriod=isInPeriod(ds);
+              const predicted=isPredicted(ds);
+              const fertile=isFertile(ds)&&!inPeriod&&!predicted;
+              const hasSymptoms=(symptoms[ds]||[]).length>0;
+              return (
+                <button key={d} onClick={()=>{logPeriod(ds);setSelectedDay(ds);}} style={{
+                  aspectRatio:"1",borderRadius:8,border:`1.5px solid ${isToday?G.gold:inPeriod?G.peach:predicted?"rgba(232,184,154,0.4)":fertile?`${G.sage}60`:"transparent"}`,
+                  background:inPeriod?`${G.peach}30`:predicted?`${G.peachSoft}80`:fertile?`${G.sage}20`:"transparent",
+                  cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
+                  fontFamily:"'Cormorant Garamond',serif",gap:1,position:"relative",
+                }}>
+                  <span style={{fontSize:12,fontWeight:isToday?700:400,color:inPeriod?G.peach:predicted?"#C8907A":isToday?G.gold:G.inkSoft}}>{d}</span>
+                  {hasSymptoms&&<div style={{width:4,height:4,borderRadius:99,background:G.sage}}/>}
+                </button>
+              );
+            })}
+          </div>
+          {/* Legend */}
+          <div style={{display:"flex",gap:14,marginTop:14,flexWrap:"wrap"}}>
+            {[{color:G.peach,label:"Period"},{color:"rgba(232,184,154,0.6)",label:"Predicted"},{color:G.sage,label:"Fertile window"},{color:G.gold,label:"Today"}].map(l=>(
+              <div key={l.label} style={{display:"flex",alignItems:"center",gap:5,fontSize:11,color:G.inkLight}}>
+                <div style={{width:10,height:10,borderRadius:3,background:l.color}}/>
+                {l.label}
+              </div>
+            ))}
+          </div>
+          <div style={{marginTop:12,fontSize:11,color:G.inkLight,fontStyle:"italic",fontFamily:"'Cormorant Garamond',serif"}}>Tap a day to mark/unmark as period day.</div>
+        </Card>
+      )}
+
+      {view==="log"&&(
+        <Card>
+          <SLabel text={`Symptoms — Today, ${new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"})}`}/>
+          <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:14}}>
+            {SYMPTOM_LIST.map(s=>(
+              <button key={s} onClick={()=>toggleSymptom(s)} style={{padding:"8px 14px",borderRadius:99,border:`1.5px solid ${todaySymptoms.includes(s)?G.peach:G.cardBorder}`,background:todaySymptoms.includes(s)?`${G.peach}20`:"rgba(255,252,248,0.8)",cursor:"pointer",fontSize:12,fontWeight:600,color:todaySymptoms.includes(s)?G.peach:G.inkMid,fontFamily:"'Jost',sans-serif",transition:"all 0.2s"}}>{s}</button>
+            ))}
+          </div>
+          {todaySymptoms.length>0&&(
+            <div style={{background:`${G.peachSoft}`,borderRadius:12,padding:"10px 14px"}}>
+              <div style={{fontSize:12,color:G.inkMid,fontFamily:"'Cormorant Garamond',serif"}}>Logged today: <span style={{color:G.peach,fontWeight:600}}>{todaySymptoms.join(", ")}</span></div>
+            </div>
+          )}
+          <div style={{marginTop:14}}>
+            <button onClick={()=>logPeriod(todayStr)} style={{...bS(isInPeriod(todayStr)?`${G.sage}30`:`linear-gradient(135deg,${G.peach},${G.gold})`),color:isInPeriod(todayStr)?G.sage:G.ink}}>
+              {isInPeriod(todayStr)?"✓ Period logged today":"+ Log Period Day"}
+            </button>
+          </div>
+        </Card>
+      )}
+
+      {view==="history"&&(
+        <div>
+          {/* Settings */}
+          <Card>
+            <SLabel text="⚙️ Cycle Settings"/>
+            <div style={{display:"flex",gap:8,marginBottom:10}}>
+              <div style={{flex:1}}>
+                <div style={{fontSize:11,color:G.inkLight,marginBottom:4,fontFamily:"'Jost',sans-serif"}}>Cycle Length (days)</div>
+                <input type="number" value={cycleLen} onChange={e=>setCycleLen(Number(e.target.value))} style={{...iS,marginBottom:0}}/>
+              </div>
+              <div style={{flex:1}}>
+                <div style={{fontSize:11,color:G.inkLight,marginBottom:4,fontFamily:"'Jost',sans-serif"}}>Period Length (days)</div>
+                <input type="number" value={periodLen} onChange={e=>setPeriodLen(Number(e.target.value))} style={{...iS,marginBottom:0}}/>
+              </div>
+            </div>
+          </Card>
+          {/* Past periods */}
+          <SLabel text="Past Periods"/>
+          {sortedPeriods.length===0?<Empty emoji="🌸" text="No periods logged yet — tap days on the calendar to start tracking"/>:
+            sortedPeriods.map((p,i)=>{
+              const next=sortedPeriods[i+1];
+              const cycleL=next?Math.round(Math.abs((new Date(p.start)-new Date(next.start))/86400000)):null;
+              return (
+                <div key={p.id} style={{background:G.cardBg,border:`1px solid ${G.cardBorder}`,borderRadius:14,padding:"12px 16px",display:"flex",alignItems:"center",gap:12,marginBottom:8}}>
+                  <span style={{fontSize:22}}>🌸</span>
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:14,fontWeight:600,color:G.inkSoft,fontFamily:"'Cormorant Garamond',serif"}}>{new Date(p.start).toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})}</div>
+                    <div style={{fontSize:11,color:G.inkLight,marginTop:2}}>{p.length||periodLen} day period{cycleL?` · ${cycleL} day cycle`:""}</div>
+                  </div>
+                  <DelBtn onClick={()=>setPeriods(prev=>prev.filter(x=>x.id!==p.id))}/>
+                </div>
+              );
+            })
+          }
+        </div>
+      )}
     </div>
   );
 }
@@ -2359,7 +2560,7 @@ const ALL_TABS=[
   {id:"Analytics",icon:"📊",label:"Insights"},
   {id:"Milestones",icon:"🏆",label:"Wins"},
   {id:"Meds",icon:"💊",label:"Wellness"},
-  {id:"Cycle",icon:"🌙",label:"Cycle",femaleOnly:true},
+  {id:"Cycle",icon:"🌸",label:"Menstrual",femaleOnly:true},
   {id:"Profile",icon:"✨",label:"Profile"},
 ];
 
@@ -2498,7 +2699,7 @@ function MainApp({user,onLogout}) {
         {activeTab==="Analytics"    &&<AnalyticsTab    profile={profile} cyclePhase={cyclePhase}/>}
         {activeTab==="Milestones"   &&<MilestonesTab   dayState={dayState} profile={profile} cyclePhase={cyclePhase} habits={habits} weightLog={weightLog} measurements={measurements}/>}
         {activeTab==="Meds"         &&<MedsTab         medList={medList} setMedList={setMedList} takenLog={takenLog} setTakenLog={setTakenLog} addToast={addToast} dayState={dayState}/>}
-        {activeTab==="Cycle"        &&<CycleTab        cyclePhase={cyclePhase} setCyclePhase={setCyclePhase} profile={profile} addToast={addToast}/>}
+        {activeTab==="Cycle"        &&<CycleTab        profile={profile} addToast={addToast}/>}
         {activeTab==="Profile"      &&<ProfileTab      profile={profile} setProfile={setProfile} addToast={addToast}/>}
         {activeTab==="Profile"  &&<ProfileTab  profile={profile} setProfile={setProfile} addToast={addToast}/>}
       </div>
