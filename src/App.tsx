@@ -8,81 +8,361 @@ const TODAY = new Date().toISOString().slice(0, 10);
 
 // ─── MEAL DATABASE ────────────────────────────────────────────────────────────
 const MEAL_DB = [
+  // ── FROZEN MEALS ─────────────────────────────────────────────────────────────
   { name: "Healthy Choice Power Bowls Chicken Marinara", cal: 360, protein: 28, carbs: 43, fat: 8, serving: "1 bowl (283g)" },
-  { name: "Healthy Choice Simply Steamers Unwrapped Burrito Bowl", cal: 310, protein: 12, carbs: 53, fat: 5, serving: "1 bowl" },
+  { name: "Healthy Choice Simply Steamers Burrito Bowl", cal: 310, protein: 12, carbs: 53, fat: 5, serving: "1 bowl" },
   { name: "Healthy Choice Café Steamers Grilled Basil Chicken", cal: 280, protein: 22, carbs: 36, fat: 5, serving: "1 meal" },
   { name: "Healthy Choice Power Bowls Adobo Chicken", cal: 370, protein: 30, carbs: 45, fat: 8, serving: "1 bowl" },
   { name: "Healthy Choice Chicken Tikka Masala", cal: 290, protein: 22, carbs: 36, fat: 6, serving: "1 bowl" },
+  { name: "Healthy Choice Simply Steamers Chicken & Vegetables", cal: 190, protein: 19, carbs: 21, fat: 3, serving: "1 bowl" },
+  { name: "Healthy Choice Zero Chicken Fettuccine Alfredo", cal: 270, protein: 18, carbs: 38, fat: 6, serving: "1 meal" },
+  { name: "Healthy Choice Simply Steamers Pineapple Chicken", cal: 340, protein: 20, carbs: 51, fat: 6, serving: "1 bowl" },
   { name: "Lean Cuisine Chicken Teriyaki", cal: 290, protein: 16, carbs: 45, fat: 4, serving: "1 meal" },
   { name: "Lean Cuisine Chicken Marsala", cal: 250, protein: 17, carbs: 31, fat: 6, serving: "1 meal" },
   { name: "Lean Cuisine Butternut Squash Ravioli", cal: 260, protein: 9, carbs: 43, fat: 6, serving: "1 meal" },
+  { name: "Lean Cuisine Beef & Vegetable Bowl", cal: 280, protein: 19, carbs: 36, fat: 6, serving: "1 meal" },
+  { name: "Lean Cuisine Chicken Pot Pie", cal: 310, protein: 12, carbs: 40, fat: 10, serving: "1 meal" },
+  { name: "Lean Cuisine Vermont White Cheddar Mac", cal: 280, protein: 11, carbs: 46, fat: 7, serving: "1 meal" },
+  { name: "Amy's Bowls Teriyaki", cal: 310, protein: 9, carbs: 57, fat: 6, serving: "1 bowl" },
+  { name: "Amy's Burrito Especial", cal: 320, protein: 10, carbs: 54, fat: 8, serving: "1 burrito" },
+  { name: "Amy's Black Bean Enchilada", cal: 330, protein: 11, carbs: 50, fat: 10, serving: "1 meal" },
+  { name: "Trader Joe's Mandarin Orange Chicken (1 cup)", cal: 430, protein: 18, carbs: 54, fat: 16, serving: "1 cup" },
+  { name: "Trader Joe's Indian Fare Chana Masala", cal: 240, protein: 11, carbs: 44, fat: 3, serving: "1 package" },
+  { name: "Bird's Eye Protein Bowl Chicken Fried Rice", cal: 340, protein: 20, carbs: 47, fat: 8, serving: "1 bowl" },
+  // ── CHICKEN ───────────────────────────────────────────────────────────────────
   { name: "Grilled Chicken Breast (2 oz)", cal: 93, protein: 17, carbs: 0, fat: 2, serving: "2 oz (57g)" },
   { name: "Grilled Chicken Breast (3 oz)", cal: 140, protein: 26, carbs: 0, fat: 3, serving: "3 oz (85g)" },
   { name: "Grilled Chicken Breast (4 oz)", cal: 185, protein: 35, carbs: 0, fat: 4, serving: "4 oz (113g)" },
+  { name: "Grilled Chicken Breast (5 oz)", cal: 231, protein: 43, carbs: 0, fat: 5, serving: "5 oz" },
   { name: "Grilled Chicken Breast (6 oz)", cal: 280, protein: 52, carbs: 0, fat: 6, serving: "6 oz (170g)" },
+  { name: "Baked Chicken Breast (4 oz)", cal: 185, protein: 35, carbs: 0, fat: 4, serving: "4 oz" },
   { name: "Rotisserie Chicken (3 oz, no skin)", cal: 130, protein: 23, carbs: 0, fat: 4, serving: "3 oz" },
+  { name: "Rotisserie Chicken Breast (half)", cal: 240, protein: 44, carbs: 0, fat: 6, serving: "half breast" },
+  { name: "Chicken Thigh, Boneless Skinless (3 oz)", cal: 150, protein: 22, carbs: 0, fat: 7, serving: "3 oz" },
+  { name: "Chicken Thigh, Boneless Skinless (4 oz)", cal: 200, protein: 29, carbs: 0, fat: 9, serving: "4 oz" },
+  { name: "Chicken Drumstick (1 medium, no skin)", cal: 116, protein: 19, carbs: 0, fat: 4, serving: "1 drumstick" },
+  { name: "Chicken Wing (1, no skin)", cal: 43, protein: 6, carbs: 0, fat: 2, serving: "1 wing" },
+  { name: "Shredded Chicken (1/2 cup)", cal: 110, protein: 20, carbs: 0, fat: 3, serving: "1/2 cup (85g)" },
+  { name: "Chicken Strips, Baked (3 oz)", cal: 170, protein: 24, carbs: 10, fat: 4, serving: "3 oz" },
+  { name: "Chicken Nuggets, Baked (6 pieces)", cal: 270, protein: 14, carbs: 24, fat: 12, serving: "6 pieces" },
+  // ── TURKEY & PORK ────────────────────────────────────────────────────────────
   { name: "Ground Turkey (3 oz, 93% lean)", cal: 130, protein: 22, carbs: 0, fat: 5, serving: "3 oz" },
   { name: "Ground Turkey (4 oz, 93% lean)", cal: 170, protein: 29, carbs: 0, fat: 6, serving: "4 oz" },
+  { name: "Ground Turkey (4 oz, 85% lean)", cal: 200, protein: 27, carbs: 0, fat: 10, serving: "4 oz" },
+  { name: "Turkey Breast Deli (2 oz)", cal: 60, protein: 12, carbs: 1, fat: 1, serving: "2 oz (57g)" },
+  { name: "Turkey Burger Patty (4 oz, 93% lean)", cal: 170, protein: 29, carbs: 0, fat: 6, serving: "4 oz patty" },
+  { name: "Turkey Meatballs (3 oz)", cal: 160, protein: 18, carbs: 6, fat: 7, serving: "3 oz (~3 meatballs)" },
+  { name: "Pork Tenderloin (3 oz)", cal: 120, protein: 22, carbs: 0, fat: 3, serving: "3 oz" },
+  { name: "Pork Chop, Lean (3 oz)", cal: 137, protein: 22, carbs: 0, fat: 5, serving: "3 oz" },
+  { name: "Canadian Bacon (2 oz)", cal: 68, protein: 11, carbs: 1, fat: 2, serving: "2 oz" },
+  { name: "Turkey Bacon (2 strips)", cal: 70, protein: 6, carbs: 1, fat: 4, serving: "2 strips" },
+  // ── BEEF ─────────────────────────────────────────────────────────────────────
   { name: "Ground Beef (3 oz, 90% lean)", cal: 150, protein: 23, carbs: 0, fat: 7, serving: "3 oz" },
+  { name: "Ground Beef (4 oz, 90% lean)", cal: 200, protein: 30, carbs: 0, fat: 9, serving: "4 oz" },
+  { name: "Ground Beef (4 oz, 80% lean)", cal: 280, protein: 26, carbs: 0, fat: 19, serving: "4 oz" },
+  { name: "Sirloin Steak (3 oz)", cal: 158, protein: 24, carbs: 0, fat: 7, serving: "3 oz" },
+  { name: "Sirloin Steak (6 oz)", cal: 315, protein: 48, carbs: 0, fat: 13, serving: "6 oz" },
+  { name: "Filet Mignon (3 oz)", cal: 165, protein: 23, carbs: 0, fat: 8, serving: "3 oz" },
+  { name: "Ribeye Steak (4 oz)", cal: 310, protein: 26, carbs: 0, fat: 22, serving: "4 oz" },
+  { name: "Beef Burger Patty (4 oz, 90% lean)", cal: 200, protein: 28, carbs: 0, fat: 10, serving: "4 oz patty" },
+  { name: "Beef Meatballs (3 oz)", cal: 190, protein: 14, carbs: 7, fat: 12, serving: "3 oz" },
+  { name: "Beef Taco Meat (3 oz, seasoned)", cal: 180, protein: 19, carbs: 3, fat: 10, serving: "3 oz" },
+  { name: "Deli Ham (2 oz)", cal: 60, protein: 10, carbs: 2, fat: 2, serving: "2 oz" },
+  // ── SEAFOOD ──────────────────────────────────────────────────────────────────
   { name: "Salmon Fillet (3 oz)", cal: 177, protein: 17, carbs: 0, fat: 11, serving: "3 oz" },
   { name: "Salmon Fillet (4 oz)", cal: 234, protein: 23, carbs: 0, fat: 14, serving: "4 oz" },
-  { name: "Tilapia (3 oz)", cal: 110, protein: 22, carbs: 0, fat: 2, serving: "3 oz" },
+  { name: "Salmon Fillet (6 oz)", cal: 354, protein: 34, carbs: 0, fat: 22, serving: "6 oz" },
   { name: "Tuna in Water (3 oz can)", cal: 80, protein: 18, carbs: 0, fat: 1, serving: "3 oz" },
+  { name: "Tuna in Olive Oil (3 oz can)", cal: 140, protein: 18, carbs: 0, fat: 7, serving: "3 oz" },
+  { name: "Tilapia (3 oz)", cal: 110, protein: 22, carbs: 0, fat: 2, serving: "3 oz" },
+  { name: "Tilapia (4 oz)", cal: 145, protein: 29, carbs: 0, fat: 3, serving: "4 oz" },
   { name: "Shrimp (3 oz, steamed)", cal: 84, protein: 18, carbs: 0, fat: 1, serving: "3 oz" },
+  { name: "Shrimp (6 oz, steamed)", cal: 168, protein: 36, carbs: 0, fat: 2, serving: "6 oz" },
+  { name: "Cod (3 oz, baked)", cal: 90, protein: 20, carbs: 0, fat: 1, serving: "3 oz" },
+  { name: "Halibut (3 oz)", cal: 119, protein: 23, carbs: 0, fat: 2, serving: "3 oz" },
+  { name: "Mahi Mahi (3 oz)", cal: 93, protein: 20, carbs: 0, fat: 1, serving: "3 oz" },
+  { name: "Crab Meat (3 oz)", cal: 82, protein: 17, carbs: 0, fat: 1, serving: "3 oz" },
+  { name: "Lobster (3 oz)", cal: 83, protein: 17, carbs: 1, fat: 1, serving: "3 oz" },
+  { name: "Sardines in Water (3 oz)", cal: 140, protein: 20, carbs: 0, fat: 6, serving: "3 oz" },
+  { name: "Scallops (3 oz, pan-seared)", cal: 100, protein: 19, carbs: 3, fat: 1, serving: "3 oz" },
+  { name: "Tuna Salad (1/2 cup, light mayo)", cal: 190, protein: 21, carbs: 4, fat: 9, serving: "1/2 cup" },
+  // ── EGGS & DAIRY ─────────────────────────────────────────────────────────────
+  { name: "Whole Egg (1 large)", cal: 72, protein: 6, carbs: 0, fat: 5, serving: "1 egg" },
   { name: "Eggs (2 large)", cal: 143, protein: 13, carbs: 1, fat: 10, serving: "2 eggs" },
+  { name: "Eggs (3 large)", cal: 214, protein: 19, carbs: 1, fat: 14, serving: "3 eggs" },
   { name: "Egg Whites (3 large)", cal: 51, protein: 11, carbs: 1, fat: 0, serving: "3 whites" },
+  { name: "Egg Whites (6 large)", cal: 102, protein: 22, carbs: 1, fat: 0, serving: "6 whites" },
+  { name: "Scrambled Eggs (2 eggs, no butter)", cal: 182, protein: 13, carbs: 2, fat: 14, serving: "2 eggs" },
+  { name: "Scrambled Eggs (3 eggs, no butter)", cal: 270, protein: 19, carbs: 2, fat: 20, serving: "3 eggs" },
+  { name: "Hard Boiled Egg (1)", cal: 78, protein: 6, carbs: 1, fat: 5, serving: "1 egg" },
+  { name: "Omelette (2 eggs, veggies, no cheese)", cal: 200, protein: 15, carbs: 5, fat: 13, serving: "1 omelette" },
+  { name: "Omelette (3 eggs, cheese, veggies)", cal: 340, protein: 24, carbs: 5, fat: 25, serving: "1 omelette" },
   { name: "Greek Yogurt Plain Nonfat (6 oz)", cal: 100, protein: 17, carbs: 6, fat: 0, serving: "6 oz" },
+  { name: "Greek Yogurt Plain 2% (6 oz)", cal: 130, protein: 15, carbs: 8, fat: 4, serving: "6 oz" },
+  { name: "Greek Yogurt with Honey (5.3 oz)", cal: 150, protein: 11, carbs: 22, fat: 2, serving: "5.3 oz" },
+  { name: "Chobani Plain Non-Fat (5.3 oz)", cal: 80, protein: 14, carbs: 6, fat: 0, serving: "5.3 oz" },
   { name: "Cottage Cheese 2% (1/2 cup)", cal: 90, protein: 12, carbs: 5, fat: 2, serving: "1/2 cup" },
-  { name: "White Rice, Cooked (1 cup)", cal: 206, protein: 4, carbs: 45, fat: 0, serving: "1 cup" },
+  { name: "Cottage Cheese 4% (1/2 cup)", cal: 110, protein: 12, carbs: 4, fat: 5, serving: "1/2 cup" },
+  { name: "Skim Milk (1 cup)", cal: 83, protein: 8, carbs: 12, fat: 0, serving: "1 cup" },
+  { name: "Whole Milk (1 cup)", cal: 149, protein: 8, carbs: 12, fat: 8, serving: "1 cup" },
+  { name: "2% Milk (1 cup)", cal: 122, protein: 8, carbs: 12, fat: 5, serving: "1 cup" },
+  { name: "String Cheese (1 stick)", cal: 80, protein: 7, carbs: 0, fat: 5, serving: "1 stick" },
+  { name: "Cheese, Cheddar (1 oz)", cal: 115, protein: 7, carbs: 0, fat: 9, serving: "1 oz" },
+  { name: "Cheese, Mozzarella (1 oz)", cal: 85, protein: 6, carbs: 1, fat: 6, serving: "1 oz" },
+  { name: "Cheese, Swiss (1 oz)", cal: 108, protein: 8, carbs: 2, fat: 8, serving: "1 oz" },
+  { name: "Cheese, Feta (1 oz)", cal: 75, protein: 4, carbs: 1, fat: 6, serving: "1 oz" },
+  { name: "Cheese, Parmesan (2 tbsp)", cal: 43, protein: 4, carbs: 0, fat: 3, serving: "2 tbsp" },
+  // ── GRAINS & CARBS ────────────────────────────────────────────────────────────
+  { name: "White Rice, Cooked (1/3 cup)", cal: 68, protein: 1, carbs: 15, fat: 0, serving: "1/3 cup" },
   { name: "White Rice, Cooked (1/2 cup)", cal: 103, protein: 2, carbs: 22, fat: 0, serving: "1/2 cup" },
+  { name: "White Rice, Cooked (1 cup)", cal: 206, protein: 4, carbs: 45, fat: 0, serving: "1 cup" },
+  { name: "Brown Rice, Cooked (1/2 cup)", cal: 108, protein: 2, carbs: 22, fat: 1, serving: "1/2 cup" },
   { name: "Brown Rice, Cooked (1 cup)", cal: 216, protein: 5, carbs: 45, fat: 2, serving: "1 cup" },
+  { name: "Jasmine Rice, Cooked (1 cup)", cal: 205, protein: 4, carbs: 45, fat: 0, serving: "1 cup" },
+  { name: "Cauliflower Rice (1 cup)", cal: 25, protein: 2, carbs: 5, fat: 0, serving: "1 cup" },
+  { name: "Quinoa, Cooked (1/2 cup)", cal: 111, protein: 4, carbs: 20, fat: 2, serving: "1/2 cup" },
   { name: "Quinoa, Cooked (1 cup)", cal: 222, protein: 8, carbs: 39, fat: 4, serving: "1 cup" },
+  { name: "Oatmeal, Cooked (1/2 cup)", cal: 77, protein: 3, carbs: 14, fat: 2, serving: "1/2 cup" },
   { name: "Oatmeal, Cooked (1 cup)", cal: 154, protein: 6, carbs: 28, fat: 3, serving: "1 cup" },
+  { name: "Rolled Oats, Dry (1/2 cup)", cal: 150, protein: 5, carbs: 27, fat: 3, serving: "1/2 cup" },
+  { name: "Overnight Oats (oats, almond milk, berries)", cal: 310, protein: 11, carbs: 52, fat: 7, serving: "1 jar" },
+  { name: "Pasta, Cooked (1/2 cup)", cal: 110, protein: 4, carbs: 22, fat: 0, serving: "1/2 cup" },
+  { name: "Pasta, Cooked (1 cup)", cal: 220, protein: 8, carbs: 43, fat: 1, serving: "1 cup" },
+  { name: "Pasta, Whole Wheat (1 cup)", cal: 174, protein: 7, carbs: 37, fat: 1, serving: "1 cup" },
+  { name: "Spaghetti with Marinara (1 cup pasta + sauce)", cal: 290, protein: 10, carbs: 54, fat: 4, serving: "1 cup" },
+  { name: "Sweet Potato, Baked (small)", cal: 60, protein: 1, carbs: 14, fat: 0, serving: "1 small" },
   { name: "Sweet Potato, Baked (medium)", cal: 103, protein: 2, carbs: 24, fat: 0, serving: "1 medium" },
   { name: "Sweet Potato, Baked (large)", cal: 162, protein: 4, carbs: 37, fat: 0, serving: "1 large" },
-  { name: "Pasta, Cooked (1 cup)", cal: 220, protein: 8, carbs: 43, fat: 1, serving: "1 cup" },
+  { name: "White Potato, Baked (medium)", cal: 161, protein: 4, carbs: 37, fat: 0, serving: "1 medium" },
+  { name: "White Potato, Baked (large)", cal: 220, protein: 6, carbs: 51, fat: 0, serving: "1 large" },
+  { name: "Bread, White (1 slice)", cal: 79, protein: 3, carbs: 15, fat: 1, serving: "1 slice" },
   { name: "Bread, Whole Wheat (1 slice)", cal: 80, protein: 4, carbs: 15, fat: 1, serving: "1 slice" },
+  { name: "Bread, Sourdough (1 slice)", cal: 93, protein: 4, carbs: 18, fat: 1, serving: "1 slice" },
+  { name: "Bagel, Plain (1 medium)", cal: 270, protein: 11, carbs: 53, fat: 2, serving: "1 medium bagel" },
+  { name: "English Muffin (1)", cal: 132, protein: 5, carbs: 26, fat: 1, serving: "1 muffin" },
+  { name: "Tortilla, Flour (medium, 8-inch)", cal: 146, protein: 4, carbs: 25, fat: 4, serving: "1 tortilla" },
+  { name: "Tortilla, Corn (2 small)", cal: 104, protein: 3, carbs: 22, fat: 1, serving: "2 tortillas" },
+  { name: "Tortilla, Low-Carb Wheat (1)", cal: 80, protein: 6, carbs: 14, fat: 3, serving: "1 tortilla" },
+  { name: "Pita Bread (1 small)", cal: 77, protein: 3, carbs: 16, fat: 0, serving: "1 small pita" },
+  { name: "Crackers, Wheat Thins (16 crackers)", cal: 140, protein: 2, carbs: 22, fat: 5, serving: "16 crackers" },
+  { name: "Rice Cake, Plain (1)", cal: 35, protein: 1, carbs: 7, fat: 0, serving: "1 cake" },
+  { name: "Rice Cake with PB (1 cake + 1 tbsp)", cal: 130, protein: 4, carbs: 13, fat: 8, serving: "1 cake" },
+  { name: "Granola (1/4 cup)", cal: 150, protein: 4, carbs: 22, fat: 6, serving: "1/4 cup" },
+  { name: "Cereal, Special K (1 cup)", cal: 120, protein: 6, carbs: 22, fat: 1, serving: "1 cup" },
+  { name: "Cereal, Cheerios (1 cup)", cal: 100, protein: 3, carbs: 20, fat: 2, serving: "1 cup" },
+  { name: "Cereal, Frosted Flakes (3/4 cup)", cal: 110, protein: 1, carbs: 27, fat: 0, serving: "3/4 cup" },
+  // ── VEGETABLES ────────────────────────────────────────────────────────────────
+  { name: "Broccoli (1/2 cup, steamed)", cal: 27, protein: 2, carbs: 5, fat: 0, serving: "1/2 cup" },
+  { name: "Broccoli (1 cup, steamed)", cal: 55, protein: 4, carbs: 11, fat: 1, serving: "1 cup" },
+  { name: "Broccoli (2 cups, steamed)", cal: 110, protein: 8, carbs: 22, fat: 1, serving: "2 cups" },
+  { name: "Spinach (1 cup, raw)", cal: 7, protein: 1, carbs: 1, fat: 0, serving: "1 cup" },
+  { name: "Spinach (2 cups, raw)", cal: 14, protein: 2, carbs: 2, fat: 0, serving: "2 cups" },
+  { name: "Kale (1 cup, raw)", cal: 33, protein: 2, carbs: 6, fat: 0, serving: "1 cup" },
+  { name: "Mixed Salad Greens (2 cups)", cal: 20, protein: 2, carbs: 3, fat: 0, serving: "2 cups" },
+  { name: "Asparagus (6 spears)", cal: 20, protein: 2, carbs: 4, fat: 0, serving: "6 spears" },
+  { name: "Green Beans (1 cup, cooked)", cal: 44, protein: 2, carbs: 10, fat: 0, serving: "1 cup" },
+  { name: "Brussels Sprouts (1 cup, roasted)", cal: 65, protein: 5, carbs: 13, fat: 1, serving: "1 cup" },
+  { name: "Cauliflower (1 cup, roasted)", cal: 40, protein: 3, carbs: 8, fat: 0, serving: "1 cup" },
+  { name: "Zucchini (1 cup, cooked)", cal: 27, protein: 2, carbs: 5, fat: 0, serving: "1 cup" },
+  { name: "Bell Pepper (1 medium)", cal: 37, protein: 1, carbs: 9, fat: 0, serving: "1 medium" },
+  { name: "Cucumber (1 cup, sliced)", cal: 16, protein: 1, carbs: 4, fat: 0, serving: "1 cup" },
+  { name: "Celery (2 stalks)", cal: 12, protein: 1, carbs: 2, fat: 0, serving: "2 stalks" },
+  { name: "Carrots (1 medium)", cal: 25, protein: 1, carbs: 6, fat: 0, serving: "1 medium" },
+  { name: "Carrots (1 cup, sliced)", cal: 52, protein: 1, carbs: 12, fat: 0, serving: "1 cup" },
+  { name: "Cherry Tomatoes (1 cup)", cal: 27, protein: 1, carbs: 6, fat: 0, serving: "1 cup" },
+  { name: "Avocado (1/4)", cal: 60, protein: 1, carbs: 3, fat: 5, serving: "1/4 medium" },
+  { name: "Avocado (1/2)", cal: 120, protein: 2, carbs: 6, fat: 11, serving: "1/2 medium" },
+  { name: "Avocado (1 whole)", cal: 240, protein: 3, carbs: 13, fat: 22, serving: "1 whole" },
+  { name: "Corn (1 ear)", cal: 77, protein: 3, carbs: 17, fat: 1, serving: "1 ear" },
+  { name: "Corn (1/2 cup)", cal: 66, protein: 2, carbs: 15, fat: 1, serving: "1/2 cup" },
+  { name: "Edamame (1/2 cup, shelled)", cal: 94, protein: 8, carbs: 8, fat: 4, serving: "1/2 cup" },
+  { name: "Edamame (1 cup, shelled)", cal: 188, protein: 16, carbs: 16, fat: 8, serving: "1 cup" },
+  { name: "Mixed Vegetables (1 cup, steamed)", cal: 59, protein: 3, carbs: 12, fat: 0, serving: "1 cup" },
+  // ── FRUITS ────────────────────────────────────────────────────────────────────
+  { name: "Apple (small)", cal: 77, protein: 0, carbs: 20, fat: 0, serving: "1 small" },
+  { name: "Apple (medium)", cal: 95, protein: 0, carbs: 25, fat: 0, serving: "1 medium" },
+  { name: "Apple (large)", cal: 116, protein: 1, carbs: 31, fat: 0, serving: "1 large" },
+  { name: "Banana (small)", cal: 72, protein: 1, carbs: 19, fat: 0, serving: "1 small" },
+  { name: "Banana (medium)", cal: 105, protein: 1, carbs: 27, fat: 0, serving: "1 medium" },
+  { name: "Banana (large)", cal: 121, protein: 2, carbs: 31, fat: 0, serving: "1 large" },
+  { name: "Strawberries (1/2 cup)", cal: 25, protein: 1, carbs: 6, fat: 0, serving: "1/2 cup" },
+  { name: "Strawberries (1 cup)", cal: 49, protein: 1, carbs: 12, fat: 0, serving: "1 cup" },
+  { name: "Blueberries (1/2 cup)", cal: 42, protein: 1, carbs: 11, fat: 0, serving: "1/2 cup" },
+  { name: "Blueberries (1 cup)", cal: 84, protein: 1, carbs: 21, fat: 0, serving: "1 cup" },
+  { name: "Raspberries (1 cup)", cal: 64, protein: 1, carbs: 15, fat: 1, serving: "1 cup" },
+  { name: "Mixed Berries (1 cup)", cal: 70, protein: 1, carbs: 17, fat: 0, serving: "1 cup" },
+  { name: "Orange (medium)", cal: 62, protein: 1, carbs: 15, fat: 0, serving: "1 medium" },
+  { name: "Grapes (1 cup)", cal: 104, protein: 1, carbs: 27, fat: 0, serving: "1 cup" },
+  { name: "Watermelon (2 cups, cubed)", cal: 86, protein: 2, carbs: 22, fat: 0, serving: "2 cups" },
+  { name: "Mango (1 cup, sliced)", cal: 107, protein: 1, carbs: 28, fat: 0, serving: "1 cup" },
+  { name: "Pineapple (1 cup, chunks)", cal: 82, protein: 1, carbs: 22, fat: 0, serving: "1 cup" },
+  { name: "Peach (1 medium)", cal: 58, protein: 1, carbs: 14, fat: 0, serving: "1 medium" },
+  { name: "Pear (1 medium)", cal: 101, protein: 1, carbs: 27, fat: 0, serving: "1 medium" },
+  { name: "Kiwi (1 medium)", cal: 42, protein: 1, carbs: 10, fat: 0, serving: "1 medium" },
+  { name: "Grapefruit (1/2)", cal: 52, protein: 1, carbs: 13, fat: 0, serving: "1/2 medium" },
+  { name: "Cherries (1 cup)", cal: 87, protein: 1, carbs: 22, fat: 0, serving: "1 cup" },
+  { name: "Dates (2 Medjool)", cal: 133, protein: 1, carbs: 36, fat: 0, serving: "2 dates" },
+  // ── BEANS & LEGUMES ───────────────────────────────────────────────────────────
+  { name: "Black Beans (1/2 cup, cooked)", cal: 109, protein: 7, carbs: 20, fat: 0, serving: "1/2 cup" },
+  { name: "Black Beans (1 cup, cooked)", cal: 218, protein: 15, carbs: 40, fat: 1, serving: "1 cup" },
+  { name: "Chickpeas / Garbanzo (1/2 cup)", cal: 134, protein: 7, carbs: 22, fat: 2, serving: "1/2 cup" },
+  { name: "Chickpeas / Garbanzo (1 cup)", cal: 268, protein: 15, carbs: 45, fat: 4, serving: "1 cup" },
+  { name: "Lentils, Cooked (1/2 cup)", cal: 115, protein: 9, carbs: 20, fat: 0, serving: "1/2 cup" },
+  { name: "Kidney Beans (1/2 cup)", cal: 113, protein: 8, carbs: 20, fat: 0, serving: "1/2 cup" },
+  { name: "Pinto Beans (1/2 cup)", cal: 122, protein: 8, carbs: 22, fat: 1, serving: "1/2 cup" },
+  { name: "Refried Beans (1/2 cup, fat-free)", cal: 110, protein: 7, carbs: 20, fat: 0, serving: "1/2 cup" },
+  { name: "Hummus (2 tbsp)", cal: 50, protein: 2, carbs: 5, fat: 3, serving: "2 tbsp" },
+  { name: "Hummus (1/4 cup)", cal: 100, protein: 5, carbs: 9, fat: 6, serving: "1/4 cup" },
+  // ── NUTS, SEEDS & FATS ────────────────────────────────────────────────────────
+  { name: "Almonds (1 oz / 23 nuts)", cal: 164, protein: 6, carbs: 6, fat: 14, serving: "1 oz" },
+  { name: "Walnuts (1 oz / 14 halves)", cal: 185, protein: 4, carbs: 4, fat: 18, serving: "1 oz" },
+  { name: "Cashews (1 oz / 18 nuts)", cal: 157, protein: 5, carbs: 9, fat: 12, serving: "1 oz" },
+  { name: "Peanuts (1 oz)", cal: 166, protein: 7, carbs: 6, fat: 14, serving: "1 oz" },
+  { name: "Mixed Nuts (1 oz)", cal: 168, protein: 5, carbs: 7, fat: 15, serving: "1 oz" },
+  { name: "Peanut Butter (1 tbsp)", cal: 95, protein: 4, carbs: 4, fat: 8, serving: "1 tbsp" },
+  { name: "Peanut Butter (2 tbsp)", cal: 190, protein: 8, carbs: 7, fat: 16, serving: "2 tbsp" },
+  { name: "Almond Butter (2 tbsp)", cal: 196, protein: 7, carbs: 6, fat: 18, serving: "2 tbsp" },
+  { name: "Sunflower Seeds (1 oz)", cal: 165, protein: 5, carbs: 7, fat: 14, serving: "1 oz" },
+  { name: "Chia Seeds (1 tbsp)", cal: 58, protein: 2, carbs: 5, fat: 4, serving: "1 tbsp" },
+  { name: "Flaxseed (1 tbsp)", cal: 37, protein: 1, carbs: 2, fat: 3, serving: "1 tbsp" },
+  { name: "Olive Oil (1 tbsp)", cal: 119, protein: 0, carbs: 0, fat: 14, serving: "1 tbsp" },
+  { name: "Coconut Oil (1 tbsp)", cal: 121, protein: 0, carbs: 0, fat: 14, serving: "1 tbsp" },
+  { name: "Butter (1 tbsp)", cal: 102, protein: 0, carbs: 0, fat: 12, serving: "1 tbsp" },
+  // ── PROTEIN SUPPLEMENTS ───────────────────────────────────────────────────────
+  { name: "Whey Protein Shake (1 scoop in water)", cal: 120, protein: 24, carbs: 3, fat: 2, serving: "1 scoop (~30g)" },
+  { name: "Whey Protein Shake (1 scoop in milk)", cal: 220, protein: 29, carbs: 15, fat: 5, serving: "1 scoop + 1 cup skim milk" },
+  { name: "Casein Protein Shake (1 scoop)", cal: 120, protein: 24, carbs: 3, fat: 1, serving: "1 scoop" },
+  { name: "Plant Protein Shake (1 scoop)", cal: 130, protein: 22, carbs: 6, fat: 3, serving: "1 scoop" },
+  { name: "Protein Bar (Quest Bar)", cal: 190, protein: 21, carbs: 21, fat: 8, serving: "1 bar (60g)" },
+  { name: "Protein Bar (RXBar)", cal: 210, protein: 12, carbs: 24, fat: 9, serving: "1 bar (52g)" },
+  { name: "Protein Bar (Clif Builder's)", cal: 270, protein: 20, carbs: 30, fat: 8, serving: "1 bar" },
+  { name: "Protein Bar (KIND Protein)", cal: 250, protein: 12, carbs: 24, fat: 12, serving: "1 bar" },
+  { name: "Protein Bar (ONE Bar)", cal: 220, protein: 20, carbs: 24, fat: 8, serving: "1 bar" },
+  { name: "Protein Pudding (1 serving)", cal: 150, protein: 15, carbs: 12, fat: 4, serving: "1 cup" },
+  // ── SMOOTHIES & SHAKES ────────────────────────────────────────────────────────
+  { name: "Protein Smoothie (banana, protein, almond milk)", cal: 320, protein: 26, carbs: 45, fat: 4, serving: "~16 oz" },
+  { name: "Green Smoothie (spinach, banana, protein)", cal: 280, protein: 24, carbs: 40, fat: 3, serving: "~16 oz" },
+  { name: "Berry Protein Shake (berries, Greek yogurt, protein)", cal: 290, protein: 28, carbs: 35, fat: 3, serving: "~16 oz" },
+  { name: "Peanut Butter Banana Shake", cal: 420, protein: 22, carbs: 50, fat: 16, serving: "~16 oz" },
+  { name: "Chocolate Protein Shake (1 scoop + almond milk)", cal: 160, protein: 25, carbs: 8, fat: 4, serving: "~12 oz" },
+  { name: "Smoothie King Lean1 Vanilla (20 oz)", cal: 260, protein: 20, carbs: 38, fat: 4, serving: "20 oz" },
+  // ── BREAKFAST ─────────────────────────────────────────────────────────────────
+  { name: "Avocado Toast (1 slice wheat, 1/4 avocado)", cal: 175, protein: 5, carbs: 20, fat: 9, serving: "1 slice" },
+  { name: "Avocado Toast (2 slices wheat, 1/2 avocado)", cal: 350, protein: 10, carbs: 40, fat: 18, serving: "2 slices" },
+  { name: "Greek Yogurt Parfait (yogurt, berries, granola)", cal: 280, protein: 16, carbs: 42, fat: 6, serving: "1 cup" },
+  { name: "Pancakes (2 medium, plain)", cal: 260, protein: 7, carbs: 46, fat: 6, serving: "2 pancakes" },
+  { name: "Pancakes (2 medium, with syrup)", cal: 360, protein: 7, carbs: 70, fat: 6, serving: "2 pancakes + 2 tbsp syrup" },
+  { name: "Waffles (2 Eggo frozen)", cal: 190, protein: 4, carbs: 30, fat: 6, serving: "2 waffles" },
+  { name: "Bagel with Cream Cheese", cal: 390, protein: 12, carbs: 60, fat: 11, serving: "1 bagel + 2 tbsp CC" },
+  { name: "Bagel with Peanut Butter", cal: 440, protein: 18, carbs: 62, fat: 14, serving: "1 bagel + 2 tbsp PB" },
+  { name: "Toast with Peanut Butter (2 slices)", cal: 320, protein: 14, carbs: 36, fat: 15, serving: "2 slices" },
+  { name: "Breakfast Burrito (eggs, cheese, salsa)", cal: 350, protein: 18, carbs: 38, fat: 14, serving: "1 burrito" },
+  { name: "Breakfast Burrito (eggs, turkey, veggies)", cal: 310, protein: 22, carbs: 36, fat: 9, serving: "1 burrito" },
+  { name: "Oatmeal with Banana and Honey", cal: 280, protein: 7, carbs: 56, fat: 4, serving: "1 bowl" },
+  { name: "Açaí Bowl (base, granola, fruit)", cal: 380, protein: 6, carbs: 65, fat: 11, serving: "1 bowl" },
+  // ── SALADS ────────────────────────────────────────────────────────────────────
+  { name: "Garden Salad (no dressing)", cal: 50, protein: 3, carbs: 8, fat: 0, serving: "2 cups" },
+  { name: "Caesar Salad (side, no croutons)", cal: 150, protein: 4, carbs: 6, fat: 13, serving: "1 side" },
+  { name: "Grilled Chicken Caesar Salad", cal: 350, protein: 32, carbs: 12, fat: 19, serving: "1 full salad" },
+  { name: "Cobb Salad (no dressing)", cal: 410, protein: 30, carbs: 10, fat: 28, serving: "1 full salad" },
+  { name: "Spinach Salad with Grilled Chicken", cal: 280, protein: 28, carbs: 10, fat: 14, serving: "1 salad" },
+  { name: "Greek Salad with Chicken (no dressing)", cal: 300, protein: 26, carbs: 12, fat: 16, serving: "1 salad" },
+  { name: "Taco Salad (no shell, with chicken)", cal: 420, protein: 28, carbs: 35, fat: 18, serving: "1 salad" },
+  { name: "Asian Chicken Salad", cal: 380, protein: 24, carbs: 38, fat: 14, serving: "1 salad" },
+  // ── SOUPS ─────────────────────────────────────────────────────────────────────
+  { name: "Chicken Noodle Soup (1 cup)", cal: 90, protein: 6, carbs: 13, fat: 2, serving: "1 cup" },
+  { name: "Tomato Basil Soup (1 cup)", cal: 120, protein: 3, carbs: 20, fat: 4, serving: "1 cup" },
+  { name: "Lentil Soup (1 cup)", cal: 180, protein: 12, carbs: 30, fat: 2, serving: "1 cup" },
+  { name: "Minestrone Soup (1 cup)", cal: 130, protein: 5, carbs: 22, fat: 3, serving: "1 cup" },
+  { name: "Black Bean Soup (1 cup)", cal: 170, protein: 9, carbs: 30, fat: 2, serving: "1 cup" },
+  { name: "Broccoli Cheddar Soup (1 cup, Panera)", cal: 290, protein: 12, carbs: 21, fat: 18, serving: "1 cup" },
+  { name: "Miso Soup (1 cup)", cal: 35, protein: 3, carbs: 5, fat: 1, serving: "1 cup" },
+  // ── MEAL COMBOS ───────────────────────────────────────────────────────────────
   { name: "Chicken & White Rice (4 oz chicken, 1 cup rice)", cal: 391, protein: 39, carbs: 45, fat: 4, serving: "meal" },
   { name: "Chicken & Brown Rice (4 oz chicken, 1 cup rice)", cal: 401, protein: 40, carbs: 45, fat: 6, serving: "meal" },
   { name: "Chicken & Rice (2 oz chicken, 1 cup rice)", cal: 299, protein: 21, carbs: 45, fat: 2, serving: "meal" },
+  { name: "Chicken & Sweet Potato (4 oz chicken, 1 medium)", cal: 288, protein: 37, carbs: 24, fat: 4, serving: "meal" },
   { name: "Salmon & Quinoa (4 oz salmon, 1 cup quinoa)", cal: 456, protein: 31, carbs: 39, fat: 18, serving: "meal" },
   { name: "Ground Turkey & Sweet Potato Bowl", cal: 350, protein: 32, carbs: 30, fat: 8, serving: "meal" },
   { name: "Shrimp Stir Fry with Brown Rice", cal: 380, protein: 24, carbs: 52, fat: 7, serving: "meal" },
-  { name: "Broccoli (1 cup, steamed)", cal: 55, protein: 4, carbs: 11, fat: 1, serving: "1 cup" },
-  { name: "Spinach (2 cups, raw)", cal: 14, protein: 2, carbs: 2, fat: 0, serving: "2 cups" },
-  { name: "Mixed Salad Greens (2 cups)", cal: 20, protein: 2, carbs: 3, fat: 0, serving: "2 cups" },
-  { name: "Banana (medium)", cal: 105, protein: 1, carbs: 27, fat: 0, serving: "1 medium" },
-  { name: "Apple (medium)", cal: 95, protein: 0, carbs: 25, fat: 0, serving: "1 medium" },
-  { name: "Strawberries (1 cup)", cal: 49, protein: 1, carbs: 12, fat: 0, serving: "1 cup" },
-  { name: "Blueberries (1 cup)", cal: 84, protein: 1, carbs: 21, fat: 0, serving: "1 cup" },
-  { name: "Almonds (1 oz / 23 nuts)", cal: 164, protein: 6, carbs: 6, fat: 14, serving: "1 oz" },
-  { name: "Peanut Butter (2 tbsp)", cal: 190, protein: 8, carbs: 7, fat: 16, serving: "2 tbsp" },
-  { name: "Protein Shake (Whey, 1 scoop)", cal: 120, protein: 24, carbs: 3, fat: 2, serving: "1 scoop" },
-  { name: "Protein Bar (Quest Bar)", cal: 190, protein: 21, carbs: 21, fat: 8, serving: "1 bar" },
-  { name: "Avocado (1/2)", cal: 120, protein: 2, carbs: 6, fat: 11, serving: "1/2 medium" },
+  { name: "Turkey & Veggie Bowl (turkey, rice, broccoli)", cal: 380, protein: 36, carbs: 40, fat: 7, serving: "meal" },
+  { name: "Steak & Potatoes (6 oz sirloin, medium potato)", cal: 476, protein: 52, carbs: 37, fat: 13, serving: "meal" },
+  { name: "Tuna & Rice Cake (1 can tuna, 2 rice cakes)", cal: 150, protein: 21, carbs: 15, fat: 1, serving: "snack meal" },
+  // ── FAST FOOD ─────────────────────────────────────────────────────────────────
   { name: "Chick-fil-A Grilled Chicken Sandwich", cal: 320, protein: 30, carbs: 40, fat: 7, serving: "1 sandwich" },
   { name: "Chick-fil-A Grilled Nuggets (8 ct)", cal: 140, protein: 25, carbs: 2, fat: 4, serving: "8 count" },
-  { name: "Subway Turkey 6-inch (9-grain wheat)", cal: 280, protein: 18, carbs: 46, fat: 4, serving: "6-inch sub" },
+  { name: "Chick-fil-A Grilled Chicken Cool Wrap", cal: 350, protein: 42, carbs: 29, fat: 14, serving: "1 wrap" },
+  { name: "Chick-fil-A Waffle Fries (medium)", cal: 420, protein: 5, carbs: 55, fat: 21, serving: "medium" },
+  { name: "McDonald's Big Mac", cal: 590, protein: 25, carbs: 46, fat: 34, serving: "1 burger" },
+  { name: "McDonald's McDouble", cal: 400, protein: 23, carbs: 36, fat: 20, serving: "1 burger" },
+  { name: "McDonald's Egg McMuffin", cal: 310, protein: 18, carbs: 30, fat: 13, serving: "1 sandwich" },
+  { name: "McDonald's Grilled Chicken Sandwich", cal: 380, protein: 37, carbs: 44, fat: 7, serving: "1 sandwich" },
+  { name: "McDonald's Small Fries", cal: 230, protein: 3, carbs: 29, fat: 11, serving: "small" },
+  { name: "McDonald's Medium Fries", cal: 320, protein: 4, carbs: 43, fat: 15, serving: "medium" },
+  { name: "Subway Turkey 6-inch (9-grain wheat)", cal: 280, protein: 18, carbs: 46, fat: 4, serving: "6-inch" },
+  { name: "Subway Chicken Teriyaki 6-inch", cal: 370, protein: 26, carbs: 54, fat: 5, serving: "6-inch" },
+  { name: "Subway Rotisserie Chicken 6-inch", cal: 350, protein: 29, carbs: 45, fat: 6, serving: "6-inch" },
+  { name: "Subway Veggie Delite 6-inch", cal: 200, protein: 8, carbs: 40, fat: 2, serving: "6-inch" },
   { name: "Chipotle Chicken Bowl (basic, no guac)", cal: 550, protein: 42, carbs: 62, fat: 14, serving: "1 bowl" },
   { name: "Chipotle Chicken Bowl (with guac)", cal: 760, protein: 43, carbs: 79, fat: 30, serving: "1 bowl" },
-  { name: "Scrambled Eggs (2 eggs)", cal: 182, protein: 13, carbs: 2, fat: 14, serving: "2 eggs" },
-  { name: "Greek Yogurt Parfait (yogurt, berries, granola)", cal: 280, protein: 16, carbs: 42, fat: 6, serving: "1 cup" },
-  { name: "Smoothie (banana, berries, protein, almond milk)", cal: 320, protein: 26, carbs: 45, fat: 4, serving: "~16 oz" },
-  { name: "Avocado Toast (2 slices wheat, 1/2 avocado)", cal: 350, protein: 10, carbs: 40, fat: 18, serving: "2 slices" },
-  { name: "Overnight Oats (oats, almond milk, berries)", cal: 310, protein: 11, carbs: 52, fat: 7, serving: "1 jar" },
-  { name: "Grilled Chicken Caesar Salad", cal: 350, protein: 32, carbs: 12, fat: 19, serving: "1 salad" },
-  { name: "Black Beans (1/2 cup)", cal: 109, protein: 7, carbs: 20, fat: 0, serving: "1/2 cup" },
-  { name: "Edamame (1/2 cup, shelled)", cal: 94, protein: 8, carbs: 8, fat: 4, serving: "1/2 cup" },
-  { name: "Almond Milk, Unsweetened (1 cup)", cal: 30, protein: 1, carbs: 1, fat: 3, serving: "1 cup" },
-  { name: "Latte (16 oz, 2% milk)", cal: 190, protein: 12, carbs: 18, fat: 7, serving: "16 oz" },
-  { name: "Olive Oil (1 tbsp)", cal: 119, protein: 0, carbs: 0, fat: 14, serving: "1 tbsp" },
-  { name: "Cheese, Cheddar (1 oz)", cal: 115, protein: 7, carbs: 0, fat: 9, serving: "1 oz" },
-  { name: "String Cheese (1 stick)", cal: 80, protein: 7, carbs: 0, fat: 5, serving: "1 stick" },
-  { name: "Rice Cake (plain)", cal: 35, protein: 1, carbs: 7, fat: 0, serving: "1 cake" },
+  { name: "Chipotle Steak Bowl (basic)", cal: 570, protein: 38, carbs: 63, fat: 17, serving: "1 bowl" },
+  { name: "Chipotle Chicken Burrito (flour tortilla)", cal: 870, protein: 51, carbs: 98, fat: 28, serving: "1 burrito" },
+  { name: "Chipotle Chicken Tacos (3 corn tortillas)", cal: 405, protein: 30, carbs: 50, fat: 10, serving: "3 tacos" },
+  { name: "Taco Bell Chicken Quesadilla", cal: 520, protein: 28, carbs: 40, fat: 27, serving: "1 quesadilla" },
+  { name: "Taco Bell Bean & Cheese Burrito", cal: 380, protein: 15, carbs: 55, fat: 12, serving: "1 burrito" },
+  { name: "Wendy's Grilled Chicken Sandwich", cal: 370, protein: 35, carbs: 38, fat: 8, serving: "1 sandwich" },
+  { name: "Wendy's Small Chili", cal: 160, protein: 14, carbs: 16, fat: 4, serving: "small" },
+  { name: "Panera Turkey Avocado BLT", cal: 590, protein: 31, carbs: 55, fat: 28, serving: "1 sandwich" },
+  { name: "Panera You Pick 2 (half turkey, cup tomato soup)", cal: 470, protein: 24, carbs: 56, fat: 16, serving: "combo" },
+  { name: "Starbucks Egg White & Roasted Red Pepper Egg Bites", cal: 170, protein: 13, carbs: 12, fat: 7, serving: "2 bites" },
+  { name: "Starbucks Spinach & Feta Wrap", cal: 290, protein: 20, carbs: 33, fat: 10, serving: "1 wrap" },
+  // ── SNACKS ────────────────────────────────────────────────────────────────────
+  { name: "Apple with Peanut Butter (1 apple + 2 tbsp PB)", cal: 285, protein: 9, carbs: 39, fat: 16, serving: "1 apple + 2 tbsp" },
+  { name: "Celery & Peanut Butter (3 stalks + 2 tbsp)", cal: 212, protein: 9, carbs: 16, fat: 16, serving: "3 stalks + 2 tbsp" },
+  { name: "Hummus & Carrots (1/4 cup + 1 cup carrots)", cal: 130, protein: 5, carbs: 19, fat: 6, serving: "serving" },
+  { name: "Hummus & Pita (2 tbsp + 1/2 pita)", cal: 127, protein: 5, carbs: 20, fat: 3, serving: "serving" },
+  { name: "Mixed Nuts (1 oz)", cal: 168, protein: 5, carbs: 7, fat: 15, serving: "1 oz" },
+  { name: "Trail Mix (1 oz)", cal: 130, protein: 3, carbs: 14, fat: 8, serving: "1 oz" },
+  { name: "Cheese & Crackers (1 oz cheese + 5 crackers)", cal: 190, protein: 8, carbs: 15, fat: 11, serving: "serving" },
   { name: "Popcorn (3 cups, air-popped)", cal: 93, protein: 3, carbs: 19, fat: 1, serving: "3 cups" },
+  { name: "Popcorn (1 bag, microwave light)", cal: 130, protein: 3, carbs: 23, fat: 5, serving: "1 bag" },
+  { name: "Chips, Lay's Classic (1 oz)", cal: 160, protein: 2, carbs: 15, fat: 10, serving: "1 oz (15 chips)" },
+  { name: "Tortilla Chips (1 oz, ~12 chips)", cal: 140, protein: 2, carbs: 19, fat: 6, serving: "1 oz" },
   { name: "Dark Chocolate (1 oz, 70%+)", cal: 170, protein: 2, carbs: 13, fat: 12, serving: "1 oz" },
-  { name: "Chicken Noodle Soup (1 cup)", cal: 90, protein: 6, carbs: 13, fat: 2, serving: "1 cup" },
-  { name: "Lentil Soup (1 cup)", cal: 180, protein: 12, carbs: 30, fat: 2, serving: "1 cup" },
+  { name: "Dark Chocolate (2 squares)", cal: 70, protein: 1, carbs: 7, fat: 4, serving: "2 squares" },
+  { name: "Protein Muffin (homemade, oat-based)", cal: 185, protein: 10, carbs: 24, fat: 5, serving: "1 muffin" },
+  { name: "Baby Carrots (1 cup)", cal: 52, protein: 1, carbs: 12, fat: 0, serving: "1 cup" },
+  { name: "Edamame in Shell (1 cup)", cal: 122, protein: 11, carbs: 9, fat: 5, serving: "1 cup" },
+  // ── BEVERAGES ─────────────────────────────────────────────────────────────────
+  { name: "Water (0 cal)", cal: 0, protein: 0, carbs: 0, fat: 0, serving: "any amount" },
+  { name: "Coffee, Black (8 oz)", cal: 2, protein: 0, carbs: 0, fat: 0, serving: "8 oz" },
+  { name: "Espresso (1 shot)", cal: 5, protein: 0, carbs: 1, fat: 0, serving: "1 shot" },
+  { name: "Latte, Skim Milk (12 oz)", cal: 120, protein: 9, carbs: 14, fat: 0, serving: "12 oz" },
+  { name: "Latte, 2% Milk (16 oz)", cal: 190, protein: 12, carbs: 18, fat: 7, serving: "16 oz" },
+  { name: "Latte, Oat Milk (12 oz)", cal: 140, protein: 5, carbs: 20, fat: 5, serving: "12 oz" },
+  { name: "Cappuccino (12 oz, 2% milk)", cal: 120, protein: 8, carbs: 12, fat: 4, serving: "12 oz" },
+  { name: "Cold Brew Coffee (12 oz, black)", cal: 5, protein: 1, carbs: 0, fat: 0, serving: "12 oz" },
+  { name: "Almond Milk, Unsweetened (1 cup)", cal: 30, protein: 1, carbs: 1, fat: 3, serving: "1 cup" },
+  { name: "Oat Milk (1 cup)", cal: 120, protein: 3, carbs: 16, fat: 5, serving: "1 cup" },
+  { name: "Orange Juice (8 oz)", cal: 112, protein: 2, carbs: 26, fat: 0, serving: "8 oz" },
+  { name: "Apple Juice (8 oz)", cal: 114, protein: 0, carbs: 28, fat: 0, serving: "8 oz" },
+  { name: "Green Tea (8 oz)", cal: 2, protein: 0, carbs: 0, fat: 0, serving: "8 oz" },
+  { name: "Sparkling Water (0 cal)", cal: 0, protein: 0, carbs: 0, fat: 0, serving: "12 oz" },
+  { name: "Sports Drink, Gatorade (20 oz)", cal: 140, protein: 0, carbs: 36, fat: 0, serving: "20 oz" },
+  { name: "Coconut Water (1 cup)", cal: 46, protein: 2, carbs: 9, fat: 0, serving: "1 cup" },
+  { name: "Soda, Coca-Cola (12 oz)", cal: 140, protein: 0, carbs: 39, fat: 0, serving: "12 oz" },
+  { name: "Soda, Diet Coke (12 oz)", cal: 0, protein: 0, carbs: 0, fat: 0, serving: "12 oz" },
+  // ── CONDIMENTS & EXTRAS ───────────────────────────────────────────────────────
+  { name: "Honey (1 tbsp)", cal: 64, protein: 0, carbs: 17, fat: 0, serving: "1 tbsp" },
+  { name: "Maple Syrup (1 tbsp)", cal: 52, protein: 0, carbs: 13, fat: 0, serving: "1 tbsp" },
+  { name: "Ketchup (1 tbsp)", cal: 17, protein: 0, carbs: 4, fat: 0, serving: "1 tbsp" },
+  { name: "Salsa (2 tbsp)", cal: 10, protein: 0, carbs: 2, fat: 0, serving: "2 tbsp" },
+  { name: "Guacamole (2 tbsp)", cal: 50, protein: 1, carbs: 3, fat: 4, serving: "2 tbsp" },
+  { name: "Sour Cream (2 tbsp)", cal: 60, protein: 1, carbs: 1, fat: 6, serving: "2 tbsp" },
+  { name: "Ranch Dressing (2 tbsp)", cal: 140, protein: 1, carbs: 1, fat: 14, serving: "2 tbsp" },
+  { name: "Balsamic Vinaigrette (2 tbsp)", cal: 90, protein: 0, carbs: 5, fat: 8, serving: "2 tbsp" },
+  { name: "Hot Sauce (1 tsp)", cal: 0, protein: 0, carbs: 0, fat: 0, serving: "1 tsp" },
+  { name: "Soy Sauce (1 tbsp)", cal: 11, protein: 2, carbs: 1, fat: 0, serving: "1 tbsp" },
 ];
 
 // ─── WORKOUT DATABASE ─────────────────────────────────────────────────────────
@@ -1687,7 +1967,11 @@ function OnboardingScreen({onDone}) {
 
 // ─── LOGIN / SIGNUP SCREEN ────────────────────────────────────────────────────
 function AuthScreen({onAuth}) {
-  const [mode,setMode]=useState("welcome"); // "welcome" | "login" | "signup"
+  const [screen,setScreen]=useState("welcome"); // welcome | login | signup | questionnaire
+  const [step,setStep]=useState(0); // questionnaire step 0-6
+  const [anim,setAnim]=useState(false);
+
+  // Account fields
   const [name,setName]=useState("");
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
@@ -1695,7 +1979,27 @@ function AuthScreen({onAuth}) {
   const [error,setError]=useState("");
   const [loading,setLoading]=useState(false);
 
-  // For now: local auth stored in localStorage (replace with real backend for App Store)
+  // Profile questionnaire fields
+  const [sex,setSex]=useState("");
+  const [age,setAge]=useState("");
+  const [heightFt,setHeightFt]=useState("");
+  const [heightIn,setHeightIn]=useState("");
+  const [weight,setWeight]=useState("");
+  const [weightUnit,setWeightUnit]=useState("lbs");
+  const [goalWeight,setGoalWeight]=useState("");
+  const [goal,setGoal]=useState("");
+  const [activity,setActivity]=useState("");
+  const [challenges,setChallenges]=useState([]);
+  const [dietStyle,setDietStyle]=useState("");
+  const [workoutFreq,setWorkoutFreq]=useState("");
+  const [motivation,setMotivation]=useState("");
+
+  const aS={...iS,marginBottom:12,fontSize:15,padding:"14px 16px",borderRadius:14,background:"rgba(255,252,248,0.9)"};
+
+  const TOTAL_STEPS=7;
+
+  const toggleChallenge=(c)=>setChallenges(p=>p.includes(c)?p.filter(x=>x!==c):[...p,c]);
+
   const handleSignup=()=>{
     setError("");
     if(!name.trim()){setError("Please enter your name.");return;}
@@ -1709,7 +2013,8 @@ function AuthScreen({onAuth}) {
       LS.set("glorie_users",users);
       LS.set("glorie_session",{email:email.toLowerCase(),name,loggedIn:true});
       setLoading(false);
-      onAuth({name,email:email.toLowerCase()});
+      setScreen("questionnaire");
+      setStep(0);
     },800);
   };
 
@@ -1729,125 +2034,316 @@ function AuthScreen({onAuth}) {
     },800);
   };
 
-  const inputStyle={
-    ...iS,
-    marginBottom:12,
-    fontSize:15,
-    padding:"14px 16px",
-    borderRadius:14,
-    background:"rgba(255,252,248,0.9)",
+  const nextStep=()=>{
+    setAnim(true);
+    setTimeout(()=>{setStep(s=>s+1);setAnim(false);},200);
   };
 
-  if(mode==="welcome") return (
-    <div style={{minHeight:"100vh",background:G.bg,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-between",fontFamily:"'Cormorant Garamond',serif",maxWidth:480,margin:"0 auto",padding:"0 28px"}}>
+  const prevStep=()=>{
+    if(step===0){setScreen("signup");return;}
+    setAnim(true);
+    setTimeout(()=>{setStep(s=>s-1);setAnim(false);},200);
+  };
+
+  const finishQuestionnaire=()=>{
+    // Build and save full profile from questionnaire answers
+    const tdeeMultipliers={sedentary:1.2,light:1.375,moderate:1.55,active:1.725,veryActive:1.9};
+    const wKg=weightUnit==="lbs"?Number(weight)*0.453592:Number(weight);
+    const hCm=(parseInt(heightFt)||0)*30.48+(parseInt(heightIn)||0)*2.54;
+    const ageN=parseInt(age)||25;
+    const bmr=sex==="female"?10*wKg+6.25*hCm-5*ageN-161:10*wKg+6.25*hCm-5*ageN+5;
+    const actKey=activity||"moderate";
+    const tdee=Math.round(bmr*(tdeeMultipliers[actKey]||1.55));
+    let goalCal=tdee;
+    if(goal==="lose")goalCal=tdee-500;
+    if(goal==="gain")goalCal=tdee+300;
+
+    const profile={
+      name,age,sex,weight,weightUnit,
+      heightFt,heightIn,heightUnit:"imperial",
+      activity:actKey,goal:goal||"maintain",
+      goalWeight,startWeight:weight,
+      dietStyle,workoutFreq,challenges,motivation,
+      goalCalories:Math.max(1200,Math.round(goalCal)),
+      onboarded:true,
+    };
+    LS.set("wellness_profile",profile);
+    onAuth({name,email:email.toLowerCase(),profile});
+  };
+
+  // ── Welcome screen ─────────────────────────────────────────────────────────
+  if(screen==="welcome") return (
+    <div style={{minHeight:"100vh",background:G.bg,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-between",fontFamily:"'Cormorant Garamond',serif",maxWidth:480,margin:"0 auto",padding:"0 28px",position:"relative",overflow:"hidden"}}>
       <GoldSpeckles corner="tr"/>
       <GoldSpeckles corner="bl"/>
-
-      {/* Logo area */}
       <div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",textAlign:"center"}}>
         <GlorieLogo size={80}/>
         <div style={{fontSize:54,fontWeight:600,color:G.inkSoft,letterSpacing:"-1px",marginTop:20,lineHeight:1}}>Glorié</div>
-        <div style={{fontSize:16,color:G.inkLight,fontStyle:"italic",marginTop:10,letterSpacing:"0.03em"}}>your daily glow, inside and out.</div>
-
+        <div style={{fontSize:16,color:G.inkLight,fontStyle:"italic",marginTop:10}}>your daily glow, inside and out.</div>
         <div style={{display:"flex",gap:12,marginTop:48,width:"100%",flexDirection:"column"}}>
-          <button onClick={()=>setMode("signup")} style={{
-            padding:"16px",borderRadius:16,border:"none",cursor:"pointer",
-            background:`linear-gradient(135deg,${G.peach},${G.gold})`,
-            color:G.ink,fontWeight:700,fontSize:15,
-            fontFamily:"'Jost',sans-serif",letterSpacing:"0.08em",textTransform:"uppercase",
-            boxShadow:"0 4px 20px rgba(201,169,110,0.3)",
-          }}>Create Account</button>
-          <button onClick={()=>setMode("login")} style={{
-            padding:"16px",borderRadius:16,border:`1.5px solid ${G.cardBorder}`,cursor:"pointer",
-            background:"rgba(255,252,248,0.8)",
-            color:G.inkSoft,fontWeight:600,fontSize:15,
-            fontFamily:"'Jost',sans-serif",letterSpacing:"0.08em",textTransform:"uppercase",
-          }}>Sign In</button>
+          <button onClick={()=>setScreen("signup")} style={{padding:"16px",borderRadius:16,border:"none",cursor:"pointer",background:`linear-gradient(135deg,${G.peach},${G.gold})`,color:G.ink,fontWeight:700,fontSize:15,fontFamily:"'Jost',sans-serif",letterSpacing:"0.08em",textTransform:"uppercase",boxShadow:"0 4px 20px rgba(201,169,110,0.3)"}}>Begin My Journey</button>
+          <button onClick={()=>setScreen("login")} style={{padding:"16px",borderRadius:16,border:`1.5px solid ${G.cardBorder}`,cursor:"pointer",background:"rgba(255,252,248,0.8)",color:G.inkSoft,fontWeight:600,fontSize:15,fontFamily:"'Jost',sans-serif",letterSpacing:"0.08em",textTransform:"uppercase"}}>Sign In</button>
         </div>
       </div>
-
-      <div style={{paddingBottom:40,fontSize:11,color:G.inkLight,fontFamily:"'Jost',sans-serif",letterSpacing:"0.1em",textAlign:"center",lineHeight:1.8}}>
-        Your personal wellness companion.<br/>Private. Judgment-free. Yours.
-      </div>
+      <div style={{paddingBottom:40,fontSize:11,color:G.inkLight,fontFamily:"'Jost',sans-serif",letterSpacing:"0.1em",textAlign:"center",lineHeight:1.8}}>Private. Judgment-free. Yours.</div>
     </div>
   );
 
-  return (
-    <div style={{minHeight:"100vh",background:G.bg,fontFamily:"'Cormorant Garamond',serif",maxWidth:480,margin:"0 auto",padding:"0 24px"}}>
+  // ── Login screen ───────────────────────────────────────────────────────────
+  if(screen==="login") return (
+    <div style={{minHeight:"100vh",background:G.bg,fontFamily:"'Cormorant Garamond',serif",maxWidth:480,margin:"0 auto",padding:"0 24px",overflowY:"auto"}}>
       <GoldSpeckles corner="tr"/>
-
-      {/* Back button */}
       <div style={{paddingTop:52,marginBottom:8}}>
-        <button onClick={()=>{setMode("welcome");setError("");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:13,color:G.inkLight,fontFamily:"'Jost',sans-serif",letterSpacing:"0.05em",display:"flex",alignItems:"center",gap:6}}>← Back</button>
+        <button onClick={()=>setScreen("welcome")} style={{background:"none",border:"none",cursor:"pointer",fontSize:13,color:G.inkLight,fontFamily:"'Jost',sans-serif"}}>← Back</button>
       </div>
-
-      {/* Header */}
       <div style={{marginBottom:32,marginTop:24}}>
         <GlorieLogo size={40}/>
-        <div style={{fontSize:36,fontWeight:600,color:G.inkSoft,marginTop:12,lineHeight:1}}>
-          {mode==="signup"?"Welcome.":"Welcome back."}
+        <div style={{fontSize:36,fontWeight:600,color:G.inkSoft,marginTop:12,lineHeight:1}}>Welcome back.</div>
+        <div style={{fontSize:15,color:G.inkLight,fontStyle:"italic",marginTop:6}}>Sign in to continue your journey.</div>
+      </div>
+      <input placeholder="Email address" type="email" value={email} onChange={e=>setEmail(e.target.value)} style={aS}/>
+      <div style={{position:"relative",marginBottom:12}}>
+        <input placeholder="Password" type={showPass?"text":"password"} value={password} onChange={e=>setPassword(e.target.value)} style={{...aS,marginBottom:0,paddingRight:48}}/>
+        <button onClick={()=>setShowPass(p=>!p)} style={{position:"absolute",right:14,top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:16,color:G.inkLight}}>{showPass?"🙈":"👁️"}</button>
+      </div>
+      {error&&<div style={{background:"rgba(200,80,60,0.08)",border:"1px solid rgba(200,80,60,0.2)",borderRadius:12,padding:"10px 14px",marginBottom:12,fontSize:13,color:"#A04030",fontFamily:"'Jost',sans-serif"}}>{error}</div>}
+      <button onClick={handleLogin} disabled={loading} style={{width:"100%",padding:"16px",borderRadius:16,border:"none",cursor:"pointer",background:loading?`rgba(201,169,110,0.4)`:`linear-gradient(135deg,${G.peach},${G.gold})`,color:G.ink,fontWeight:700,fontSize:15,fontFamily:"'Jost',sans-serif",letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:16}}>{loading?"Please wait…":"Sign In"}</button>
+      <div style={{textAlign:"center",fontSize:13,color:G.inkLight,fontFamily:"'Jost',sans-serif"}}>Don't have an account? <span onClick={()=>setScreen("signup")} style={{color:G.gold,cursor:"pointer",fontWeight:600}}>Create one</span></div>
+    </div>
+  );
+
+  // ── Signup screen ──────────────────────────────────────────────────────────
+  if(screen==="signup") return (
+    <div style={{minHeight:"100vh",background:G.bg,fontFamily:"'Cormorant Garamond',serif",maxWidth:480,margin:"0 auto",padding:"0 24px",overflowY:"auto"}}>
+      <GoldSpeckles corner="tr"/>
+      <div style={{paddingTop:52,marginBottom:8}}>
+        <button onClick={()=>setScreen("welcome")} style={{background:"none",border:"none",cursor:"pointer",fontSize:13,color:G.inkLight,fontFamily:"'Jost',sans-serif"}}>← Back</button>
+      </div>
+      <div style={{marginBottom:32,marginTop:24}}>
+        <GlorieLogo size={40}/>
+        <div style={{fontSize:36,fontWeight:600,color:G.inkSoft,marginTop:12,lineHeight:1}}>Welcome.</div>
+        <div style={{fontSize:15,color:G.inkLight,fontStyle:"italic",marginTop:6}}>Let's create your account — then we'll personalize everything.</div>
+      </div>
+      <input placeholder="Your first name" value={name} onChange={e=>setName(e.target.value)} style={aS}/>
+      <input placeholder="Email address" type="email" value={email} onChange={e=>setEmail(e.target.value)} style={aS}/>
+      <div style={{position:"relative",marginBottom:12}}>
+        <input placeholder="Password (6+ characters)" type={showPass?"text":"password"} value={password} onChange={e=>setPassword(e.target.value)} style={{...aS,marginBottom:0,paddingRight:48}}/>
+        <button onClick={()=>setShowPass(p=>!p)} style={{position:"absolute",right:14,top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:16,color:G.inkLight}}>{showPass?"🙈":"👁️"}</button>
+      </div>
+      {error&&<div style={{background:"rgba(200,80,60,0.08)",border:"1px solid rgba(200,80,60,0.2)",borderRadius:12,padding:"10px 14px",marginBottom:12,fontSize:13,color:"#A04030",fontFamily:"'Jost',sans-serif"}}>{error}</div>}
+      <button onClick={handleSignup} disabled={loading} style={{width:"100%",padding:"16px",borderRadius:16,border:"none",cursor:"pointer",background:loading?`rgba(201,169,110,0.4)`:`linear-gradient(135deg,${G.peach},${G.gold})`,color:G.ink,fontWeight:700,fontSize:15,fontFamily:"'Jost',sans-serif",letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:16,boxShadow:"0 4px 20px rgba(201,169,110,0.3)"}}>{loading?"Creating your account…":"Continue →"}</button>
+      <div style={{textAlign:"center",fontSize:13,color:G.inkLight,fontFamily:"'Jost',sans-serif"}}>Already have an account? <span onClick={()=>setScreen("login")} style={{color:G.gold,cursor:"pointer",fontWeight:600}}>Sign in</span></div>
+      <div style={{marginTop:24,fontSize:11,color:G.inkLight,fontFamily:"'Jost',sans-serif",textAlign:"center",lineHeight:1.8,paddingBottom:40}}>Your data stays on your device.<br/>Private. Secure. Always yours.</div>
+    </div>
+  );
+
+  // ── Profile questionnaire ──────────────────────────────────────────────────
+  const STEPS=[
+    {
+      id:"basics",
+      emoji:"🌸",
+      title:`Nice to meet you, ${name}!`,
+      subtitle:"Let's start with the basics.",
+      content:(
+        <div>
+          <div style={{fontSize:13,color:G.inkMid,marginBottom:12,fontFamily:"'Jost',sans-serif",fontWeight:600,textTransform:"uppercase",letterSpacing:1}}>I am</div>
+          <div style={{display:"flex",gap:10,marginBottom:20}}>
+            {[{val:"female",emoji:"👩",label:"Female"},{val:"male",emoji:"👨",label:"Male"},{val:"other",emoji:"🧑",label:"Other"}].map(s=>(
+              <button key={s.val} onClick={()=>setSex(s.val)} style={{flex:1,padding:"16px 8px",borderRadius:16,border:`2px solid ${sex===s.val?G.gold:G.cardBorder}`,background:sex===s.val?`linear-gradient(135deg,${G.peachSoft},${G.goldLight})`:"rgba(255,252,248,0.8)",cursor:"pointer",fontFamily:"'Cormorant Garamond',serif",transition:"all 0.2s"}}>
+                <div style={{fontSize:28,marginBottom:4}}>{s.emoji}</div>
+                <div style={{fontSize:13,fontWeight:600,color:sex===s.val?G.inkSoft:G.inkMid}}>{s.label}</div>
+              </button>
+            ))}
+          </div>
+          <div style={{fontSize:13,color:G.inkMid,marginBottom:8,fontFamily:"'Jost',sans-serif",fontWeight:600,textTransform:"uppercase",letterSpacing:1}}>Age</div>
+          <input placeholder="Your age" type="number" value={age} onChange={e=>setAge(e.target.value)} style={{...aS,marginBottom:0}}/>
         </div>
-        <div style={{fontSize:15,color:G.inkLight,fontStyle:"italic",marginTop:6}}>
-          {mode==="signup"?"Let's create your account.":"Sign in to your account."}
+      ),
+      canNext:sex&&age,
+    },
+    {
+      id:"body",
+      emoji:"⚖️",
+      title:"Your body, your numbers.",
+      subtitle:"This stays completely private and is used only to calculate your personalized goals.",
+      content:(
+        <div>
+          <div style={{fontSize:13,color:G.inkMid,marginBottom:8,fontFamily:"'Jost',sans-serif",fontWeight:600,textTransform:"uppercase",letterSpacing:1}}>Height</div>
+          <div style={{display:"flex",gap:8,marginBottom:16}}>
+            <input placeholder="Feet" type="number" value={heightFt} onChange={e=>setHeightFt(e.target.value)} style={{...aS,flex:1,marginBottom:0}}/>
+            <input placeholder="Inches" type="number" value={heightIn} onChange={e=>setHeightIn(e.target.value)} style={{...aS,flex:1,marginBottom:0}}/>
+          </div>
+          <div style={{fontSize:13,color:G.inkMid,marginBottom:8,fontFamily:"'Jost',sans-serif",fontWeight:600,textTransform:"uppercase",letterSpacing:1}}>Current Weight</div>
+          <div style={{display:"flex",gap:8,marginBottom:8}}>
+            <input placeholder="Weight" type="number" value={weight} onChange={e=>setWeight(e.target.value)} style={{...aS,flex:1,marginBottom:0}}/>
+            <div style={{display:"flex",flexDirection:"column",gap:4}}>
+              {["lbs","kg"].map(u=><button key={u} onClick={()=>setWeightUnit(u)} style={{padding:"8px 14px",borderRadius:10,border:`1.5px solid ${weightUnit===u?G.gold:G.cardBorder}`,background:weightUnit===u?`linear-gradient(135deg,${G.peachSoft},${G.goldLight})`:"rgba(255,252,248,0.8)",cursor:"pointer",fontSize:12,fontWeight:600,color:weightUnit===u?G.inkSoft:G.inkLight,fontFamily:"'Jost',sans-serif"}}>{u}</button>)}
+            </div>
+          </div>
+          <div style={{fontSize:13,color:G.inkMid,marginBottom:8,fontFamily:"'Jost',sans-serif",fontWeight:600,textTransform:"uppercase",letterSpacing:1}}>Goal Weight <span style={{fontSize:10,color:G.inkLight,textTransform:"none"}}>(optional)</span></div>
+          <input placeholder={`Goal weight (${weightUnit})`} type="number" value={goalWeight} onChange={e=>setGoalWeight(e.target.value)} style={{...aS,marginBottom:0}}/>
+        </div>
+      ),
+      canNext:weight&&heightFt,
+    },
+    {
+      id:"goal",
+      emoji:"🎯",
+      title:"What's your main goal?",
+      subtitle:"We'll adjust your calorie target, workout suggestions, and insights around this.",
+      content:(
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          {[
+            {val:"lose",emoji:"🔥",title:"Lose Fat",desc:"Reduce body fat while preserving muscle"},
+            {val:"maintain",emoji:"⚖️",title:"Maintain Weight",desc:"Stay at my current weight and improve health"},
+            {val:"gain",emoji:"💪",title:"Build Muscle",desc:"Gain lean muscle and increase strength"},
+            {val:"energy",emoji:"⚡",title:"More Energy",desc:"Feel better, sleep better, move more"},
+            {val:"health",emoji:"🌿",title:"Overall Wellness",desc:"Focus on healthy habits and balance"},
+          ].map(g=>(
+            <button key={g.val} onClick={()=>setGoal(g.val)} style={{display:"flex",alignItems:"center",gap:14,padding:"14px 16px",borderRadius:16,border:`2px solid ${goal===g.val?G.gold:G.cardBorder}`,background:goal===g.val?`linear-gradient(135deg,${G.peachSoft},${G.goldLight})`:"rgba(255,252,248,0.8)",cursor:"pointer",textAlign:"left",fontFamily:"inherit",transition:"all 0.2s"}}>
+              <span style={{fontSize:28}}>{g.emoji}</span>
+              <div><div style={{fontWeight:600,fontSize:15,color:goal===g.val?G.inkSoft:G.inkMid,fontFamily:"'Cormorant Garamond',serif"}}>{g.title}</div><div style={{fontSize:12,color:G.inkLight,marginTop:2}}>{g.desc}</div></div>
+              {goal===g.val&&<span style={{marginLeft:"auto",color:G.gold,fontSize:18}}>✓</span>}
+            </button>
+          ))}
+        </div>
+      ),
+      canNext:goal,
+    },
+    {
+      id:"activity",
+      emoji:"🏃",
+      title:"How active are you?",
+      subtitle:"Be honest — this directly impacts your calorie calculations.",
+      content:(
+        <div style={{display:"flex",flexDirection:"column",gap:8}}>
+          {[
+            {val:"sedentary",emoji:"🪑",title:"Sedentary",desc:"Desk job, little to no exercise"},
+            {val:"light",emoji:"🚶",title:"Lightly Active",desc:"Light exercise 1–3 days/week"},
+            {val:"moderate",emoji:"🏃",title:"Moderately Active",desc:"Exercise 3–5 days/week"},
+            {val:"active",emoji:"🏋️",title:"Very Active",desc:"Hard exercise 6–7 days/week"},
+            {val:"veryActive",emoji:"⚡",title:"Extra Active",desc:"Physical job + daily intense training"},
+          ].map(a=>(
+            <button key={a.val} onClick={()=>setActivity(a.val)} style={{display:"flex",alignItems:"center",gap:14,padding:"13px 16px",borderRadius:16,border:`2px solid ${activity===a.val?G.gold:G.cardBorder}`,background:activity===a.val?`linear-gradient(135deg,${G.peachSoft},${G.goldLight})`:"rgba(255,252,248,0.8)",cursor:"pointer",textAlign:"left",fontFamily:"inherit",transition:"all 0.2s"}}>
+              <span style={{fontSize:24}}>{a.emoji}</span>
+              <div><div style={{fontWeight:600,fontSize:14,color:activity===a.val?G.inkSoft:G.inkMid,fontFamily:"'Cormorant Garamond',serif"}}>{a.title}</div><div style={{fontSize:11,color:G.inkLight,marginTop:1}}>{a.desc}</div></div>
+              {activity===a.val&&<span style={{marginLeft:"auto",color:G.gold,fontSize:18}}>✓</span>}
+            </button>
+          ))}
+        </div>
+      ),
+      canNext:activity,
+    },
+    {
+      id:"diet",
+      emoji:"🥗",
+      title:"Any dietary preferences?",
+      subtitle:"We'll highlight relevant foods and meals in your database.",
+      content:(
+        <div>
+          <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:16}}>
+            {["No restrictions","High Protein","Low Carb / Keto","Vegetarian","Vegan","Intermittent Fasting","Gluten Free","Dairy Free","Mediterranean","Paleo"].map(d=>(
+              <button key={d} onClick={()=>setDietStyle(d)} style={{padding:"10px 16px",borderRadius:99,border:`1.5px solid ${dietStyle===d?G.gold:G.cardBorder}`,background:dietStyle===d?`linear-gradient(135deg,${G.peach},${G.gold})`:"rgba(255,252,248,0.8)",cursor:"pointer",fontSize:12,fontWeight:600,color:dietStyle===d?G.ink:G.inkMid,fontFamily:"'Jost',sans-serif",transition:"all 0.2s"}}>{d}</button>
+            ))}
+          </div>
+          <div style={{fontSize:13,color:G.inkMid,marginBottom:8,fontFamily:"'Jost',sans-serif",fontWeight:600,textTransform:"uppercase",letterSpacing:1}}>How often do you work out?</div>
+          <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+            {["Never","1–2x/week","3–4x/week","5–6x/week","Every day"].map(f=>(
+              <button key={f} onClick={()=>setWorkoutFreq(f)} style={{padding:"10px 16px",borderRadius:99,border:`1.5px solid ${workoutFreq===f?G.gold:G.cardBorder}`,background:workoutFreq===f?`linear-gradient(135deg,${G.peach},${G.gold})`:"rgba(255,252,248,0.8)",cursor:"pointer",fontSize:12,fontWeight:600,color:workoutFreq===f?G.ink:G.inkMid,fontFamily:"'Jost',sans-serif",transition:"all 0.2s"}}>{f}</button>
+            ))}
+          </div>
+        </div>
+      ),
+      canNext:true,
+    },
+    {
+      id:"challenges",
+      emoji:"💙",
+      title:"What are your biggest challenges?",
+      subtitle:"Select all that apply — your app will give you targeted support.",
+      content:(
+        <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+          {[
+            "Staying consistent","Late night eating","Emotional eating",
+            "Not drinking enough water","Skipping workouts","Low energy",
+            "Stress eating","Poor sleep","Slow metabolism","Plateaus",
+            "No time to meal prep","Social eating","Cravings",
+          ].map(c=>(
+            <button key={c} onClick={()=>toggleChallenge(c)} style={{padding:"10px 16px",borderRadius:99,border:`1.5px solid ${challenges.includes(c)?G.gold:G.cardBorder}`,background:challenges.includes(c)?`linear-gradient(135deg,${G.peach},${G.gold})`:"rgba(255,252,248,0.8)",cursor:"pointer",fontSize:12,fontWeight:600,color:challenges.includes(c)?G.ink:G.inkMid,fontFamily:"'Jost',sans-serif",transition:"all 0.2s"}}>{c}</button>
+          ))}
+        </div>
+      ),
+      canNext:true,
+    },
+    {
+      id:"motivation",
+      emoji:"✨",
+      title:"What motivates you most?",
+      subtitle:"We'll personalize your daily messages and insights around this.",
+      content:(
+        <div style={{display:"flex",flexDirection:"column",gap:8}}>
+          {[
+            {val:"confidence",emoji:"💫",label:"Feeling confident in my body"},
+            {val:"health",emoji:"❤️",label:"Long-term health and longevity"},
+            {val:"energy",emoji:"⚡",label:"Having more energy every day"},
+            {val:"strength",emoji:"💪",label:"Getting stronger and fitter"},
+            {val:"appearance",emoji:"🌸",label:"Looking and feeling my best"},
+            {val:"habits",emoji:"🌿",label:"Building lasting healthy habits"},
+          ].map(m=>(
+            <button key={m.val} onClick={()=>setMotivation(m.val)} style={{display:"flex",alignItems:"center",gap:14,padding:"14px 16px",borderRadius:16,border:`2px solid ${motivation===m.val?G.gold:G.cardBorder}`,background:motivation===m.val?`linear-gradient(135deg,${G.peachSoft},${G.goldLight})`:"rgba(255,252,248,0.8)",cursor:"pointer",textAlign:"left",fontFamily:"inherit",transition:"all 0.2s"}}>
+              <span style={{fontSize:24}}>{m.emoji}</span>
+              <span style={{fontSize:14,fontWeight:600,color:motivation===m.val?G.inkSoft:G.inkMid,fontFamily:"'Cormorant Garamond',serif"}}>{m.label}</span>
+              {motivation===m.val&&<span style={{marginLeft:"auto",color:G.gold,fontSize:18}}>✓</span>}
+            </button>
+          ))}
+        </div>
+      ),
+      canNext:motivation,
+    },
+  ];
+
+  const current=STEPS[step];
+  const isLast=step===STEPS.length-1;
+
+  return (
+    <div style={{minHeight:"100vh",background:G.bg,fontFamily:"'Cormorant Garamond',serif",maxWidth:480,margin:"0 auto",display:"flex",flexDirection:"column"}}>
+      <GoldSpeckles corner="tr"/>
+
+      {/* Progress bar */}
+      <div style={{padding:"44px 24px 0"}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+          <button onClick={prevStep} style={{background:"none",border:"none",cursor:"pointer",fontSize:13,color:G.inkLight,fontFamily:"'Jost',sans-serif"}}>← Back</button>
+          <span style={{fontSize:11,color:G.inkLight,fontFamily:"'Jost',sans-serif",letterSpacing:"0.1em",textTransform:"uppercase"}}>{step+1} of {TOTAL_STEPS}</span>
+          <button onClick={nextStep} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:G.inkLight,fontFamily:"'Jost',sans-serif",letterSpacing:"0.05em"}}>Skip</button>
+        </div>
+        <div style={{background:"rgba(201,169,110,0.15)",borderRadius:99,height:4,overflow:"hidden"}}>
+          <div style={{width:`${((step+1)/TOTAL_STEPS)*100}%`,height:"100%",background:`linear-gradient(90deg,${G.peach},${G.gold})`,borderRadius:99,transition:"width 0.4s ease"}}/>
         </div>
       </div>
 
-      {/* Form */}
-      <div>
-        {mode==="signup"&&(
-          <input placeholder="Your name" value={name} onChange={e=>setName(e.target.value)} style={inputStyle}/>
-        )}
-        <input placeholder="Email address" type="email" value={email} onChange={e=>setEmail(e.target.value)} style={inputStyle}/>
-        <div style={{position:"relative",marginBottom:12}}>
-          <input
-            placeholder="Password"
-            type={showPass?"text":"password"}
-            value={password}
-            onChange={e=>setPassword(e.target.value)}
-            style={{...inputStyle,marginBottom:0,paddingRight:48}}
-          />
-          <button onClick={()=>setShowPass(p=>!p)} style={{position:"absolute",right:14,top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:16,color:G.inkLight}}>{showPass?"🙈":"👁️"}</button>
-        </div>
-
-        {error&&(
-          <div style={{background:"rgba(200,80,60,0.08)",border:"1px solid rgba(200,80,60,0.2)",borderRadius:12,padding:"10px 14px",marginBottom:12,fontSize:13,color:"#A04030",fontFamily:"'Jost',sans-serif"}}>
-            {error}
-          </div>
-        )}
-
-        <button
-          onClick={mode==="signup"?handleSignup:handleLogin}
-          disabled={loading}
-          style={{
-            width:"100%",padding:"16px",borderRadius:16,border:"none",cursor:"pointer",
-            background:loading?`rgba(201,169,110,0.4)`:`linear-gradient(135deg,${G.peach},${G.gold})`,
-            color:G.ink,fontWeight:700,fontSize:15,
-            fontFamily:"'Jost',sans-serif",letterSpacing:"0.08em",textTransform:"uppercase",
-            boxShadow:"0 4px 20px rgba(201,169,110,0.3)",marginBottom:16,
-            transition:"all 0.2s",
-          }}>
-          {loading?"Please wait…":mode==="signup"?"Create My Account":"Sign In"}
-        </button>
-
-        <div style={{textAlign:"center",fontSize:13,color:G.inkLight,fontFamily:"'Jost',sans-serif"}}>
-          {mode==="signup"?"Already have an account? ":"Don't have an account? "}
-          <span onClick={()=>{setMode(mode==="signup"?"login":"signup");setError("");}} style={{color:G.gold,cursor:"pointer",fontWeight:600}}>
-            {mode==="signup"?"Sign in":"Create one"}
-          </span>
-        </div>
-
-        {mode==="login"&&(
-          <div style={{textAlign:"center",marginTop:12,fontSize:12,color:G.inkLight,fontFamily:"'Jost',sans-serif"}}>
-            <span style={{cursor:"pointer",textDecoration:"underline"}} onClick={()=>setError("Password reset coming soon — for now, create a new account.")}>Forgot password?</span>
-          </div>
-        )}
+      {/* Step content */}
+      <div style={{flex:1,padding:"28px 24px",overflowY:"auto",opacity:anim?0:1,transition:"opacity 0.2s"}}>
+        <div style={{fontSize:40,marginBottom:12}}>{current.emoji}</div>
+        <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:28,fontWeight:600,color:G.inkSoft,lineHeight:1.2,marginBottom:8}}>{current.title}</div>
+        <div style={{fontSize:14,color:G.inkLight,fontStyle:"italic",marginBottom:24,lineHeight:1.6}}>{current.subtitle}</div>
+        {current.content}
       </div>
 
-      <div style={{marginTop:40,fontSize:11,color:G.inkLight,fontFamily:"'Jost',sans-serif",letterSpacing:"0.05em",textAlign:"center",lineHeight:1.8,paddingBottom:40}}>
-        Your data stays on your device.<br/>Private. Secure. Always yours.
+      {/* Next button */}
+      <div style={{padding:"0 24px 48px"}}>
+        {isLast?(
+          <button onClick={finishQuestionnaire} style={{width:"100%",padding:"17px",borderRadius:16,border:"none",cursor:"pointer",background:`linear-gradient(135deg,${G.peach},${G.gold})`,color:G.ink,fontWeight:700,fontSize:15,fontFamily:"'Jost',sans-serif",letterSpacing:"0.08em",textTransform:"uppercase",boxShadow:"0 4px 20px rgba(201,169,110,0.3)"}}>
+            ✨ Create My Profile
+          </button>
+        ):(
+          <button onClick={nextStep} disabled={!current.canNext} style={{width:"100%",padding:"17px",borderRadius:16,border:"none",cursor:current.canNext?"pointer":"default",background:current.canNext?`linear-gradient(135deg,${G.peach},${G.gold})`:"rgba(201,169,110,0.2)",color:current.canNext?G.ink:G.inkLight,fontWeight:700,fontSize:15,fontFamily:"'Jost',sans-serif",letterSpacing:"0.08em",textTransform:"uppercase",transition:"all 0.2s"}}>
+            Continue →
+          </button>
+        )}
       </div>
     </div>
   );
+
 }
 
 // ─── MAIN APP SHELL ───────────────────────────────────────────────────────────
